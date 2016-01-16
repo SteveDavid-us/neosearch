@@ -1,0 +1,19 @@
+{
+    IBClasses =     (
+                {
+            ACTIONS =             {
+                showPreferencesPanel = id;
+                showSearchWindow = id;
+            };
+            CLASS = AppController;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        },
+                {
+            CLASS = FirstResponder;
+            LANGUAGE = ObjC;
+            SUPERCLASS = NSObject;
+        }
+    );
+    IBVersion = 1;
+}

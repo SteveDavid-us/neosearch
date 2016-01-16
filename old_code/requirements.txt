@@ -1,0 +1,25 @@
+REQUIREMENTS FOR THE PROGRAM (NEED A FILE AND PRINTED SHEET TO GO WITH THE SOFTWARE):
+
+system 7 or higher
+3 megs of free memory (minimum)
+30 megs hard drive space
+
+macintosh drag and drop:  -- when I booted without extensions it wouldn't run unless I put this one back in.  I have system 7.1.2, I think it's built into 7.5 but I'm not sure.  I put the file with this document.  We should find out how to handle this -- can we ship the drag and drop extension?  Should everyone already have it?  I don't know... but it's necessary to run it.
+
+The files that are required and where they MUST be located:
+(the error messages when you start up the program and a file is missing do mention the file's name but they still aren't very user friendly.  We should reinforce the fact that ALL these files need to stay where they were installed or it won't run.
+
+Application can be in any folder
+There must be a folder in the same one as the application called "Latin Writings".
+There must be 26 files ending in .NEO that are the Writings books inside "Latin Writings".
+There must be a folder in "Latin Writings" called "DATA".
+Inside the "DATA" folder must be:
+Book List
+Dictionary Data
+Dictionary Strings
+Giant Table
+Giant Table Strings
+Ext Amb Table
+Int Amb Table
+Mid Amb Table
+Hit List

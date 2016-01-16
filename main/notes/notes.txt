@@ -1,0 +1,26 @@
+**** TODO ****
+General
+	Check and see that all osx related files are being versioned.
+	Get highlighting finished
+
+
+
+Shared library    
+    Add regex support
+
+DONE
+
+Shared library - getting it in shape for integration with OSX gui.
+        FindHitsWithSubstringOf
+        FindHitsWithMatchOf
+        FindHitsWithStringOf 
+
+1/27/2009 - change description
+
+1. Made CGiant::GetRoseCode a non-inline function to fix the release build.
+2. Removed ns2osx framework because it was a pain to have the separate xcode projects. Now it is all statically linked together; there is no header copy or anything. ns2osx.framework 
+3. Moved data and texts directory pointers to CWD to facilitate release build. Now the data and text directories must exist in the build/Debug and build/Release directories to run Neosearch from Xcode, or they must be in the drive root for the built app to be run directly (e.g. via finder).
+
+
+
+

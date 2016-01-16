@@ -1,0 +1,1009 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		DC1C3D430EF6213400842434 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC1C3D230EF6208100842434 /* main.m */; };
+		DC1C3D440EF6214D00842434 /* PreferenceController.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC1C3D0A0EF60B1700842434 /* PreferenceController.mm */; };
+		DC1C3D450EF6215000842434 /* ResultBrowserDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC1C3D0C0EF60B1700842434 /* ResultBrowserDelegate.mm */; };
+		DC1C3D460EF6215400842434 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC1C3D0E0EF60B1700842434 /* AppController.mm */; };
+		DC1C3D470EF6215800842434 /* SearchWindow.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC1C3D100EF60B1700842434 /* SearchWindow.mm */; };
+		DC1C3D880EF623B400842434 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = DC1C3D820EF623B400842434 /* MainMenu.nib */; };
+		DC1C3D890EF623B400842434 /* PreferencesPanel.nib in Resources */ = {isa = PBXBuildFile; fileRef = DC1C3D840EF623B400842434 /* PreferencesPanel.nib */; };
+		DC1C3D8A0EF623B400842434 /* SearchWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = DC1C3D860EF623B400842434 /* SearchWindow.nib */; };
+		DC1C3F640F2B302400842434 /* Shared.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA7CF210DFD0CE600D54E4E /* Shared.h */; settings = {ATTRIBUTES = (); }; };
+		DC1C3F650F2B302400842434 /* Search.h in Headers */ = {isa = PBXBuildFile; fileRef = DC9A61210DFC6C7200A67FAB /* Search.h */; settings = {ATTRIBUTES = (); }; };
+		DC1C3F670F2B302400842434 /* SearchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = DC9A61230DFC6C7200A67FAB /* SearchResult.h */; settings = {ATTRIBUTES = (); }; };
+		DC1C3F690F2B302400842434 /* SearchEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = DC9A61290DFC6C9200A67FAB /* SearchEngine.h */; settings = {ATTRIBUTES = (); }; };
+		DC1C3F6B0F2B302400842434 /* SearchTerm.h in Headers */ = {isa = PBXBuildFile; fileRef = DCA7D0200DFD3DF800D54E4E /* SearchTerm.h */; settings = {ATTRIBUTES = (); }; };
+		DC1C3FA70F2B31DE00842434 /* Search.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC9A61220DFC6C7200A67FAB /* Search.mm */; };
+		DC1C3FA80F2B31DE00842434 /* SearchResult.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC9A61240DFC6C7200A67FAB /* SearchResult.mm */; };
+		DC1C3FA90F2B31DE00842434 /* SearchEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC9A612A0DFC6C9200A67FAB /* SearchEngine.mm */; };
+		DC1C3FAA0F2B31DE00842434 /* SearchTerm.mm in Sources */ = {isa = PBXBuildFile; fileRef = DCA7D0210DFD3DF800D54E4E /* SearchTerm.mm */; };
+		DC1C3FB50F2B332E00842434 /* CAmbiguity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6155FA0DF9ACD800C87DD4 /* CAmbiguity.cpp */; };
+		DC1C3FB60F2B332E00842434 /* CDataFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6155FB0DF9ACD800C87DD4 /* CDataFile.cpp */; };
+		DC1C3FB70F2B332E00842434 /* CDictionary.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6155FC0DF9ACD800C87DD4 /* CDictionary.cpp */; };
+		DC1C3FB80F2B332E00842434 /* CDisAmbTable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6155FD0DF9ACD800C87DD4 /* CDisAmbTable.cpp */; };
+		DC1C3FB90F2B332E00842434 /* CGenericProgress.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6155FE0DF9ACD800C87DD4 /* CGenericProgress.cpp */; };
+		DC1C3FBA0F2B332E00842434 /* CGiant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6155FF0DF9ACD800C87DD4 /* CGiant.cpp */; };
+		DC1C3FBB0F2B332E00842434 /* CHitList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156000DF9ACD800C87DD4 /* CHitList.cpp */; };
+		DC1C3FBC0F2B332E00842434 /* CHitOffsetList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156010DF9ACD800C87DD4 /* CHitOffsetList.cpp */; };
+		DC1C3FBD0F2B332E00842434 /* CTarget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156020DF9ACD800C87DD4 /* CTarget.cpp */; };
+		DC1C3FBE0F2B332E00842434 /* CTextExploder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156030DF9ACD800C87DD4 /* CTextExploder.cpp */; };
+		DC1C3FBF0F2B332E00842434 /* CTextFetch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156040DF9ACD800C87DD4 /* CTextFetch.cpp */; };
+		DC1C3FC70F2B344F00842434 /* libns2engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6156330DF9AE7900C87DD4 /* libns2engine.a */; };
+		DC1C3FEB0F2B362000842434 /* libns2api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC1C3D150EF60B5C00842434 /* libns2api.a */; };
+		DC1C3FF30F2B371D00842434 /* libns2engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6156330DF9AE7900C87DD4 /* libns2engine.a */; };
+		DC56CBCB0FCFA7CF004096CE /* NSTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC56CBBB0FCE58D8004096CE /* NSTest.mm */; };
+		DC56CBCC0FCFA7CF004096CE /* SearchTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC56CBBD0FCE58D8004096CE /* SearchTest.mm */; };
+		DC56CBCD0FCFA7CF004096CE /* TestMain.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC56CBBE0FCE58D8004096CE /* TestMain.mm */; };
+		DC56CBCE0FCFA7CF004096CE /* TextLookup.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC56CBC00FCE58D8004096CE /* TextLookup.mm */; };
+		DC56CBD40FCFA808004096CE /* libns2engine.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC6156330DF9AE7900C87DD4 /* libns2engine.a */; };
+		DC56CBD50FCFA808004096CE /* libns2api.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC1C3D150EF60B5C00842434 /* libns2api.a */; };
+		DC61563F0DF9AE8600C87DD4 /* QSortRand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156050DF9ACD800C87DD4 /* QSortRand.cpp */; };
+		DC6156400DF9AE8600C87DD4 /* StringTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DC6156060DF9ACD800C87DD4 /* StringTools.cpp */; };
+		DC71EC5B10C39A300016EE11 /* data in Resources */ = {isa = PBXBuildFile; fileRef = DC71EC1610C39A300016EE11 /* data */; };
+		DC71EC5C10C39A300016EE11 /* texts in Resources */ = {isa = PBXBuildFile; fileRef = DC71EC2310C39A300016EE11 /* texts */; };
+		DC73BF9210C3DF600014AE7F /* neosearch.icns in Resources */ = {isa = PBXBuildFile; fileRef = DC73BF9110C3DF600014AE7F /* neosearch.icns */; };
+		DC788D650F399A47002E4B00 /* HitRange.h in Headers */ = {isa = PBXBuildFile; fileRef = DC788D630F399A47002E4B00 /* HitRange.h */; };
+		DC788D660F399A47002E4B00 /* HitRange.mm in Sources */ = {isa = PBXBuildFile; fileRef = DC788D640F399A47002E4B00 /* HitRange.mm */; };
+		E41DF85F108A34500099F145 /* UISearchTerm.mm in Sources */ = {isa = PBXBuildFile; fileRef = E41DF85E108A34500099F145 /* UISearchTerm.mm */; };
+		E45D4D680F3D35A50060CB1B /* SearchRow.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E45D4D5C0F3D35A50060CB1B /* SearchRow.h */; };
+		E45D4D690F3D35A50060CB1B /* SearchRow.mm in Sources */ = {isa = PBXBuildFile; fileRef = E45D4D5D0F3D35A50060CB1B /* SearchRow.mm */; };
+		E45D4D6A0F3D35A50060CB1B /* SearchRowContainer.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E45D4D5E0F3D35A50060CB1B /* SearchRowContainer.h */; };
+		E45D4D6B0F3D35A50060CB1B /* SearchRowContainer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E45D4D5F0F3D35A50060CB1B /* SearchRowContainer.mm */; };
+		E45D4D6C0F3D35A50060CB1B /* SearchViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = E45D4D600F3D35A50060CB1B /* SearchViewController.h */; };
+		E45D4D6D0F3D35A50060CB1B /* SearchViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = E45D4D610F3D35A50060CB1B /* SearchViewController.mm */; };
+		E45D4D7C0F3D36350060CB1B /* SearchControls.nib in Resources */ = {isa = PBXBuildFile; fileRef = E45D4D7A0F3D36350060CB1B /* SearchControls.nib */; };
+		E477DD96108DC159001994BE /* NS2SearchTermValueTransformer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E477DD95108DC159001994BE /* NS2SearchTermValueTransformer.mm */; };
+		E477E01410931B41001994BE /* NS2Constants.mm in Sources */ = {isa = PBXBuildFile; fileRef = E477E01310931B41001994BE /* NS2Constants.mm */; };
+		E47DEA8D0F52D7DA001E145B /* NSAddTemplate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E47DEA890F52D7DA001E145B /* NSAddTemplate.jpg */; };
+		E47DEA8E0F52D7DA001E145B /* NSGoLeftTemplate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E47DEA8A0F52D7DA001E145B /* NSGoLeftTemplate.jpg */; };
+		E47DEA8F0F52D7DA001E145B /* NSGoRightTemplate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E47DEA8B0F52D7DA001E145B /* NSGoRightTemplate.jpg */; };
+		E47DEA900F52D7DA001E145B /* NSRemoveTemplate.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E47DEA8C0F52D7DA001E145B /* NSRemoveTemplate.jpg */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		DC1C3D480EF6216300842434 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC6156320DF9AE7900C87DD4;
+			remoteInfo = ns2engine;
+		};
+		DC1C3FE30F2B359B00842434 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC1C3D140EF60B5C00842434;
+			remoteInfo = ns2api;
+		};
+		DC71EA8910BD4B380016EE11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC6156320DF9AE7900C87DD4;
+			remoteInfo = ns2engine;
+		};
+		DC71EA8B10BD4B3C0016EE11 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DC1C3D140EF60B5C00842434;
+			remoteInfo = ns2api;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E45D4C0A0F3A8AF60060CB1B /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			comments = "Copy data files";
+			dstPath = data;
+			dstSubfolderSpec = 7;
+			files = (
+				E45D4D680F3D35A50060CB1B /* SearchRow.h in CopyFiles */,
+				E45D4D6A0F3D35A50060CB1B /* SearchRowContainer.h in CopyFiles */,
+				E45D4D6C0F3D35A50060CB1B /* SearchViewController.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0867D69BFE84028FC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		0867D6A5FE840307C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		32DBCF5E0370ADEE00C91783 /* ns2osx.framework_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ns2osx.framework_Prefix.pch; sourceTree = "<group>"; };
+		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		DC1C3D090EF60B1700842434 /* PreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = PreferenceController.h; path = ../ns2osx/PreferenceController.h; sourceTree = SOURCE_ROOT; };
+		DC1C3D0A0EF60B1700842434 /* PreferenceController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = PreferenceController.mm; path = ../ns2osx/PreferenceController.mm; sourceTree = SOURCE_ROOT; };
+		DC1C3D0B0EF60B1700842434 /* ResultBrowserDelegate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ResultBrowserDelegate.h; path = ../ns2osx/ResultBrowserDelegate.h; sourceTree = SOURCE_ROOT; };
+		DC1C3D0C0EF60B1700842434 /* ResultBrowserDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = ResultBrowserDelegate.mm; path = ../ns2osx/ResultBrowserDelegate.mm; sourceTree = SOURCE_ROOT; };
+		DC1C3D0D0EF60B1700842434 /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = AppController.h; path = ../ns2osx/AppController.h; sourceTree = SOURCE_ROOT; };
+		DC1C3D0E0EF60B1700842434 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = AppController.mm; path = ../ns2osx/AppController.mm; sourceTree = SOURCE_ROOT; };
+		DC1C3D0F0EF60B1700842434 /* SearchWindow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SearchWindow.h; path = ../ns2osx/SearchWindow.h; sourceTree = SOURCE_ROOT; };
+		DC1C3D100EF60B1700842434 /* SearchWindow.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = SearchWindow.mm; path = ../ns2osx/SearchWindow.mm; sourceTree = SOURCE_ROOT; };
+		DC1C3D150EF60B5C00842434 /* libns2api.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libns2api.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC1C3D230EF6208100842434 /* main.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../ns2osx/main.m; sourceTree = SOURCE_ROOT; };
+		DC1C3D320EF620E800842434 /* NeoSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeoSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC1C3D340EF620E800842434 /* ns2osx-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ns2osx-Info.plist"; sourceTree = "<group>"; };
+		DC1C3D830EF623B400842434 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../ns2osx/English.lproj/MainMenu.nib; sourceTree = SOURCE_ROOT; };
+		DC1C3D850EF623B400842434 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../ns2osx/English.lproj/PreferencesPanel.nib; sourceTree = SOURCE_ROOT; };
+		DC1C3D870EF623B400842434 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = ../ns2osx/English.lproj/SearchWindow.nib; sourceTree = SOURCE_ROOT; };
+		DC56CBBA0FCE58D8004096CE /* NSTest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = NSTest.h; path = Tests/NSTest.h; sourceTree = "<group>"; };
+		DC56CBBB0FCE58D8004096CE /* NSTest.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = NSTest.mm; path = Tests/NSTest.mm; sourceTree = "<group>"; };
+		DC56CBBC0FCE58D8004096CE /* SearchTest.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SearchTest.h; path = Tests/SearchTest.h; sourceTree = "<group>"; };
+		DC56CBBD0FCE58D8004096CE /* SearchTest.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = SearchTest.mm; path = Tests/SearchTest.mm; sourceTree = "<group>"; };
+		DC56CBBE0FCE58D8004096CE /* TestMain.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = TestMain.mm; path = Tests/TestMain.mm; sourceTree = "<group>"; };
+		DC56CBBF0FCE58D8004096CE /* TextLookup.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = TextLookup.h; path = Tests/TextLookup.h; sourceTree = "<group>"; };
+		DC56CBC00FCE58D8004096CE /* TextLookup.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; name = TextLookup.mm; path = Tests/TextLookup.mm; sourceTree = "<group>"; };
+		DC56CBC90FCFA7A6004096CE /* ns2test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ns2test; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC6155E40DF9ACD800C87DD4 /* CAmbiguity.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CAmbiguity.h; sourceTree = "<group>"; };
+		DC6155E50DF9ACD800C87DD4 /* CDataFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CDataFile.h; sourceTree = "<group>"; };
+		DC6155E60DF9ACD800C87DD4 /* CDictionary.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CDictionary.h; sourceTree = "<group>"; };
+		DC6155E70DF9ACD800C87DD4 /* CDisAmbTable.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CDisAmbTable.h; sourceTree = "<group>"; };
+		DC6155E80DF9ACD800C87DD4 /* CGenericProgress.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CGenericProgress.h; sourceTree = "<group>"; };
+		DC6155E90DF9ACD800C87DD4 /* CGiant.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CGiant.h; sourceTree = "<group>"; };
+		DC6155EA0DF9ACD800C87DD4 /* CHitList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CHitList.h; sourceTree = "<group>"; };
+		DC6155EB0DF9ACD800C87DD4 /* CHitOffsetList.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CHitOffsetList.h; sourceTree = "<group>"; };
+		DC6155EC0DF9ACD800C87DD4 /* CRoseCode.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CRoseCode.h; sourceTree = "<group>"; };
+		DC6155ED0DF9ACD800C87DD4 /* CTarget.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CTarget.h; sourceTree = "<group>"; };
+		DC6155EE0DF9ACD800C87DD4 /* CTextExploder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CTextExploder.h; sourceTree = "<group>"; };
+		DC6155EF0DF9ACD800C87DD4 /* CTextFetch.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = CTextFetch.h; sourceTree = "<group>"; };
+		DC6155F00DF9ACD800C87DD4 /* EndianSwap.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = EndianSwap.h; sourceTree = "<group>"; };
+		DC6155F10DF9ACD800C87DD4 /* Engine.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Engine.h; sourceTree = "<group>"; };
+		DC6155F20DF9ACD800C87DD4 /* IndexerCodes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IndexerCodes.h; sourceTree = "<group>"; };
+		DC6155F30DF9ACD800C87DD4 /* NeoException.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = NeoException.h; sourceTree = "<group>"; };
+		DC6155F40DF9ACD800C87DD4 /* QSortRand.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = QSortRand.h; sourceTree = "<group>"; };
+		DC6155F50DF9ACD800C87DD4 /* StringTools.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = StringTools.h; sourceTree = "<group>"; };
+		DC6155F60DF9ACD800C87DD4 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
+		DC6155F70DF9ACD800C87DD4 /* makefile */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
+		DC6155FA0DF9ACD800C87DD4 /* CAmbiguity.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CAmbiguity.cpp; sourceTree = "<group>"; };
+		DC6155FB0DF9ACD800C87DD4 /* CDataFile.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CDataFile.cpp; sourceTree = "<group>"; };
+		DC6155FC0DF9ACD800C87DD4 /* CDictionary.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CDictionary.cpp; sourceTree = "<group>"; };
+		DC6155FD0DF9ACD800C87DD4 /* CDisAmbTable.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CDisAmbTable.cpp; sourceTree = "<group>"; };
+		DC6155FE0DF9ACD800C87DD4 /* CGenericProgress.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CGenericProgress.cpp; sourceTree = "<group>"; };
+		DC6155FF0DF9ACD800C87DD4 /* CGiant.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CGiant.cpp; sourceTree = "<group>"; };
+		DC6156000DF9ACD800C87DD4 /* CHitList.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CHitList.cpp; sourceTree = "<group>"; };
+		DC6156010DF9ACD800C87DD4 /* CHitOffsetList.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CHitOffsetList.cpp; sourceTree = "<group>"; };
+		DC6156020DF9ACD800C87DD4 /* CTarget.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CTarget.cpp; sourceTree = "<group>"; };
+		DC6156030DF9ACD800C87DD4 /* CTextExploder.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CTextExploder.cpp; sourceTree = "<group>"; };
+		DC6156040DF9ACD800C87DD4 /* CTextFetch.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = CTextFetch.cpp; sourceTree = "<group>"; };
+		DC6156050DF9ACD800C87DD4 /* QSortRand.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = QSortRand.cpp; sourceTree = "<group>"; };
+		DC6156060DF9ACD800C87DD4 /* StringTools.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = StringTools.cpp; sourceTree = "<group>"; };
+		DC6156070DF9ACD800C87DD4 /* test1.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = test1.cpp; sourceTree = "<group>"; };
+		DC61560A0DF9ACD800C87DD4 /* TextBrowse.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = TextBrowse.cpp; sourceTree = "<group>"; };
+		DC6156330DF9AE7900C87DD4 /* libns2engine.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libns2engine.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC71EC1610C39A300016EE11 /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../data; sourceTree = SOURCE_ROOT; };
+		DC71EC2310C39A300016EE11 /* texts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = texts; path = ../texts; sourceTree = SOURCE_ROOT; };
+		DC73BF9110C3DF600014AE7F /* neosearch.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = neosearch.icns; path = ../shared/resources/neosearch.icns; sourceTree = SOURCE_ROOT; };
+		DC788D630F399A47002E4B00 /* HitRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HitRange.h; sourceTree = "<group>"; };
+		DC788D640F399A47002E4B00 /* HitRange.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = HitRange.mm; sourceTree = "<group>"; };
+		DC9A61210DFC6C7200A67FAB /* Search.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Search.h; sourceTree = "<group>"; };
+		DC9A61220DFC6C7200A67FAB /* Search.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = Search.mm; sourceTree = "<group>"; };
+		DC9A61230DFC6C7200A67FAB /* SearchResult.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SearchResult.h; sourceTree = "<group>"; };
+		DC9A61240DFC6C7200A67FAB /* SearchResult.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchResult.mm; sourceTree = "<group>"; };
+		DC9A61290DFC6C9200A67FAB /* SearchEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchEngine.h; sourceTree = "<group>"; };
+		DC9A612A0DFC6C9200A67FAB /* SearchEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchEngine.mm; sourceTree = "<group>"; };
+		DCA7CF210DFD0CE600D54E4E /* Shared.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Shared.h; sourceTree = "<group>"; };
+		DCA7D0200DFD3DF800D54E4E /* SearchTerm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTerm.h; sourceTree = "<group>"; };
+		DCA7D0210DFD3DF800D54E4E /* SearchTerm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchTerm.mm; sourceTree = "<group>"; };
+		E41DF85D108A34500099F145 /* UISearchTerm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UISearchTerm.h; sourceTree = "<group>"; };
+		E41DF85E108A34500099F145 /* UISearchTerm.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UISearchTerm.mm; sourceTree = "<group>"; };
+		E45D4D5C0F3D35A50060CB1B /* SearchRow.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SearchRow.h; sourceTree = "<group>"; };
+		E45D4D5D0F3D35A50060CB1B /* SearchRow.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchRow.mm; sourceTree = "<group>"; };
+		E45D4D5E0F3D35A50060CB1B /* SearchRowContainer.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SearchRowContainer.h; sourceTree = "<group>"; };
+		E45D4D5F0F3D35A50060CB1B /* SearchRowContainer.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchRowContainer.mm; sourceTree = "<group>"; };
+		E45D4D600F3D35A50060CB1B /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		E45D4D610F3D35A50060CB1B /* SearchViewController.mm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.objcpp; path = SearchViewController.mm; sourceTree = "<group>"; };
+		E45D4D7B0F3D36350060CB1B /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/SearchControls.nib; sourceTree = "<group>"; };
+		E477DD94108DC159001994BE /* NS2SearchTermValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NS2SearchTermValueTransformer.h; sourceTree = "<group>"; };
+		E477DD95108DC159001994BE /* NS2SearchTermValueTransformer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NS2SearchTermValueTransformer.mm; sourceTree = "<group>"; };
+		E477DE5C108F098F001994BE /* NS2Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NS2Constants.h; sourceTree = "<group>"; };
+		E477E01310931B41001994BE /* NS2Constants.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NS2Constants.mm; sourceTree = "<group>"; };
+		E47DEA890F52D7DA001E145B /* NSAddTemplate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NSAddTemplate.jpg; sourceTree = "<group>"; };
+		E47DEA8A0F52D7DA001E145B /* NSGoLeftTemplate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NSGoLeftTemplate.jpg; sourceTree = "<group>"; };
+		E47DEA8B0F52D7DA001E145B /* NSGoRightTemplate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NSGoRightTemplate.jpg; sourceTree = "<group>"; };
+		E47DEA8C0F52D7DA001E145B /* NSRemoveTemplate.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = NSRemoveTemplate.jpg; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DC1C3D130EF60B5C00842434 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1C3FC70F2B344F00842434 /* libns2engine.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC1C3D300EF620E800842434 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1C3FEB0F2B362000842434 /* libns2api.a in Frameworks */,
+				DC1C3FF30F2B371D00842434 /* libns2engine.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC56CBC70FCFA7A6004096CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC56CBD40FCFA808004096CE /* libns2engine.a in Frameworks */,
+				DC56CBD50FCFA808004096CE /* libns2api.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC6156310DF9AE7900C87DD4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DC6156330DF9AE7900C87DD4 /* libns2engine.a */,
+				DC1C3D150EF60B5C00842434 /* libns2api.a */,
+				DC1C3D320EF620E800842434 /* NeoSearch.app */,
+				DC56CBC90FCFA7A6004096CE /* ns2test */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* ns2osx.framework */ = {
+			isa = PBXGroup;
+			children = (
+				DC1C3D060EF607E100842434 /* User Interface */,
+				08FB77AEFE84172EC02AAC07 /* Engine API */,
+				32C88DFF0371C24200C91783 /* Engine */,
+				089C1665FE841158C02AAC07 /* Resources */,
+				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
+				034768DFFF38A50411DB9C8B /* Products */,
+				DC1C3D340EF620E800842434 /* ns2osx-Info.plist */,
+			);
+			name = ns2osx.framework;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
+				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
+			);
+			name = "External Frameworks and Libraries";
+			sourceTree = "<group>";
+		};
+		089C1665FE841158C02AAC07 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				DC73BF9110C3DF600014AE7F /* neosearch.icns */,
+				DC71EC1610C39A300016EE11 /* data */,
+				DC71EC2310C39A300016EE11 /* texts */,
+				E47DEA890F52D7DA001E145B /* NSAddTemplate.jpg */,
+				E47DEA8A0F52D7DA001E145B /* NSGoLeftTemplate.jpg */,
+				E47DEA8B0F52D7DA001E145B /* NSGoRightTemplate.jpg */,
+				E47DEA8C0F52D7DA001E145B /* NSRemoveTemplate.jpg */,
+				E45D4D7A0F3D36350060CB1B /* SearchControls.nib */,
+				DC1C3D820EF623B400842434 /* MainMenu.nib */,
+				DC1C3D840EF623B400842434 /* PreferencesPanel.nib */,
+				DC1C3D860EF623B400842434 /* SearchWindow.nib */,
+				8DC2EF5A0486A6940098B216 /* Info.plist */,
+				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Engine API */ = {
+			isa = PBXGroup;
+			children = (
+				DC56CBB90FCE58B6004096CE /* Tests */,
+				DCA7CF210DFD0CE600D54E4E /* Shared.h */,
+				DC9A61210DFC6C7200A67FAB /* Search.h */,
+				DC9A61220DFC6C7200A67FAB /* Search.mm */,
+				DC9A61230DFC6C7200A67FAB /* SearchResult.h */,
+				DC9A61240DFC6C7200A67FAB /* SearchResult.mm */,
+				DC9A61290DFC6C9200A67FAB /* SearchEngine.h */,
+				DC9A612A0DFC6C9200A67FAB /* SearchEngine.mm */,
+				DCA7D0200DFD3DF800D54E4E /* SearchTerm.h */,
+				DCA7D0210DFD3DF800D54E4E /* SearchTerm.mm */,
+				DC788D630F399A47002E4B00 /* HitRange.h */,
+				DC788D640F399A47002E4B00 /* HitRange.mm */,
+			);
+			name = "Engine API";
+			sourceTree = "<group>";
+		};
+		1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7B2FEA5585E11CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0867D6A5FE840307C02AAC07 /* AppKit.framework */,
+				D2F7E79907B2D74100F64583 /* CoreData.framework */,
+				0867D69BFE84028FC02AAC07 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				DC6155E20DF9ACD800C87DD4 /* shared */,
+				32DBCF5E0370ADEE00C91783 /* ns2osx.framework_Prefix.pch */,
+			);
+			name = Engine;
+			sourceTree = "<group>";
+		};
+		DC1C3D060EF607E100842434 /* User Interface */ = {
+			isa = PBXGroup;
+			children = (
+				E45D4D580F3D352B0060CB1B /* Search Controls */,
+				DC1C3D230EF6208100842434 /* main.m */,
+				DC1C3D090EF60B1700842434 /* PreferenceController.h */,
+				DC1C3D0A0EF60B1700842434 /* PreferenceController.mm */,
+				DC1C3D0B0EF60B1700842434 /* ResultBrowserDelegate.h */,
+				DC1C3D0C0EF60B1700842434 /* ResultBrowserDelegate.mm */,
+				DC1C3D0D0EF60B1700842434 /* AppController.h */,
+				DC1C3D0E0EF60B1700842434 /* AppController.mm */,
+				DC1C3D0F0EF60B1700842434 /* SearchWindow.h */,
+				DC1C3D100EF60B1700842434 /* SearchWindow.mm */,
+				E477DE5C108F098F001994BE /* NS2Constants.h */,
+				E477E01310931B41001994BE /* NS2Constants.mm */,
+			);
+			name = "User Interface";
+			sourceTree = "<group>";
+		};
+		DC56CBB90FCE58B6004096CE /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				DC56CBBA0FCE58D8004096CE /* NSTest.h */,
+				DC56CBBB0FCE58D8004096CE /* NSTest.mm */,
+				DC56CBBC0FCE58D8004096CE /* SearchTest.h */,
+				DC56CBBD0FCE58D8004096CE /* SearchTest.mm */,
+				DC56CBBE0FCE58D8004096CE /* TestMain.mm */,
+				DC56CBBF0FCE58D8004096CE /* TextLookup.h */,
+				DC56CBC00FCE58D8004096CE /* TextLookup.mm */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
+		DC6155E20DF9ACD800C87DD4 /* shared */ = {
+			isa = PBXGroup;
+			children = (
+				DC6155E30DF9ACD800C87DD4 /* include */,
+				DC6155F70DF9ACD800C87DD4 /* makefile */,
+				DC6155F90DF9ACD800C87DD4 /* src */,
+			);
+			name = shared;
+			path = ../shared;
+			sourceTree = SOURCE_ROOT;
+		};
+		DC6155E30DF9ACD800C87DD4 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				DC6155E40DF9ACD800C87DD4 /* CAmbiguity.h */,
+				DC6155E50DF9ACD800C87DD4 /* CDataFile.h */,
+				DC6155E60DF9ACD800C87DD4 /* CDictionary.h */,
+				DC6155E70DF9ACD800C87DD4 /* CDisAmbTable.h */,
+				DC6155E80DF9ACD800C87DD4 /* CGenericProgress.h */,
+				DC6155E90DF9ACD800C87DD4 /* CGiant.h */,
+				DC6155EA0DF9ACD800C87DD4 /* CHitList.h */,
+				DC6155EB0DF9ACD800C87DD4 /* CHitOffsetList.h */,
+				DC6155EC0DF9ACD800C87DD4 /* CRoseCode.h */,
+				DC6155ED0DF9ACD800C87DD4 /* CTarget.h */,
+				DC6155EE0DF9ACD800C87DD4 /* CTextExploder.h */,
+				DC6155EF0DF9ACD800C87DD4 /* CTextFetch.h */,
+				DC6155F00DF9ACD800C87DD4 /* EndianSwap.h */,
+				DC6155F10DF9ACD800C87DD4 /* Engine.h */,
+				DC6155F20DF9ACD800C87DD4 /* IndexerCodes.h */,
+				DC6155F30DF9ACD800C87DD4 /* NeoException.h */,
+				DC6155F40DF9ACD800C87DD4 /* QSortRand.h */,
+				DC6155F50DF9ACD800C87DD4 /* StringTools.h */,
+				DC6155F60DF9ACD800C87DD4 /* Types.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		DC6155F90DF9ACD800C87DD4 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				DC6155FA0DF9ACD800C87DD4 /* CAmbiguity.cpp */,
+				DC6155FB0DF9ACD800C87DD4 /* CDataFile.cpp */,
+				DC6155FC0DF9ACD800C87DD4 /* CDictionary.cpp */,
+				DC6155FD0DF9ACD800C87DD4 /* CDisAmbTable.cpp */,
+				DC6155FE0DF9ACD800C87DD4 /* CGenericProgress.cpp */,
+				DC6155FF0DF9ACD800C87DD4 /* CGiant.cpp */,
+				DC6156000DF9ACD800C87DD4 /* CHitList.cpp */,
+				DC6156010DF9ACD800C87DD4 /* CHitOffsetList.cpp */,
+				DC6156020DF9ACD800C87DD4 /* CTarget.cpp */,
+				DC6156030DF9ACD800C87DD4 /* CTextExploder.cpp */,
+				DC6156040DF9ACD800C87DD4 /* CTextFetch.cpp */,
+				DC6156050DF9ACD800C87DD4 /* QSortRand.cpp */,
+				DC6156060DF9ACD800C87DD4 /* StringTools.cpp */,
+				DC6156070DF9ACD800C87DD4 /* test1.cpp */,
+				DC6156080DF9ACD800C87DD4 /* tests */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		DC6156080DF9ACD800C87DD4 /* tests */ = {
+			isa = PBXGroup;
+			children = (
+				DC61560A0DF9ACD800C87DD4 /* TextBrowse.cpp */,
+			);
+			path = tests;
+			sourceTree = "<group>";
+		};
+		E45D4D580F3D352B0060CB1B /* Search Controls */ = {
+			isa = PBXGroup;
+			children = (
+				E45D4D5C0F3D35A50060CB1B /* SearchRow.h */,
+				E45D4D5D0F3D35A50060CB1B /* SearchRow.mm */,
+				E45D4D5E0F3D35A50060CB1B /* SearchRowContainer.h */,
+				E45D4D5F0F3D35A50060CB1B /* SearchRowContainer.mm */,
+				E45D4D600F3D35A50060CB1B /* SearchViewController.h */,
+				E45D4D610F3D35A50060CB1B /* SearchViewController.mm */,
+				E41DF85D108A34500099F145 /* UISearchTerm.h */,
+				E41DF85E108A34500099F145 /* UISearchTerm.mm */,
+				E477DD94108DC159001994BE /* NS2SearchTermValueTransformer.h */,
+				E477DD95108DC159001994BE /* NS2SearchTermValueTransformer.mm */,
+			);
+			name = "Search Controls";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		DC1C3D110EF60B5C00842434 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1C3F640F2B302400842434 /* Shared.h in Headers */,
+				DC1C3F650F2B302400842434 /* Search.h in Headers */,
+				DC1C3F670F2B302400842434 /* SearchResult.h in Headers */,
+				DC1C3F690F2B302400842434 /* SearchEngine.h in Headers */,
+				DC1C3F6B0F2B302400842434 /* SearchTerm.h in Headers */,
+				DC788D650F399A47002E4B00 /* HitRange.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC61562F0DF9AE7900C87DD4 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		DC1C3D140EF60B5C00842434 /* ns2api */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC1C3D1F0EF60B9700842434 /* Build configuration list for PBXNativeTarget "ns2api" */;
+			buildPhases = (
+				DC1C3D110EF60B5C00842434 /* Headers */,
+				DC1C3D120EF60B5C00842434 /* Sources */,
+				DC1C3D130EF60B5C00842434 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC1C3D490EF6216300842434 /* PBXTargetDependency */,
+			);
+			name = ns2api;
+			productName = ns2api;
+			productReference = DC1C3D150EF60B5C00842434 /* libns2api.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		DC1C3D310EF620E800842434 /* NeoSearch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC1C3D350EF620E800842434 /* Build configuration list for PBXNativeTarget "NeoSearch" */;
+			buildPhases = (
+				DC1C3D2E0EF620E800842434 /* Resources */,
+				DC1C3D2F0EF620E800842434 /* Sources */,
+				DC1C3D300EF620E800842434 /* Frameworks */,
+				E45D4C0A0F3A8AF60060CB1B /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC1C3FE40F2B359B00842434 /* PBXTargetDependency */,
+			);
+			name = NeoSearch;
+			productName = ns2osx;
+			productReference = DC1C3D320EF620E800842434 /* NeoSearch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		DC56CBC80FCFA7A6004096CE /* ns2test */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC56CBD70FCFA826004096CE /* Build configuration list for PBXNativeTarget "ns2test" */;
+			buildPhases = (
+				DC56CBC60FCFA7A6004096CE /* Sources */,
+				DC56CBC70FCFA7A6004096CE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DC71EA8A10BD4B380016EE11 /* PBXTargetDependency */,
+				DC71EA8C10BD4B3C0016EE11 /* PBXTargetDependency */,
+			);
+			name = ns2test;
+			productName = ns2test;
+			productReference = DC56CBC90FCFA7A6004096CE /* ns2test */;
+			productType = "com.apple.product-type.tool";
+		};
+		DC6156320DF9AE7900C87DD4 /* ns2engine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DC6156470DF9AEA600C87DD4 /* Build configuration list for PBXNativeTarget "ns2engine" */;
+			buildPhases = (
+				DC61562F0DF9AE7900C87DD4 /* Headers */,
+				DC6156300DF9AE7900C87DD4 /* Sources */,
+				DC6156310DF9AE7900C87DD4 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ns2engine;
+			productName = ns2engine;
+			productReference = DC6156330DF9AE7900C87DD4 /* libns2engine.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ns2osx.framework" */;
+			compatibilityVersion = "Xcode 2.4";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* ns2osx.framework */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DC6156320DF9AE7900C87DD4 /* ns2engine */,
+				DC1C3D140EF60B5C00842434 /* ns2api */,
+				DC1C3D310EF620E800842434 /* NeoSearch */,
+				DC56CBC80FCFA7A6004096CE /* ns2test */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DC1C3D2E0EF620E800842434 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1C3D880EF623B400842434 /* MainMenu.nib in Resources */,
+				DC1C3D890EF623B400842434 /* PreferencesPanel.nib in Resources */,
+				DC1C3D8A0EF623B400842434 /* SearchWindow.nib in Resources */,
+				E45D4D7C0F3D36350060CB1B /* SearchControls.nib in Resources */,
+				E47DEA8D0F52D7DA001E145B /* NSAddTemplate.jpg in Resources */,
+				E47DEA8E0F52D7DA001E145B /* NSGoLeftTemplate.jpg in Resources */,
+				E47DEA8F0F52D7DA001E145B /* NSGoRightTemplate.jpg in Resources */,
+				E47DEA900F52D7DA001E145B /* NSRemoveTemplate.jpg in Resources */,
+				DC71EC5B10C39A300016EE11 /* data in Resources */,
+				DC71EC5C10C39A300016EE11 /* texts in Resources */,
+				DC73BF9210C3DF600014AE7F /* neosearch.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DC1C3D120EF60B5C00842434 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1C3FA70F2B31DE00842434 /* Search.mm in Sources */,
+				DC1C3FA80F2B31DE00842434 /* SearchResult.mm in Sources */,
+				DC1C3FA90F2B31DE00842434 /* SearchEngine.mm in Sources */,
+				DC1C3FAA0F2B31DE00842434 /* SearchTerm.mm in Sources */,
+				DC788D660F399A47002E4B00 /* HitRange.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC1C3D2F0EF620E800842434 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC1C3D430EF6213400842434 /* main.m in Sources */,
+				DC1C3D440EF6214D00842434 /* PreferenceController.mm in Sources */,
+				DC1C3D450EF6215000842434 /* ResultBrowserDelegate.mm in Sources */,
+				DC1C3D460EF6215400842434 /* AppController.mm in Sources */,
+				DC1C3D470EF6215800842434 /* SearchWindow.mm in Sources */,
+				E45D4D690F3D35A50060CB1B /* SearchRow.mm in Sources */,
+				E45D4D6B0F3D35A50060CB1B /* SearchRowContainer.mm in Sources */,
+				E45D4D6D0F3D35A50060CB1B /* SearchViewController.mm in Sources */,
+				E41DF85F108A34500099F145 /* UISearchTerm.mm in Sources */,
+				E477DD96108DC159001994BE /* NS2SearchTermValueTransformer.mm in Sources */,
+				E477E01410931B41001994BE /* NS2Constants.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC56CBC60FCFA7A6004096CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC56CBCB0FCFA7CF004096CE /* NSTest.mm in Sources */,
+				DC56CBCC0FCFA7CF004096CE /* SearchTest.mm in Sources */,
+				DC56CBCD0FCFA7CF004096CE /* TestMain.mm in Sources */,
+				DC56CBCE0FCFA7CF004096CE /* TextLookup.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DC6156300DF9AE7900C87DD4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC61563F0DF9AE8600C87DD4 /* QSortRand.cpp in Sources */,
+				DC6156400DF9AE8600C87DD4 /* StringTools.cpp in Sources */,
+				DC1C3FB50F2B332E00842434 /* CAmbiguity.cpp in Sources */,
+				DC1C3FB60F2B332E00842434 /* CDataFile.cpp in Sources */,
+				DC1C3FB70F2B332E00842434 /* CDictionary.cpp in Sources */,
+				DC1C3FB80F2B332E00842434 /* CDisAmbTable.cpp in Sources */,
+				DC1C3FB90F2B332E00842434 /* CGenericProgress.cpp in Sources */,
+				DC1C3FBA0F2B332E00842434 /* CGiant.cpp in Sources */,
+				DC1C3FBB0F2B332E00842434 /* CHitList.cpp in Sources */,
+				DC1C3FBC0F2B332E00842434 /* CHitOffsetList.cpp in Sources */,
+				DC1C3FBD0F2B332E00842434 /* CTarget.cpp in Sources */,
+				DC1C3FBE0F2B332E00842434 /* CTextExploder.cpp in Sources */,
+				DC1C3FBF0F2B332E00842434 /* CTextFetch.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		DC1C3D490EF6216300842434 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC6156320DF9AE7900C87DD4 /* ns2engine */;
+			targetProxy = DC1C3D480EF6216300842434 /* PBXContainerItemProxy */;
+		};
+		DC1C3FE40F2B359B00842434 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC1C3D140EF60B5C00842434 /* ns2api */;
+			targetProxy = DC1C3FE30F2B359B00842434 /* PBXContainerItemProxy */;
+		};
+		DC71EA8A10BD4B380016EE11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC6156320DF9AE7900C87DD4 /* ns2engine */;
+			targetProxy = DC71EA8910BD4B380016EE11 /* PBXContainerItemProxy */;
+		};
+		DC71EA8C10BD4B3C0016EE11 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DC1C3D140EF60B5C00842434 /* ns2api */;
+			targetProxy = DC71EA8B10BD4B3C0016EE11 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		089C1666FE841158C02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C1667FE841158C02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		DC1C3D820EF623B400842434 /* MainMenu.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC1C3D830EF623B400842434 /* English */,
+			);
+			name = MainMenu.nib;
+			sourceTree = "<group>";
+		};
+		DC1C3D840EF623B400842434 /* PreferencesPanel.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC1C3D850EF623B400842434 /* English */,
+			);
+			name = PreferencesPanel.nib;
+			sourceTree = "<group>";
+		};
+		DC1C3D860EF623B400842434 /* SearchWindow.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DC1C3D870EF623B400842434 /* English */,
+			);
+			name = SearchWindow.nib;
+			sourceTree = "<group>";
+		};
+		E45D4D7A0F3D36350060CB1B /* SearchControls.nib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E45D4D7B0F3D36350060CB1B /* English */,
+			);
+			name = SearchControls.nib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB91B208733DA50010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Debug;
+		};
+		1DEB91B308733DA50010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				PRODUCT_NAME = NeoSearch;
+				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
+			};
+			name = Release;
+		};
+		DC1C3D200EF60B9700842434 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = 4.0;
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ns2api;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		DC1C3D210EF60B9700842434 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ns2api;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		DC1C3D360EF620E800842434 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "ns2osx-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = NeoSearch;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		DC1C3D370EF620E800842434 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "ns2osx-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = NeoSearch;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		DC56CBD80FCFA826004096CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = "$(HOME)/bin";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ns2test;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		DC56CBD90FCFA826004096CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = "$(HOME)/bin";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ns2test;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		DC6156480DF9AEA600C87DD4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_BIT_PRE_XCODE_3_1 = "ppc i386";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				GCC_VERSION = 4.0;
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ns2engine;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		DC6156490DF9AEA600C87DD4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Carbon.framework/Headers/Carbon.h";
+				INSTALL_PATH = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Carbon,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = ns2engine;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "ns2osx.framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB91B208733DA50010E9CD /* Debug */,
+				1DEB91B308733DA50010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC1C3D1F0EF60B9700842434 /* Build configuration list for PBXNativeTarget "ns2api" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC1C3D200EF60B9700842434 /* Debug */,
+				DC1C3D210EF60B9700842434 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC1C3D350EF620E800842434 /* Build configuration list for PBXNativeTarget "NeoSearch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC1C3D360EF620E800842434 /* Debug */,
+				DC1C3D370EF620E800842434 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC56CBD70FCFA826004096CE /* Build configuration list for PBXNativeTarget "ns2test" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC56CBD80FCFA826004096CE /* Debug */,
+				DC56CBD90FCFA826004096CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DC6156470DF9AEA600C87DD4 /* Build configuration list for PBXNativeTarget "ns2engine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC6156480DF9AEA600C87DD4 /* Debug */,
+				DC6156490DF9AEA600C87DD4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}

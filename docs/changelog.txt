@@ -1,0 +1,8 @@
+*** Alpha 2 ***
+Fix crash when searching for a dictionary entry form that doesn't exist (e.g.
+absum)
+Fix crash with grammar searches for forms that don’t show up in the corpus (e.g. phaenomenorum)
+Add error message for searches with externally ambiguous terms.
+
+*** Alpha 1 ***
+Initial alpha release

@@ -1,0 +1,46 @@
+**** UI ****
+
+P0
+Add Direct Browsing function
+Add search proximity control
+Reorder/remove participle search parameters
+Rename Participles to Verbals
+Enable text wheel scrolling
+Fix search term removal issue (make sure results always refresh)
+Voice drop-down should have "Any" option
+
+P1
+font size control
+run in full-screen?
+make column resizing sticky
+make toolbar customizations sticky
+customizing the toolbar seems to requre that the cursor be placed in the search string box
+make the cursor show up automatically ni the search string slot
+consider multi-string or multi-substring searches
+
+P2
+Move comparatives and superlatives into alternate category (Comparison)
+- this might require an engine change as well
+
+**** Engine ****
+
+P0
+Missing hits - quae + sunt + illorum returns 86 in 4 vol instead of 269 in 19 vol
+
+P1
+Participle-Any search should not return all verb forms
+multi-string or multi-substring searches are difficult
+
+P2
+Missing hits NS1 also misses - herba* + argi misses hits in Exodus 9 of AC
+Add inflected forms not in the writings
+Posthumous texts
+
+
+**** Done ****
+Crash: when search for dictionary entry form that doesn't exist (but inflection does)
+- e.g. absum (abesse or abesset work)
+Crash: Grammar searches for forms that don’t show up in the corpus (e.g. phaenomenorum)
+Find better location for grammar files
+Grammar search on ambiguous forms give 0 hits (e.g. vola)
+Missing hits - vertit shows 98 hits, but grammar search for the same yields 0
