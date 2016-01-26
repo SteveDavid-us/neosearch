@@ -12,7 +12,7 @@ static void rqsort(char* low, char* high );
 typedef int (* PFI)(const void*, const void*);              /* Pointer to a function that */
                                    							/* returns an int. */
 static  PFI    Comp;                /* Pointer to comparsion routine */
-static  int    Width;               /* Width of an object in bytes */
+static  long   Width;               /* Width of an object in bytes */
 /* ------------------------------------------------------------------ */
 
 inline long random(long range) {
@@ -45,8 +45,8 @@ static void rqsort(char* low, char* high )
         *base;
    static char *a,         /* Used for exchange, will not be needed */
                *b;         /* during recusion, so they can be static.*/
-   static int   tmp,       /* That way they will not take up stack   */
-                i;         /* space.                                 */
+   static int   tmp;       /* That way they will not take up stack   */
+   static long  i;         /* space.                                 */
    static char*  switcher;  // swap this w/ pivot
 
    base = low ;            /* Remember base address of array. */

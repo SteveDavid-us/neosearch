@@ -14,29 +14,34 @@ int main (int argc, char *argv)
     CTextFetch *textFetcher;
 
     try {
-		cout << "Alloc CGiant" << endl;
+        cout << "Alloc CGiant" << endl;
         giantTable = new CGiant();
-		cout << "Alloc CTextFetch" << endl;
+        cout << "Alloc CTextFetch" << endl;
         textFetcher = new CTextFetch();
     } catch (CException f) {
         cout << f.Diagnostic() << endl;;
         cout << f.WhatFailed() << endl; 
-		return 1;
+        return 1;
     }
 
     CTextExploder textExploder;
     CHitOffsetList hitOffsetList;
-	cout << "Setup textExploder" << endl;
-	textExploder.Setup(textFetcher, giantTable, &hitOffsetList);
+    cout << "Setup textExploder" << endl;
+    textExploder.Setup(textFetcher, giantTable, &hitOffsetList);
     hit testhit;
     testhit.Set(9, 1, 1);
-    try {
-		cout << "PrintPassageNumber" << endl;
+#ifndef DEBUG
+    try
+#endif
+    {
+        cout << "PrintPassageNumber" << endl;
         textExploder.PrintPassageNumber(testhit);
     }
+#ifndef DEBUG
     catch (CException f) {
         cout << f.Diagnostic() << endl;
         cout << f.WhatFailed() << endl;
     }
+#endif
     return 0;
 }

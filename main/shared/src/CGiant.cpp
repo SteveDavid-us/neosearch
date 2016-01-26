@@ -21,11 +21,11 @@
 #include "CGenericProgress.h"
 #include "EndianSwap.h"
 
-void liget::EndianSwap()
+void LigetEndianSwap(liget &l)
 {
-    endian_swap((unsigned int&)latStringOffSet);
-    endian_swap((unsigned int&)hitListFileOffset);
-    fourByte.EndianSwap(); 
+    endian_swap(l.latStringOffSet);
+    endian_swap(l.hitListFileOffset);
+    l.fourByte.EndianSwap(); 
 }
 
 // ###########################################################################################
@@ -48,7 +48,7 @@ CGiant::CGiant()
     table = (liget*) mainFile.ReadAll();
 #ifndef __BIG_ENDIAN__
     for (int i=0; i < numLines; i++) {
-        table[i].EndianSwap();
+        LigetEndianSwap(table[i]);
     }
 #endif
     mainFile.Close();
@@ -118,7 +118,7 @@ inline Boolean  CGiant::IsAmb(long tIndex)
 
 // ###########################################################################################
 //  Returns the disk offset at which the hit list for the word begins
-inline long CGiant::GetDiskHitOffset(long tIndex)
+inline int CGiant::GetDiskHitOffset(long tIndex)
 {
     return( table[tIndex].hitListFileOffset  );
 }
@@ -387,18 +387,18 @@ CHitList*   CGiant::FindHitsWithLemmaOf(CTarget theTarget)
 // ###########################################################################################
 CHitList*   CGiant::FindHits(CTarget theTarget)
 {
-	// Here we decide what to do for this target, depending on
-	// 1. whether a string was supplied
-	// 2. whether that string has wildcards
-	// 3. whether grammar was supplied
+    // Here we decide what to do for this target, depending on
+    // 1. whether a string was supplied
+    // 2. whether that string has wildcards
+    // 3. whether grammar was supplied
     if (!theTarget.DoesGrammarMatter()) {
-		return FindHitsWithMatchOf(theTarget);
-	}
-	if (theTarget.DoesStemMatter() && strstr(theTarget.GetString(), "*")) {
-		return FindHitsWithMatchAndGrammarOf(theTarget);
-	} else {
-		return FindHitsWithLemmaAndGrammarOf(theTarget);
-	}
+        return FindHitsWithMatchOf(theTarget);
+    }
+    if (theTarget.DoesStemMatter() && strstr(theTarget.GetString(), "*")) {
+        return FindHitsWithMatchAndGrammarOf(theTarget);
+    } else {
+        return FindHitsWithLemmaAndGrammarOf(theTarget);
+    }
 }
 
 CHitList*   CGiant::FindHitsWithMatchAndGrammarOf(CTarget theTarget)
@@ -417,19 +417,19 @@ CHitList*   CGiant::FindHitsWithMatchAndGrammarOf(CTarget theTarget)
     hitList = StartHitsBySearchMode();
     
     if (!theTarget.DoesStemMatter()) {
-		SetError(SEARCH_ARGS_ERROR);
-		hitList = FinishHitsBySearchMode(hitList, (hitSetsAdded > 1) );
-		delete hitList;
-		return NULL;
-	}
+        SetError(SEARCH_ARGS_ERROR);
+        hitList = FinishHitsBySearchMode(hitList, (hitSetsAdded > 1) );
+        delete hitList;
+        return NULL;
+    }
 
-	tString = theTarget.GetString();
-	if (!strstr(tString, "*")) {
-		SetError(SEARCH_ARGS_ERROR);
-		hitList = FinishHitsBySearchMode(hitList, (hitSetsAdded > 1) );
-		delete hitList;
-		return NULL;
-	}
+    tString = theTarget.GetString();
+    if (!strstr(tString, "*")) {
+        SetError(SEARCH_ARGS_ERROR);
+        hitList = FinishHitsBySearchMode(hitList, (hitSetsAdded > 1) );
+        delete hitList;
+        return NULL;
+    }
 
     CGenericProgress        progressIndicator;  
     progressIndicator.Initialize(numLines/400); 
@@ -447,14 +447,14 @@ CHitList*   CGiant::FindHitsWithMatchAndGrammarOf(CTarget theTarget)
 
         // skip ambiguity check
 
-		if (theTarget.DoesMyGrammarMatchThis( GetRoseCode(j) ) && 
-				strmatch( GetString(j), tString )) {
-			try {
-				hitList->AddHits( GetDiskHitOffset(j), NULL );
-				hitSetsAdded++;
-			} catch (CMemoryFullError m) {hitList = FinishHitsBySearchMode(hitList, FALSE);
-										  delete hitList; throw m;}
-		}
+        if (theTarget.DoesMyGrammarMatchThis( GetRoseCode(j) ) && 
+                strmatch( GetString(j), tString )) {
+            try {
+                hitList->AddHits( GetDiskHitOffset(j), NULL );
+                hitSetsAdded++;
+            } catch (CMemoryFullError m) {hitList = FinishHitsBySearchMode(hitList, FALSE);
+                                          delete hitList; throw m;}
+        }
     }
 
     delete exceptions;
@@ -620,7 +620,7 @@ void    CGiant::MakeUnAmbList(CRoseCode ambCode)
 }
 
 // ###########################################################################################
-void    CGiant::SetHitListOffset(long tIndex, long offset) {
+void    CGiant::SetHitListOffset(long tIndex, int offset) {
     if ((tIndex < 0) || (tIndex >= numLines)) {
         throw CFatalError("Bad Index: CGiant::SetHitListOffset");
 //      cout << "Bad Index: CGiant::SetHitListOffset\n";

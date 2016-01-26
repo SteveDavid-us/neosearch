@@ -19,30 +19,30 @@
 // ###########################################################################################
 class CDataFile {
 
-	FILE		*theFile;
+    FILE        *theFile;
 
 public:
 
-	CDataFile();
+    CDataFile();
     static void SetBasePath(const char *path);
 
-	long		GetLength();
-	void		Open(char* fname, char* permission = "rb");
-	void		OpenPath(char* path, char* fname, char* permission = "rb");
-	void		Close();
-	Boolean		IsOpen();
+    long        GetLength();
+    void        Open(char* fname, char* permission = "rb");
+    void        OpenPath(char* path, char* fname, char* permission = "rb");
+    void        Close();
+    Boolean     IsOpen();
 
-	void*		ReadAll();
-	void*		ReadChunk(long size);
-	void		WriteAll(void* contents, long Num);
-	
-	void		Seek(long seekSpot, int whence = SEEK_SET);
-	long		WhereAmI(void);
+    void*       ReadAll();
+    void*       ReadChunk(long size);
+    void        WriteAll(void* contents, long Num);
+    
+    void        Seek(long int seekSpot, int whence = SEEK_SET);
+    long        WhereAmI(void);
 
-	char		GetChar(void);
-	short		GetShort(void);
-	long		GetLong(void);
-	Boolean		GetLine(char* string, int maxChars);
+    char        GetChar(void);
+    short       GetShort(void);
+    int         GetInt(void);
+    Boolean     GetLine(char* string, int maxChars);
 };
 
 // ###########################################################################################

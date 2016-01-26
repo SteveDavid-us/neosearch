@@ -20,27 +20,27 @@
 
 // ###########################################################################################
 struct DictionaryLine {
-	unsigned short	baseNum;
-	long			stringOffset;		 // offset in block of text in memory
+    unsigned short  baseNum;
+    long            stringOffset;        // offset in block of text in memory
 };
 
 // ###########################################################################################
 class CDictionary {
 protected:
-	DictionaryLine		*dictionaryData;
-	char				*dictionaryStringBlock;
-	long				numLines;
-	
-	char*				GetString(long index) {return dictionaryStringBlock +
-												 dictionaryData[index].stringOffset;}
-	unsigned short		GetBase(long index)	{return dictionaryData[index].baseNum;}
-	
+    DictionaryLine      *dictionaryData;
+    char                *dictionaryStringBlock;
+    long                numLines;
+    
+    char*               GetString(long index) {return dictionaryStringBlock +
+                                                 dictionaryData[index].stringOffset;}
+    unsigned short      GetBase(long index) {return dictionaryData[index].baseNum;}
+    
 public:
-	CDictionary();
-	~CDictionary();
-	
-	char*	operator[](unsigned short whichBase);		// look up a word from a base
-	unsigned short operator[](const char* whichString);	// look up a base from a word	
+    CDictionary();
+    ~CDictionary();
+    
+    char*   operator[](unsigned short whichBase);       // look up a word from a base
+    unsigned short operator[](const char* whichString); // look up a base from a word   
 
 };
 

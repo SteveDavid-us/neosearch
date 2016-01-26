@@ -19,10 +19,10 @@ APP = $(OUTDIR)/$(_APP)
 
 #	flags and libraries
 DEBUG_FLAGS=-g
-RELEASE_FLAGS=-O2 -Wall
+RELEASE_FLAGS=-O2
 PROFILE_FLAGS=-pg -O2
 
-FLAGS=-Iinclude 
+FLAGS=-Iinclude -Wno-write-strings -Wconversion
 LIBS= 
 
 #	platform-specific makefile includes
@@ -40,8 +40,8 @@ all : debug
 #release : $(APP)
 #release : setup
 debug : FLAGS += $(DEBUG_FLAGS)
-debug : $(APP)
 debug : ./$(OUTDIR) 
+debug : $(APP)
 #profile : FLAGS += $(PROFILE_FLAGS)
 #profile : $(APP)
 #profile : setup

@@ -17,27 +17,27 @@
 #include "CDataFile.h"
 
 // ###########################################################################################
-typedef struct bookInfo {
-	char	volFile[30];				// filename on disk
-	char	volName[70];				// full book name
+struct bookInfo {
+    char    volFile[30];                // filename on disk
+    char    volName[70];                // full book name
 };
 
 // ###########################################################################################
 class CTextFetch {
 
-	bookInfo	book[MAX_VOLUMES];
-	short		previousVol; 
-	CDataFile	theBook;			// file of most recent volume opened
+    bookInfo    book[MAX_VOLUMES];
+    short       previousVol; 
+    CDataFile   theBook;            // file of most recent volume opened
 
 public:
 
-	CTextFetch();
-	~CTextFetch();
-	long*		ReadPassage(short vol, short pas, long& length);
-	char*		GetBookName(short vol);
-	char*		GetBookFile(short vol);
-	long		GetHighestPassageNumber(short vol);
-	long		GetLowestPassageNumber(short vol);
+    CTextFetch();
+    ~CTextFetch();
+    int*        ReadPassage(short vol, short pas, long& length);
+    char*       GetBookName(short vol);
+    char*       GetBookFile(short vol);
+    int         GetHighestPassageNumber(short vol);
+    int         GetLowestPassageNumber(short vol);
 };
 
 // ###########################################################################################

@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
+#include <errno.h>
 #include "CDataFile.h"
 #include "NeoException.h"
 #include "EndianSwap.h"
@@ -15,8 +16,8 @@
 using namespace std;
 
 static char BASE_PATH_BUF[1000];
-static char *BASE_PATH = "";
-static size_t BASE_PATH_LEN = 0;
+static char *BASE_PATH = ".";
+static size_t BASE_PATH_LEN = 1;
 
 // ###########################################################################################
 CDataFile::CDataFile() {
@@ -69,7 +70,7 @@ static int filesOpen = 0;
 void    CDataFile::Open(char* fname, char* permission)
 {
     theFile = fopen(fname, permission);
-#if 0
+#if 1
     cout << "CDataFile::Open(fname=" << fname << ", permission=" << permission << ", errno=" << errno << ", filesOpen=" << filesOpen << ")" << endl;
 #endif
     if (!theFile) {
@@ -186,7 +187,7 @@ void    CDataFile::WriteAll(void* contents, long num)
  
         Seek a file position from a certain spot.
  ******************************************************************************/
-void    CDataFile::Seek(long seekSpot, int whence)
+void    CDataFile::Seek(long int seekSpot, int whence)
 {
     int err;
     
@@ -201,8 +202,11 @@ void    CDataFile::Seek(long seekSpot, int whence)
         Read a character.
  ******************************************************************************/
 char    CDataFile::GetChar(void) {
-
-    return fgetc(theFile);
+    int c = fgetc(theFile);
+    if (c == EOF) {
+        throw CFatalError("CDataFile::GetChar");
+    }
+    return (char)c;
 }
 
 /******************************************************************************
@@ -211,33 +215,33 @@ char    CDataFile::GetChar(void) {
         Read a short.
  ******************************************************************************/
 short   CDataFile::GetShort(void) {
-    int     numread;
+    size_t     numread;
     short   s;
 
     numread = fread(&s, sizeof(short), 1, theFile);
     if (numread==0)
         throw CFatalError("CDataFile::GetShort 0");
 #ifndef __BIG_ENDIAN__
-    endian_swap((unsigned short&)s);    
+    endian_swap(s);    
 #endif
     return s;
 }
 
 /******************************************************************************
- GetLong
+ GetInt
  
-        Read a long.
+        Read an int.
  ******************************************************************************/
-long    CDataFile::GetLong(void) {
-    int     numread;
-    long    s;
+int   CDataFile::GetInt(void) {
+    size_t     numread;
+    int   s;
 
-    numread = fread(&s, sizeof(long), 1, theFile);
+    numread = fread(&s, sizeof(int), 1, theFile);
     if (numread==0) {
-        throw CFatalError("CDataFile::GetLong 0");
+        throw CFatalError("CDataFile::GetInt 0");
     }
 #ifndef __BIG_ENDIAN__
-    endian_swap((unsigned int&)s);    
+    endian_swap(s);    
 #endif
     return s;
 }

@@ -29,13 +29,10 @@ enum {NO_SEARCH_ERROR, EXT_AMB_SEARCH_ERROR, NON_PLACE_SEARCH_ERROR,
 
 // ###########################################################################################
 // LIGET = Line-In-Giant-Equivalence-Table
-class liget {
-
-public:
+struct liget {
     CRoseCode       fourByte;
-    long            latStringOffSet;
-    long            hitListFileOffset;
-    void            EndianSwap();
+    int             latStringOffSet;
+    int             hitListFileOffset;
 };
 // fourByte         =   The four byte grammatical code.
 // latStringOffSet  =   A location offset within the huge block of strings in memory.
@@ -78,7 +75,7 @@ protected:
         
     // CLASS METHODS
     // =============
-    long        GetDiskHitOffset(long tIndex);
+    int         GetDiskHitOffset(long tIndex);
     void        MakeUnAmbList(CRoseCode ambCode);
     std::vector<hit>* StartHitExceptionList(void);      // for disambiguated words to exclude
     void        AddHitException(std::vector<hit> &theList, hit skipMe);
@@ -122,7 +119,7 @@ public:
     
     // SPECIAL METHODS FOR INDEXING ONLY
     void            ZeroAllOffsets(void);
-    void            SetHitListOffset(long tIndex, long offset);
+    void            SetHitListOffset(long tIndex, int offset);
     void            WriteAllInfo(void);             // save entire table to file
 };
 // ###########################################################################################

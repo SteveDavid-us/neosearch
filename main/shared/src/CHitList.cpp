@@ -156,7 +156,7 @@ Boolean CHitMemoryStream::ReadPreviousHit(short& pas, short& wrd) {
 // ###########################################################################################
 Boolean CHitMemoryStream::ReadPreviousPassageHit(short& pas, short& wrd) {
     short       info;
-    int         rememberPos;
+    long        rememberPos;
     
     if (iMovingNextWards) { 
         iMovingNextWards = FALSE;       // turn around!
@@ -364,7 +364,7 @@ CHitList*   CHitList::CloseIntersectMode(void) {
 //  volume has had no previous hits.
 //  The exceptions handle can point to a list of volumes/offsets to EXCLUDE because
 //  the word has been disambiguated there (skip them when reading from disk).
-void    CHitList::AddHits(long diskOffset, std::vector<hit> *exceptions)
+void    CHitList::AddHits(long int diskOffset, std::vector<hit> *exceptions)
 {
     short       vol, pas, s;
     CHitList    *destination;

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int main (int argc, char *argv)
+int main (int argc, char **argv)
 {
     CGiant *giantTable;
     CTextFetch *textFetcher;
@@ -55,7 +55,7 @@ int main (int argc, char *argv)
 
     for (int i = 0; i < MAX_VOLUMES; ++i) {
         if (hitsPerVol[i] > 0) {
-            printf("Book %d, %s, %d hits.\n", i, textFetcher->GetBookName(i), hitsPerVol[i]);
+            printf("Book %d, %s, %ld hits.\n", i, textFetcher->GetBookName(i), hitsPerVol[i]);
             theHits->ResetVolume(i);
             while (theHits->ReportNextHit(testhit)) {
                 cout << "vol = " << testhit.volume << " pas = " << testhit.passage << " word = " << testhit.word << endl;
@@ -68,14 +68,19 @@ int main (int argc, char *argv)
         CHitOffsetList hitOffsetList;
         cout << "Setup textExploder" << endl;
         textExploder.Setup(textFetcher, giantTable, &hitOffsetList);
-        try {
+#ifndef DEBUG
+        try
+#endif
+        {
             cout << "PrintPassageNumber" << endl;
             textExploder.PrintPassageNumber(testhit);
         }
+#ifndef DEBUG
         catch (CException f) {
             cout << f.Diagnostic() << endl;
             cout << f.WhatFailed() << endl;
         }
+#endif
     }
 
     return 0;
