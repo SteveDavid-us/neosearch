@@ -19,14 +19,14 @@ QSortRand.cpp
 StringTools.cpp
 """.strip().split()
 
-source_files = [os.path.join('test.pyx')] + [os.path.join('..', 'shared', 'src', f) for f in source_names]
+source_files = ['nsweb.pyx', 'CResultBuilder.cpp'] + [os.path.join('..', 'shared', 'src', f) for f in source_names]
 
 setup(ext_modules = cythonize(Extension(
     'nsweb', 
     language='c++',
     sources=source_files,
-    include_dirs=[os.path.join('..', 'shared', 'include')],
-    libraries=[],
+    include_dirs=[os.path.join('..', 'shared', 'include'), 'include'],
+    libraries=['jsoncpp'],
     extra_compile_args='-Wno-write-strings -Wno-unused-variable'.split(),
 )),
     name='nsweb',
