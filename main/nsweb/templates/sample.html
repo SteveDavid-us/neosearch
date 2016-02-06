@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="icon" href="static/images/favicon.ico">
+
+<title>Neosearch</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% assets "css_all" %}<link rel="stylesheet" href="{{ ASSET_URL }}">
+{% endassets %}
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="">
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Neosearch</a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <div id="search_form" class="navbar-form navbar-left" role="search">
+          <div class="input-group">
+            <input type="text" id="textInput0" class="input-search form-control" aria-label="..." size="15">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Text <span class="caret"></span></button>
+              <ul class="dropdown-menu dropdown-menu-right dropdown-form">
+                <li class="dropdown">
+                <div class="row">
+                  <div class="col-md-12">
+                    <form id="type0_form">
+                      <label for="type0">Search Type:</label>
+                      <div class="form-group" id="type0">
+                        <div class="btn-group btn-group-justified">
+                          <label class="btn btn-default">
+                            <input type="radio" name="type0" value='text' checked> Text 
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="type0" value='noun'> Noun
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="type0" value='verb' checked> Verb
+                          </label>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                </li>
+              </ul>
+            </div><!-- /btn-group -->
+          </div><!-- /input-group -->
+        </div>
+
+        <form class="navbar-form navbar-left">
+          <div class="form-group">
+            <button type="submit" id="searchSubmit" class="btn btn-primary btn-block" style="min-width:100px">Search</button>
+          </div>
+        </form>
+
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="#" class="dropdown-toggle" id="add_term">
+              <span class="glyphicon glyphicon-plus"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <span class="glyphicon glyphicon-cog"></span>
+            </a>
+          </li>
+          <li>
+            <a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#helpModal">
+              <span class="glyphicon glyphicon-question-sign"></span>
+            </a>
+          </li>
+        </ul>
+
+      </div><!-- /.navbar-collapse -->
+    </div>
+  </nav>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 pull-right" id="resultsSidebar">
+      <div class="form-group">
+        <div class="btn-group-vertical" id="resultsByBook">
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8" id="resultsMain">
+      <div id="results">
+        <h6 id="resultHeader">0 results (0.0 seconds)</h6>
+        <div class="passage"></div>
+        <hr class="spacer"></hr>
+        <div class="passage"></div>
+        <hr class="spacer"></hr>
+      </div>
+      <div id="pageSelection"></div>
+    </div>
+  </div>
+</div>
+
+{% assets "js_all" %}
+<script type="text/javascript" src="{{ ASSET_URL }}"></script>
+{% endassets %}
+<script type="text/javascript">var clientVersion = {{ version }};</script>
+
+</body>
+</html>
