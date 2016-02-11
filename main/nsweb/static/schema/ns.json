@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://ns.jpserve.net/static/schema/ns.json",
+  "description": "Neosearch Query Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+
+    "version": {
+        "type": "integer",
+        "additionalProperties": false,
+        "minimum": 2,
+        "maximum": 2
+    },
+    "params": {
+        "type": "array",
+        "additionalProperties": false,
+        "items" : {
+            "type": "string"
+        },
+        "minLength": 1,
+        "maxLength": 16 
+    },
+    "first": {
+        "type": "integer",
+        "additionalProperties": false,
+        "minimum": 0
+    },
+    "count": {
+        "type": "integer",
+        "additionalProperties": false,
+        "minimum": 1,
+        "maximum": 100
+    }
+  },
+
+  "required": ["version", "params", "first", "count"]
+}

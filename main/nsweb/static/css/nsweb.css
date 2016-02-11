@@ -1,0 +1,30 @@
+.btn-badged-checkbox {
+    overflow: hidden;
+}
+.btn-badged-checkbox input {
+    float: left;
+}
+.btn-badged-checkbox span {
+    margin-left: 8px;
+    float: left;
+}
+.btn-badged-checkbox .badge {
+    margin-left: 8px;
+    float: right;
+}
+
+.dropdown-menu {
+    min-width: 350px;
+}
+
+.dropdown-form {
+    padding: 15px 15px 15px 15px !important;
+}
+
+.navbar-form .form-group {
+    display: table !important;
+}
+
+.input-search {
+    /*width: 125px !important;*/
+}

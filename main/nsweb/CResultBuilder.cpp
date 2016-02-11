@@ -12,6 +12,7 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
     Json::Value results;
     results["version"] = OUTPUT_VERSION;
     results["count"] = (int)hitList->ReportTotalHits();
+    results["errors"] = Json::Value(Json::arrayValue);
 
     long *hitsPerVol = hitList->ReportHitsPerVol();
 
@@ -23,7 +24,7 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
         volume["count"] = (int)hitsPerVol[i]; 
 
         Json::Value hits = Json::Value(Json::arrayValue);
-        if (hitsPerVol[i] > 0) {
+        if (0 && hitsPerVol[i] > 0) {
             hitList->ResetVolume(i);
             hit h;
             while (hitList->ReportNextHit(h)) {
