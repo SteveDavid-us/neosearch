@@ -1,0 +1,158 @@
+ABOUT NEOSEARCH:
+	NeoSearch version 1.0 (1995)
+
+	A Neo-Latin morphological search engine for the published theological writings of Emanuel Swedenborg (1688-1772).  
+
+	NeoSearch was dreamed up by Dr. Charles H. Ebert and Rev. Dr. Jonathan S. Rose.
+
+	Latin analysis algorithm by Rev. Dr. Jonathan S. Rose, (Ph.D. in Latin, Bryn Mawr College 1994).  
+	Programming by H. Bjornar Larsen.  
+	Substantial assistance with design and interface from Dr. Charles H. Ebert and Mattias Fornander.   
+
+	Latin scanning and proofreading was done by the Bryn Athyn College (formerly Academy of the New Church College) STAIRS Committee under Dr. Charles H. Ebert. 
+	A foundation for much of the Latin analysis was Dr. John Chadwick's Lexicon to the Latin Text of the Theological Writings of Emanuel Swedenborg (1688-1772), which was scanned in with permission by the STAIRS Committee.  We are grateful for Dr. Chadwick's extensive groundwork in analyzing Swedenborg's Latin.  
+
+	This software has been supported by grants from the General Church Translation Committee, and the Bryn Athyn College STAIRS Committee, both based in Bryn Athyn PA.
+
+	The "Neo" in NeoSearch alludes both to Swedenborg's concept of a new Christian church, and to the fact that he wrote in Neo-Latin.
+
+	For inquiries or more information, write to Dr. Jonathan S. Rose, Box 717, Bryn Athyn PA 19009.  (215) 938-2534 Work, 938-2637 Fax, 947-9876 Home.
+
+THE VISION:
+
+	Neo-Latin, the third great age of Latin after classical and medieval, began around 1300 and ended not long after Swedenborg was through with it in the late 1700s.  Although a tremendous amount was published in Neo-Latin, there was no systematic study of Neo-Latin and no reference tools in existence before the late 1960s.  Jozef IJsewijn pioneered such studies and created the International Association for Neo-Latin Studies.  There are still almost no reference tools to speak of.  Chadwick's Lexicon as a Neo-Latin dictionary is virtually unique.  
+
+	It is our hope that this software will accomplish a number of goals.  
+
+	One is to speed up the process of analyzing Swedenborg's Neo-Latin, and thereby help Neo-Latin studies in general.  
+
+	Another is to help translators of Swedenborg and their consultants work more quickly, efficiently and accurately.  
+
+	And a third is to bring students and readers of Swedenborg closer to his original Latin, so that perhaps they can hear his unique tone of voice for themselves, and catch a glimpse of the color, the vividness and variety of expression, and the dashes here and there of pure poetry.
+	
+
+
+SIMPLE SEARCH WINDOW HELP:
+	This window is where you may enter one or more words to search for in the Writings. 
+
+		To search for a single word:
+			Type the word in the editing box and click on the search button (or press return).
+
+		To search for multiple words:
+			Type in the logical expression describing the word combination you desire.  For example, “terram and caelum” will search for all passages in which both “terram” and “caelum” appear.   This can be abbreviated to “terram & caelum” or simply “terram caelum”.  You can search for the union of a set of words, for example “terram or caelum or est” will find all occurrences of these three words.
+
+	Explanation of search options:
+		The proximity field allows you to refine the multiple word search described above.  When you are searching for the intersection (i.e. AND) of two or more words, the value you enter in the proximity field will be used to specify how close together the words must be.  A proximity of 1 means they must be neighboring, 2 means they can have one word separating them, and so on.  A proximity of 0 (the default) means that as long as both words appear in the same passage they will be found.
+
+		The “Do Base / Word Family Search” checkbox applies to each word entered on the line.  It tells the program to find all forms of that word -- that is, it ignores the particular ending and finds all instances of the word, whatever the ending.  So if you enter an accusative noun and check this box, the nominative, genitive, dative and ablative forms of this noun will also be found.
+
+			(WARNING! LIMITATIONS TO BASE/WORD FAMILY SEARCHING.  With base or word family searching you can type in any form of the word, but if Swedenborg doesn't use that particular form, NeoSearch won't be able to find the rest of its family.  We have, however, engineered the software so that typing in the DICTIONARY ENTRY of the word will work, even if Swedenborg doesn't use the dictionary entry form.  Also, if the form you type in to search for happens to be externally ambiguous, the software will refuse the search.  In this case try another form of the same word -- almost always external ambiguities only match one form of a word, not all forms of it; or else search for just that form by turning off the Base/Word Family option.) 
+
+		The “Do SubString Search” checkbox tells the program to search for the actual characters you entered as a partial word.  For example, “quis” would find all occurrences of “quis”, “aquisitum”, “aliquis”, etc.
+
+EXPERT SEARCH WINDOW HELP:
+	The expert search window allows you to search for a single target word, choosing grammatical options if desired. 
+
+	Description of SEARCH TYPE options:
+		(The first three options can also be done in the Simple Search Window)
+		String Search: 
+			This searches for an exact match of the word you type in the “TARGET WORD” edit field.
+		
+		SubString Search:  
+			This searches for the characters you enter as a partial word -- i.e. “quis” would find “quis”, “aquisitum”, “aliquis”, etc.
+		
+		Base / Word Family Search:  
+			This option specifies that all forms of the given word are to be found, regardless of changes in stem or ending. (For limitations to this option, see the warning under Simple Search Window Help.)
+
+		Base & Grammar Search:  
+			This option uses the word entered in the “TARGET WORD” edit field to do a regular base search, but restricts the forms found using the “GRAMMAR SELECTION” options (see below).
+
+		Grammar Search:  
+			This option does not find a given word but rather any word in the morphological category or categories you specify.  (See the “GRAMMAR SELECTION” section below).  (WARNING!  This can result in hundreds of thousands of words found, and would normally be used in a proximity search with something more specific; otherwise, to see large answers such as all verbs in the indicative mood, just increase the amount of RAM assigned to NeoSearch so that it doesn't run out of memory.)
+
+		“Include Ambiguous Forms”: 
+			Specifies whether the resulting list of words found should include ambiguous words that only MIGHT match the one you entered (see Help Window on Ambiguity).
+
+		GRAMMAR SELECTION:
+			There are two halves to the grammar description, which you specify with a pair of radio buttons at the top:  either the endings relating to a substantive (here meaning anything that is inflected as a noun or adjective, including all participles and pronouns) or those relating to a verb.  
+
+			Use the pulldown menus to specify the grammar combination desired.  The default “ANY” means that all options in that menu will be included, and “NONE” means that only words that have no such attribute will be found.
+
+			(WARNING!  NOUNS IN NEOSEARCH ARE NOT SEARCHABLE BY GENDER!  Although all Latin nouns theoretically have gender (masculine, feminine or neuter), both the nature of Neo-Latin and the high number of words that Swedenborg uses only once or twice make it difficult in practice to determine the gender of every noun.  NeoSearch is a morphological analysis tool; it knows nothing about syntax, and the gender of adjectives can be determined morphologically, but not the gender of nouns.  Therefore in NeoSearch, you can search adjectives (and participles and pronouns) by gender, but not nouns.  They are treated as having no gender.  You can use this feature to find nouns; for example, setting the case to DATIVE and the gender to NONE will find all noun forms in the dative case.)  
+
+			The “Number” option straddles both halves, substantives and verbs, because it is a valid option for both.
+
+EXPERT LOGIC SEARCH WINDOW HELP:
+	The expert logic window provides a way to do proximity and union searches with words where you have specified grammatical information using an expert search window.
+
+	Each word, or “target”, you are searching for must be entered in a separate Expert Search Window.  To perform a logical search on these words, enter them just as you would in the Simple Search Window, but use a special code to represent each word:  an ‘@’ symbol followed by the Expert Search Window’s number.  For example, “@1 and @2” would search for the word described in expert search window 1 in proximity with the word described in expert search window 2.  “@3 or @1 or @2” would do a union search of three windows.
+
+	Proximity Field:
+		This operates just as in the Simple Search Window (see that help section).
+
+NAVIGATION METHODS:
+	A volume is selected by clicking on the name in the list.
+	A passage can be selected by using the pulldown menu in the upper right. Only the first 250 passage numbers with occurrences are displayed.
+	The actual hits are navigated using the buttons:
+		NEXT WORD: Selects the next occurrence of what you searched for.
+		PREVIOUS WORD: Selects the previous occurrence.
+		NEXT PASSAGE:  Selects the first occurrence in the next passage.
+		PREVIOUS PASSAGE:  Selects the last occurrence in the previous passage.
+
+	DIRECT NEXT and DIRECT PREVIOUS:  These take you to the passage number immediately after or before the one you are in, regardless of whether anything was found in that number.
+BROWSING AREA:
+	The main part of the window displays the entire text passage.  
+	Above the main part, we display the book title and passage number.  
+	The current word occurrence will be highlighted.  
+	All occurrences are color coded:  
+		red indicates no ambiguity, 
+		blue indicates external ambiguity (the word could be in one of several word families), and 
+		magenta indicates internal ambiguity (the word has more than one possible grammatical meaning, see Help Window on Ambiguity).
+	If you hold down the COMMAND key and double click on any word, a Morphological Analysis dialog box will appear that gives a description or descriptions of the word.
+BOOK LIST:
+	On the left is a list of all the books in which words were found.  The number in square brackets after the name is the number of occurrences found in that book.   Click on a book title to open the first occurrence.  A passage number of "0" indicates a title page, preface or material before the first numbered paragraph.  
+
+	In order to allow for study of linguistic or doctrinal development over time, the books are listed in their chronological order of publication.  Their years of publication are as follows:
+		Arcana Coelestia	1749-1756, a volume each year  
+		De Coelo et Inferno, Nova Hierosolyma et ejus Doctrina Coelestis, De Ultimo Judicio, De Equo Albo, De Telluribus in Universo	all 1758
+		De Domino, De Scriptura Sacra, De Vita, De Fide, Continuatio de Ultimo Judicio, De Divino Amore et Sapientia	all 1763
+		De Divina Providentia	1764
+		Apocalypsis Revelata	1766
+		De Amore Conjugiali	1768
+		Summaria Expositio, Commercio Animae et Corporis	1769
+		Vera Christiana Religio	1771
+DIRECT BROWSING WINDOW HELP:
+	The Direct Browsing Window provides a method of reading Swedenborg's theological Latin works directly without doing a search.  Simply select a book name from the pulldown menu and type a passage number in the edit field in the top right.  After changing either the selected book or the passage number you must click on “GO” to read the new passage.
+
+	The DIRECT NEXT and DIRECT PREVIOUS buttons allow you to advance or go back one passage number at a time in the current book.
+
+	Title pages, prefaces and all material before the first numbered paragraph can be found by typing in a "0" as the passage number.
+
+	If you hold down the COMMAND key and double click on any word, a Morphological Analysis dialog box will appear that gives a description or descriptions of the word.
+
+HIT BROWSING WINDOW HELP:
+	The hit browsing window is where the program shows you the results of your search.
+
+AMBIGUITY:
+	NeoSearch is not able to analyze the syntax of a Latin word, i.e., the role it plays in the sentence at hand.  Instead it analyzes each word as a separate morphological entity, and leaves the users to come to their own grammatical conclusions. The word gyro, for example, could be from the verb gyro or the noun gyrus. NeoSearch can tell you that much, but it will not decide for you.  
+
+	In analyzing Latin for NeoSearch we have come across three types of ambiguity:  
+		1. There are what we call External Ambiguities, where two unrelated words end up with the same spelling:  for example, amare is the active present infinitive form of amo, to love, but it is also the vocative masculine singular form of amarus, bitter.  
+
+		2. A special, very narrow category of ambiguity only occurs in the third person singular and the first person plural indicative active of third conjugation verbs whose present and perfect stems are identical, for e.g. involvit or involvimus, which could each be either present or perfect tense.  These are what we have called middle ambiguities because they are part of the same word but the ambiguity occurs between stems of that word.  NeoSearch treats them, however, as external ambiguities.  
+
+		3. Internal ambiguities are where that ending on that stem could represent two or more grammatical situations:  e.g., the ending -ae on mensae could be genitive or dative singular or nominative plural.  
+
+	It is possible, then, for a given string of letters to be both internally and externally ambiguous.  
+
+	The Morphological Analysis Window spells out all ambiguities both internal and external.
+
+	When you have checked the "Include ambiguous forms?" button in an expert search window, a color screen will display:
+		1. the resulting unambiguous forms in red, 
+		2. the forms that are only internally ambiguous in magenta, 
+		3. and the externally ambiguous forms (which could also be internally ambiguous) in blue.
+
+MORPHOLOGICAL ANALYSIS HELP:
+	The Morphological Analysis window can be opened by Command - Double Clicking on ANY word in a browsing window (not just the word you searched for).  It lists each possible grammatical meaning that string of letters can have.  An unambiguous word will only have one possible meaning, while words that are externally and internally ambiguous can have many meanings listed.  The word after the "<" is the dictionary entry from which it comes.
+
+	The Morphological Analysis window can also be accessed by going to the Other menu and selecting Morphological Analysis.  Type the word to be analyzed into the dialog box and then press the Lookup button.  
