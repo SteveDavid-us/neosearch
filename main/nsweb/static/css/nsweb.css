@@ -28,3 +28,7 @@
 .input-search {
     /*width: 125px !important;*/
 }
+
+.btn-remove-term {
+    padding: 0px 5px 0px 6px;
+}

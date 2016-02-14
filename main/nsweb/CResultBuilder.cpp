@@ -18,6 +18,12 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
 
     Json::Value volumes = Json::Value(Json::arrayValue);
 
+    CTextExploder textExploder;
+    CHitOffsetList hitOffsetList;
+    textExploder.Setup(textFetch, giantTable, &hitOffsetList);
+
+    int j = 0;
+
     for (int i = 0; i < MAX_VOLUMES; ++i) {
         Json::Value volume;
         volume["name"] = textFetch->GetBookName(i);
@@ -39,6 +45,9 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
     }
 
     results["volumes"] = volumes;
+
+            textExploder.PrintPassageNumber(testhit);
+
 
     Json::FastWriter writer;
     return writer.write(results);

@@ -67,11 +67,80 @@
               </ul>
             </div><!-- /btn-group -->
           </div><!-- /input-group -->
+
+          <div class="input-group">
+            <input type="text" id="textInput1" class="input-search form-control" aria-label="..." size="15">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Text <span class="caret"></span></button>
+              <ul class="dropdown-menu dropdown-menu-right dropdown-form">
+                <li class="dropdown">
+                <div class="row">
+                  <div class="col-md-12">
+                    <form id="type1_form">
+                      <label for="type1">Search Type:</label>
+                      <div class="form-group" id="type1">
+                        <div class="btn-group btn-group-justified">
+                          <label class="btn btn-default">
+                            <input type="radio" name="type1" value='text' checked> Text 
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="type1" value='noun'> Noun
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="type1" value='verb' checked> Verb
+                          </label>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                </li>
+              </ul>
+            </div><!-- /btn-group -->
+          </div><!-- /input-group -->
+          <a href="#" class="btn btn-remove-term" id="remove_term">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+
+          <div class="input-group">
+            <input type="text" id="textInput2" class="input-search form-control" aria-label="..." size="15">
+            <div class="input-group-btn">
+              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Text <span class="caret"></span></button>
+              <ul class="dropdown-menu dropdown-menu-right dropdown-form">
+                <li class="dropdown">
+                <div class="row">
+                  <div class="col-md-12">
+                    <form id="type2_form">
+                      <label for="type2">Search Type:</label>
+                      <div class="form-group" id="type2">
+                        <div class="btn-group btn-group-justified">
+                          <label class="btn btn-default">
+                            <input type="radio" name="type2" value='text' checked> Text 
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="type2" value='noun'> Noun
+                          </label>
+                          <label class="btn btn-default">
+                            <input type="radio" name="type2" value='verb' checked> Verb
+                          </label>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+                </li>
+              </ul>
+            </div><!-- /btn-group -->
+          </div><!-- /input-group -->
+          <a href="#" class="btn btn-remove-term" id="remove_term">
+            <span class="glyphicon glyphicon-remove"></span>
+          </a>
+
         </div>
 
         <form class="navbar-form navbar-left">
           <div class="form-group">
-            <button type="submit" id="searchSubmit" class="btn btn-primary btn-block" style="min-width:100px">Search</button>
+            <button type="button" id="searchSubmit" class="btn btn-primary btn-block" style="min-width:100px">Search</button>
           </div>
         </form>
 

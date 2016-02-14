@@ -17,7 +17,8 @@ function LoadResults(d) {
     $.each(d.volumes, function (i, vol) {
         if (vol.count > 0) {
             bookResults += '<label class="btn btn-default btn-badged-checkbox">';
-            bookResults += '<input type="checkbox"><span>' + vol.name + '</span>';
+            //bookResults += '<input type="checkbox"><span>' + vol.name + '</span>';
+            bookResults += '<span>' + vol.name + '</span>';
             bookResults += '<span class="badge">' + vol.count + '</span></label>\n';
         }
     });
