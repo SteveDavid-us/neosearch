@@ -17,12 +17,18 @@ function LoadResults(d) {
     $.each(d.volumes, function (i, vol) {
         if (vol.count > 0) {
             bookResults += '<label class="btn btn-default btn-badged-checkbox">';
-            //bookResults += '<input type="checkbox"><span>' + vol.name + '</span>';
-            bookResults += '<span>' + vol.name + '</span>';
+            bookResults += '<!--input type="checkbox"--><span>' + vol.name + '</span>';
             bookResults += '<span class="badge">' + vol.count + '</span></label>\n';
         }
     });
     $('div#resultsByBook').html(bookResults); 
+    var hits = "";
+    $.each(d.hits, function(i, hit) {
+        hits += '<h5>' + hit.volume + ': ' + hit.passage + ' (' + hit.count + ' hits)</h5>\n'
+        hits += '<div class="passage">' + hit.text + '</div>\n'
+        hits += '<hr class="spacer"></hr>\n';
+    });
+    $('div#results').html(hits);
     $('#pageSelection').bootpag({
         total: (d.count + lastQuery.count - 1) / lastQuery.count,
         page: lastQuery.first / lastQuery.count + 1,

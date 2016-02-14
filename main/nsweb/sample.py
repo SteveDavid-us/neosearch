@@ -47,10 +47,6 @@ assets.register('css_all', css)
 class InputError(Exception):
     pass
 
-def run_query(query):
-    engine = nsweb.NeoEngine()
-    return engine.match(query['params'][0])
-
 @app.route("/")
 def route():
     return render_template('sample.html', debug=app.debug, version=version)
@@ -60,7 +56,8 @@ def network():
     try:
         query = request.get_json()
         validate(query, neoschema)
-        result = run_query(query)
+        engine = nsweb.NeoEngine()
+        result = engine.search(query)
     except InputError as e:
         return jsonify(errors=[unicode(e)])
     except RuntimeError as e:
