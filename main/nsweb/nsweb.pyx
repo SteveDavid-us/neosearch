@@ -56,8 +56,8 @@ cdef extern from "Engine.h":
 cdef extern from "CResultBuilder.h":
     cdef cppclass CResultBuilder:
         CResultBuilder() except +
-        unsigned int firstHit
-        unsigned int hitCount
+        unsigned int firstPassage
+        unsigned int passageCount
         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
 
 cdef class NeoEngine:
@@ -88,7 +88,7 @@ cdef class NeoEngine:
         self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
         resultBuilder = new CResultBuilder()
-        resultBuilder.firstHit = query['first']
-        resultBuilder.hitCount = query['count']
+        resultBuilder.firstPassage = query['first']
+        resultBuilder.passageCount = query['count']
         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
 

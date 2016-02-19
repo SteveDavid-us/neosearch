@@ -33,7 +33,10 @@
     padding: 0px 5px 0px 6px;
 }
 
-#resultHeader {
-    width: 100%;
+#resultsSidebar {
+    text-align: center;
+}
+
+#pageSelection {
     text-align: center;
 }

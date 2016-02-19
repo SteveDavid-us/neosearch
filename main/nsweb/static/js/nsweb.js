@@ -3,10 +3,10 @@ var loading = false;
 
 function ParseQuery() {
     var searchData = {};
-    searchData['version'] = 2;
-    searchData['first'] = 0;
-    searchData['count'] = 10;
-    searchData['params'] = [];
+    searchData.version = 2;
+    searchData.first = 0;
+    searchData.count = 10;
+    searchData.params = [];
     searchData['params'].push($('input#textInput0').val());
     return searchData;
 }
@@ -23,8 +23,8 @@ function LoadResults(d) {
     });
     $('div#resultsByBook').html(bookResults); 
     var hits = "";
-    $.each(d.hits, function(i, hit) {
-        hits += '<h5>' + hit.volume + ': ' + hit.passage + ' (' + hit.count + ' hits)</h5>\n'
+    $.each(d.passages, function(i, hit) {
+        hits += '<h5><a class="">' + hit.volume + ': ' + hit.passage + ' (' + hit.count + ' hit' + ((hit.count == 1) ? '' : 's') + ')</a></h5>\n'
         hits += '<div class="passage">' + hit.text + '</div>\n'
         hits += '<hr class="spacer"></hr>\n';
     });
@@ -67,7 +67,7 @@ function RunQuery(query_data) {
                 */
 
                 var end = new Date().getTime();
-                $('#resultHeader').text("" + d.count + " results (" + ((end - start) / 1000).toFixed(1) + " seconds)");
+                $('#resultHeader').text("" + d.total_hits + " result" + (d.total_hits == 1 ? '' : 's') + " (" + ((end - start) / 1000).toFixed(1) + " seconds)");
                 LoadResults(d);
             }
     }).fail(function() {
@@ -82,7 +82,7 @@ function RunQuery(query_data) {
 }
 
 function UIInit() {
-    $('#pageSelection').bootpag({total: 0});
+    $('#pageSelection').bootpag({total: 0, maxVisible: 10});
     $('#searchSubmit').on('click', function(event) {
         RunQuery(ParseQuery());
     });

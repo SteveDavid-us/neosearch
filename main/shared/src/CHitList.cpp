@@ -32,7 +32,7 @@ CHitMemoryStream::CHitMemoryStream() {
     theData = new short[HIT_CHAIN_START_SIZE];
     handleSize = HIT_CHAIN_START_SIZE;
     ResetPosition();
-    totalHits = totalShorts = 0;
+    totalHits = totalShorts = totalPassages = 0;
 }
 
 // ###########################################################################################
@@ -48,7 +48,7 @@ void    CHitMemoryStream::Reset(void) {
 //    }
     handleSize = HIT_CHAIN_START_SIZE;
     ResetPosition();
-    totalHits = totalShorts = 0;
+    totalHits = totalShorts = totalPassages = 0;
 }
 
 // ###########################################################################################
@@ -69,6 +69,7 @@ Boolean CHitMemoryStream::WriteHit(short pas, short wrd) {
     if (lastPas != p) {
         theData[totalShorts++] = p;
         lastPas = p;
+        totalPassages++;
     }
     theData[totalShorts++] = wrd;
     totalHits++;
@@ -206,6 +207,10 @@ void    CHitMemoryStream::PopPosition(void) {
 // ###########################################################################################
 long    CHitMemoryStream::GetTotalHits(void) {
     return totalHits;
+}
+// ###########################################################################################
+long    CHitMemoryStream::GetPassagesHit(void) {
+    return totalPassages;
 }
 
 // ###########################################################################################
@@ -578,6 +583,17 @@ long    CHitList::ReportTotalHits(void) {
 }
 
 // ###########################################################################################
+long    CHitList::ReportTotalPassagesHit(void) {
+    int     j;
+    long    total = 0;
+    
+    for (j = 0; j < MAX_VOLUMES; j++)
+        total += volumeH[j].GetPassagesHit();
+        
+    return total;
+}
+
+// ###########################################################################################
 short   CHitList::ReportNumberOfVolumes(void) {
     int     j;
     short   number = 0;
@@ -598,6 +614,14 @@ long*   CHitList::ReportHitsPerVol(void) {
         hitsPerVol[j] = volumeH[j].GetTotalHits();
 
     return hitsPerVol;
+}
+
+// ###########################################################################################
+void   CHitList::ReportPassagesHitPerVol(long (&passagesPerVol)[MAX_VOLUMES]) {
+    short   j;
+    
+    for (j = 0; j < MAX_VOLUMES; j++)
+        passagesPerVol[j] = volumeH[j].GetPassagesHit();
 }
 
 // ###########################################################################################

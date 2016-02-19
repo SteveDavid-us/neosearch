@@ -1009,7 +1009,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  *         self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
  *         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))             # <<<<<<<<<<<<<<
  *         resultBuilder = new CResultBuilder()
- *         resultBuilder.firstHit = query['first']
+ *         resultBuilder.firstPassage = query['first']
  */
   try {
     __pyx_t_4 = __pyx_v_self->giantTable->FindHitsWithMatchOf((*__pyx_v_self->target));
@@ -1023,8 +1023,8 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  *         self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
  *         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
  *         resultBuilder = new CResultBuilder()             # <<<<<<<<<<<<<<
- *         resultBuilder.firstHit = query['first']
- *         resultBuilder.hitCount = query['count']
+ *         resultBuilder.firstPassage = query['first']
+ *         resultBuilder.passageCount = query['count']
  */
   try {
     __pyx_t_5 = new CResultBuilder();
@@ -1037,20 +1037,20 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   /* "nsweb.pyx":91
  *         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
  *         resultBuilder = new CResultBuilder()
- *         resultBuilder.firstHit = query['first']             # <<<<<<<<<<<<<<
- *         resultBuilder.hitCount = query['count']
+ *         resultBuilder.firstPassage = query['first']             # <<<<<<<<<<<<<<
+ *         resultBuilder.passageCount = query['count']
  *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
  */
   __pyx_t_2 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_first); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_resultBuilder->firstHit = __pyx_t_6;
+  __pyx_v_resultBuilder->firstPassage = __pyx_t_6;
 
   /* "nsweb.pyx":92
  *         resultBuilder = new CResultBuilder()
- *         resultBuilder.firstHit = query['first']
- *         resultBuilder.hitCount = query['count']             # <<<<<<<<<<<<<<
+ *         resultBuilder.firstPassage = query['first']
+ *         resultBuilder.passageCount = query['count']             # <<<<<<<<<<<<<<
  *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
  * 
  */
@@ -1058,11 +1058,11 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_resultBuilder->hitCount = __pyx_t_6;
+  __pyx_v_resultBuilder->passageCount = __pyx_t_6;
 
   /* "nsweb.pyx":93
- *         resultBuilder.firstHit = query['first']
- *         resultBuilder.hitCount = query['count']
+ *         resultBuilder.firstPassage = query['first']
+ *         resultBuilder.passageCount = query['count']
  *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')             # <<<<<<<<<<<<<<
  * 
  */

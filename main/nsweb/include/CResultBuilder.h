@@ -22,14 +22,14 @@ using namespace std;
 // ###########################################################################################
 class CResultBuilder {
 public:
-    unsigned int firstHit;
-    unsigned int hitCount;
+    unsigned int firstPassage;
+    unsigned int passageCount;
     unsigned int preContext;
     unsigned int postContext;
 
     CResultBuilder() :
-        firstHit(0),
-        hitCount(10),
+        firstPassage(0),
+        passageCount(10),
         preContext(40),
         postContext(40)
     {

@@ -30,34 +30,40 @@ std::string CResultBuilder::WriteHit(char *passage, int length, CHitOffsetList &
     int hits = hitOffsetList.GetListSize();
 
     for (int i = 0; i < hits; ++i) {
-        int hitStart = hitOffsetList.GetStartOffset(i); 
-        int hitEnd = hitOffsetList.GetEndOffset(i); 
+        int hitStart = hitOffsetList.GetStartOffsetIdx(i); 
         // Find and add context before the hit
         int preStart = std::max<int>(hitStart - preContext, lastOutput);
         preStart = std::max<int>(preStart, 0);
-        for (;preStart >= 0; --preStart) {
-            if (isspace(passage[preStart]) || ispunct(passage[preStart])) {
+        for (;preStart > 0; --preStart) {
+            if (isspace(passage[preStart])) {
                 break;
             }
         }
         OutputRange(output, passage, preStart, hitStart);
         
-        // Add hit
-        output << "<em>";
+        // Add actual hit text in bold
+        int hitEnd = hitOffsetList.GetEndOffsetIdx(i); 
+        output << "<mark>";
         OutputRange(output, passage, hitStart, hitEnd);
-        output << "</em>";
+        output << "</mark>";
         
         // Add context following this hit (avoiding subsequent hits)
         int postEnd = std::min<int>(hitEnd + postContext, length);
+        for (;postEnd < length; ++postEnd) {
+            if (isspace(passage[postEnd])) {
+                break;
+            }
+        }
+        int nextHitStart = length;
         if (i + 1 < hits) {
-            int nextHitStart = hitOffsetList.GetStartOffset(i + 1);
+            nextHitStart = hitOffsetList.GetStartOffsetIdx(i + 1);
             postEnd = std::min(postEnd, nextHitStart);
         }
         OutputRange(output, passage, hitEnd, postEnd);
         lastOutput = postEnd;
 
-        if (lastOutput != length) {
-            output << "&hellip;";
+        if (lastOutput != nextHitStart) {
+            output << " &hellip;";
         }
     }
 
@@ -68,18 +74,20 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
 {
     Json::Value results;
     results["version"] = OUTPUT_VERSION;
-    results["count"] = (int)hitList->ReportTotalHits();
+    results["count"] = (int)hitList->ReportTotalPassagesHit();
     results["errors"] = Json::Value(Json::arrayValue);
+    results["total_hits"] = (int)hitList->ReportTotalHits();
 
     long *hitsPerVol = hitList->ReportHitsPerVol();
-
-    Json::Value volumes = Json::Value(Json::arrayValue);
+    long passageHitsPerVol[MAX_VOLUMES] = {0};
+    hitList->ReportPassagesHitPerVol(passageHitsPerVol);
 
     CTextExploder textExploder;
     CHitOffsetList hitOffsetList;
     textExploder.Setup(textFetch, giantTable, &hitOffsetList);
 
     // Complete hits by volume
+    Json::Value volumes = Json::Value(Json::arrayValue);
     for (int vol = 0; vol < MAX_VOLUMES; ++vol) {
         Json::Value volume;
         volume["name"] = textFetch->GetBookName(vol);
@@ -89,41 +97,74 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
     results["volumes"] = volumes;
 
     // Requested results
-    Json::Value hits = Json::Value(Json::arrayValue);
-    int hitIndex = 0;
-    int lastHit = firstHit + hitCount;
+    Json::Value passages = Json::Value(Json::arrayValue);
+    unsigned int passageIndex = 0;
+    unsigned int lastPassage = firstPassage + passageCount;
 
-    for (int vol = 0; vol < MAX_VOLUMES && hitIndex < lastHit; ++vol) {
-        int lastPassage = -1;
-        cstr passage;
+    for (int vol = 0; vol < MAX_VOLUMES && passageIndex < lastPassage; ++vol) {
+        if (passageIndex + passageHitsPerVol[vol] < firstPassage) {
+            passageIndex += passageHitsPerVol[vol];
+            continue;
+        }
+
         hitList->ResetVolume(vol);
-        for (int volHit = 0; volHit < hitsPerVol[vol] && hitIndex < lastHit; ++volHit) {
+        hit volHit;
+        bool hitActive = false;
+        int activePassage = -1;
 
-            hit theHit;
-            if (!hitList->ReportNextHit(theHit)) {
-                throw CException("Missing hit");
+        for (int volPas = 0; volPas < passageHitsPerVol[vol] &&
+                passageIndex < lastPassage; ++volPas, ++passageIndex) {
+
+            int nextPassage = -1;
+
+            if (hitActive) {
+                if (activePassage < 0) {
+                    throw CException("No active passage");
+                }
+            } else {
+                if (!hitList->ReportNextHit(volHit)) {
+                    throw CException("Missing hit");
+                }
+                hitActive = true;
+                activePassage = volHit.passage;
             }
 
-            if (theHit.passage == lastPassage) {
-                ++hitIndex;
-                continue;
+            if (passageIndex >= firstPassage) {
+                hitOffsetList.Reset();
+                hitOffsetList.AppendHit(volHit.word);
             }
 
-            hitOffsetList.Reset();
-            passage = textExploder.RetrievePassageNumber(theHit);
-            lastPassage = theHit.passage;
+            hit nextHit;
+            while (hitList->ReportNextHit(nextHit)) {
+                if (nextHit.passage != activePassage) {
+                    nextPassage = nextHit.passage;
+                    break;
+                }
+                if (passageIndex >= firstPassage) {
+                    hitOffsetList.AppendHit(nextHit.word);
+                }
+            }
 
-            Json::Value result = Json::Value();
-            result["volume"] = textFetch->GetBookName(vol);
-            result["passage"] = theHit.passage;
-            result["count"] = hitOffsetList.GetListSize();
-            result["text"] = WriteHit(passage.text, passage.length, hitOffsetList);
-            hits.append(result);
-            ++hitIndex;
+            if (passageIndex >= firstPassage) {
+                cstr passageStr = textExploder.RetrievePassageNumber(volHit);
+
+                Json::Value passage = Json::Value();
+                passage["volume"] = textFetch->GetBookName(vol);
+                passage["passage"] = activePassage;
+                passage["count"] = hitOffsetList.GetListSize();
+                passage["text"] = WriteHit(passageStr.text, passageStr.length, hitOffsetList);
+                passages.append(passage);
+            }
+
+            hitActive = (nextPassage >= 0);
+            if (hitActive) {
+                volHit = nextHit;
+                activePassage = nextPassage;
+            }
         }
     }
    
-    results["hits"] = hits;
+    results["passages"] = passages;
 
     Json::FastWriter writer;
     std::string output = writer.write(results);
