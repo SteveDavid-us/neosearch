@@ -544,7 +544,9 @@ void CHitList::WriteLateralProximityHits(CHitList* destination)
 //  Here is the compareHits function used by sortHits:
 int compareHits(const void *h1, const void *h2)
 {
-    return(memcmp(h1, h2, sizeof(expanded)) );          // works on Mac but not PC
+    expanded *e1 = (expanded *)h1;
+    expanded *e2 = (expanded *)h2;
+    return e1->cmp(e2);  
 }
 
 // ###########################################################################################
@@ -559,6 +561,16 @@ void    CHitList::SortHits(void)
             volumeH[v].SortHits();
 
 //  cout << "Done Sorting...\n";
+}
+
+// ###########################################################################################
+void    CHitList::SortHits(short vol)
+{
+    int     v;
+
+    if (volumeH[vol].GetTotalHits()) {
+        volumeH[vol].SortHits();
+    }
 }
 
 // ###########################################################################################

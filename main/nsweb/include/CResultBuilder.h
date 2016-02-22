@@ -11,6 +11,7 @@
 #define _CRESULTBUILDER_H_
 
 #include <jsoncpp/json/json.h>
+#include <set>
 
 #include "CGiant.h"
 #include "CTextFetch.h"
@@ -26,12 +27,14 @@ public:
     unsigned int passageCount;
     unsigned int preContext;
     unsigned int postContext;
+    set<unsigned int> volumeFilter;
 
     CResultBuilder() :
         firstPassage(0),
         passageCount(10),
         preContext(40),
-        postContext(40)
+        postContext(40),
+        volumeFilter()
     {
     }
 

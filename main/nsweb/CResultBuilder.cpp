@@ -74,25 +74,44 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
 {
     Json::Value results;
     results["version"] = OUTPUT_VERSION;
-    results["count"] = (int)hitList->ReportTotalPassagesHit();
-    results["errors"] = Json::Value(Json::arrayValue);
-    results["total_hits"] = (int)hitList->ReportTotalHits();
 
     long *hitsPerVol = hitList->ReportHitsPerVol();
     long passageHitsPerVol[MAX_VOLUMES] = {0};
     hitList->ReportPassagesHitPerVol(passageHitsPerVol);
 
+    if (volumeFilter.empty()) {
+        results["count"] = (unsigned int)hitList->ReportTotalPassagesHit();
+    } else {
+        long filteredPassages = 0;
+        for (unsigned int vol = 0; vol < MAX_VOLUMES; ++vol) {
+            if (volumeFilter.find(vol) != volumeFilter.end()) {
+                filteredPassages += passageHitsPerVol[vol];
+            }
+        }
+        results["count"] = (unsigned int)filteredPassages;
+    }
+    results["errors"] = Json::Value(Json::arrayValue);
+    results["total_hits"] = (int)hitList->ReportTotalHits();
+
     CTextExploder textExploder;
     CHitOffsetList hitOffsetList;
     textExploder.Setup(textFetch, giantTable, &hitOffsetList);
 
-    // Complete hits by volume
+    // Complete hits by volume, active (checked) first
     Json::Value volumes = Json::Value(Json::arrayValue);
-    for (int vol = 0; vol < MAX_VOLUMES; ++vol) {
-        Json::Value volume;
-        volume["name"] = textFetch->GetBookName(vol);
-        volume["count"] = (int)hitsPerVol[vol]; 
-        volumes.append(volume);
+    for (int active = 1; active >=0; --active) {
+        for (int i = 0; i < MAX_VOLUMES; ++i) {
+            int vol = CTextFetch::BookOrder[i];
+            if (active != (volumeFilter.find(vol) != volumeFilter.end())) {
+                continue;
+            }
+            Json::Value volume;
+            volume["active"] = (bool)active;
+            volume["id"] = vol;
+            volume["name"] = textFetch->GetBookName(vol);
+            volume["hits"] = (int)hitsPerVol[vol]; 
+            volumes.append(volume);
+        }
     }
     results["volumes"] = volumes;
 
@@ -101,7 +120,11 @@ std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHi
     unsigned int passageIndex = 0;
     unsigned int lastPassage = firstPassage + passageCount;
 
-    for (int vol = 0; vol < MAX_VOLUMES && passageIndex < lastPassage; ++vol) {
+    for (unsigned int i = 0; i < MAX_VOLUMES && passageIndex < lastPassage; ++i) {
+        int vol = CTextFetch::BookOrder[i];
+        if (!(volumeFilter.empty() || (volumeFilter.find(vol) != volumeFilter.end()))) {
+            continue;
+        }
         if (passageIndex + passageHitsPerVol[vol] < firstPassage) {
             passageIndex += passageHitsPerVol[vol];
             continue;

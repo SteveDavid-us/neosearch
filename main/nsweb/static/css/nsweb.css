@@ -40,3 +40,7 @@
 #pageSelection {
     text-align: center;
 }
+
+.badge {
+    padding-top: 3px;
+}

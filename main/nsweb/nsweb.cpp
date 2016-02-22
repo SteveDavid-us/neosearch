@@ -280,6 +280,8 @@ class __Pyx_FakeReference {
 #include "new"
 #include "stdexcept"
 #include "typeinfo"
+#include <utility>
+#include <set>
 #include "Types.h"
 #include "CTarget.h"
 #include "CGiant.h"
@@ -478,8 +480,8 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_5nsweb_NeoEngine;
 
-/* "nsweb.pyx":63
- *         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
+/* "nsweb.pyx":77
+ *     return vols
  * 
  * cdef class NeoEngine:             # <<<<<<<<<<<<<<
  *     cdef CGiant *giantTable
@@ -558,6 +560,39 @@ struct __pyx_obj_5nsweb_NeoEngine {
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject* attr_name) {
+    PyTypeObject* tp = Py_TYPE(obj);
+    if (likely(tp->tp_getattro))
+        return tp->tp_getattro(obj, attr_name);
+#if PY_MAJOR_VERSION < 3
+    if (likely(tp->tp_getattr))
+        return tp->tp_getattr(obj, PyString_AS_STRING(attr_name));
+#endif
+    return PyObject_GetAttr(obj, attr_name);
+}
+#else
+#define __Pyx_PyObject_GetAttrStr(o,n) PyObject_GetAttr(o,n)
+#endif
+
+static PyObject *__Pyx_GetBuiltinName(PyObject *name);
+
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len) & likely(len > (L->allocated >> 1))) {
+        Py_INCREF(x);
+        PyList_SET_ITEM(list, len, x);
+        Py_SIZE(list) = len+1;
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
+#endif
+
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
 
@@ -583,6 +618,11 @@ static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Tuple_Fast(PyObject *o, Py_ssize
 static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Generic(PyObject *o, PyObject* j);
 static CYTHON_INLINE PyObject *__Pyx_GetItemInt_Fast(PyObject *o, Py_ssize_t i,
                                                      int is_list, int wraparound, int boundscheck);
+
+static CYTHON_INLINE int __Pyx_PySequence_Contains(PyObject* item, PyObject* seq, int eq) {
+    int result = PySequence_Contains(seq, item);
+    return unlikely(result < 0) ? result : (result == (eq == Py_EQ));
+}
 
 #include <string>
 
@@ -655,13 +695,15 @@ static void __Pyx_CppExn2PyErr() {
 }
 #endif
 
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
+
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
 
 static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
 
 static CYTHON_INLINE long __Pyx_PyInt_As_long(PyObject *);
-
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
 static int __Pyx_check_binary_version(void);
 
@@ -674,6 +716,10 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'libcpp' */
 
+/* Module declarations from 'libcpp.utility' */
+
+/* Module declarations from 'libcpp.set' */
+
 /* Module declarations from 'nsweb' */
 static PyTypeObject *__pyx_ptype_5nsweb_NeoEngine = 0;
 static CYTHON_INLINE PyObject *__pyx_convert_PyObject_string_to_py_std__in_string(std::string const &); /*proto*/
@@ -685,22 +731,179 @@ static CYTHON_INLINE PyObject *__pyx_convert_PyByteArray_string_to_py_std__in_st
 int __pyx_module_is_main_nsweb = 0;
 
 /* Implementation of 'nsweb' */
+static PyObject *__pyx_builtin_range;
+static PyObject *__pyx_pf_5nsweb_volumes(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self); /* proto */
 static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self, PyObject *__pyx_v_query); /* proto */
 static PyObject *__pyx_tp_new_5nsweb_NeoEngine(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static char __pyx_k_i[] = "i";
 static char __pyx_k_main[] = "__main__";
 static char __pyx_k_test[] = "__test__";
+static char __pyx_k_vols[] = "vols";
 static char __pyx_k_count[] = "count";
 static char __pyx_k_first[] = "first";
+static char __pyx_k_nsweb[] = "nsweb";
+static char __pyx_k_range[] = "range";
 static char __pyx_k_params[] = "params";
+static char __pyx_k_volumes[] = "volumes";
+static char __pyx_k_textFetch[] = "textFetch";
+static char __pyx_k_textExploder[] = "textExploder";
+static char __pyx_k_home_ubuntu_staging_ns_jpserve[] = "/home/ubuntu/staging/ns.jpserve.net/neosearch/main/nsweb/nsweb.pyx";
 static PyObject *__pyx_n_s_count;
 static PyObject *__pyx_n_s_first;
+static PyObject *__pyx_kp_s_home_ubuntu_staging_ns_jpserve;
+static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_main;
+static PyObject *__pyx_n_s_nsweb;
 static PyObject *__pyx_n_s_params;
+static PyObject *__pyx_n_s_range;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_n_s_textExploder;
+static PyObject *__pyx_n_s_textFetch;
+static PyObject *__pyx_n_s_vols;
+static PyObject *__pyx_n_s_volumes;
+static PyObject *__pyx_tuple_;
+static PyObject *__pyx_codeobj__2;
 
-/* "nsweb.pyx":70
+/* "nsweb.pyx":68
+ *         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
+ * 
+ * def volumes():             # <<<<<<<<<<<<<<
+ *     vols = list()
+ *     cdef CTextFetch *textExploder
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_5nsweb_1volumes(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_5nsweb_1volumes = {"volumes", (PyCFunction)__pyx_pw_5nsweb_1volumes, METH_NOARGS, 0};
+static PyObject *__pyx_pw_5nsweb_1volumes(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("volumes (wrapper)", 0);
+  __pyx_r = __pyx_pf_5nsweb_volumes(__pyx_self);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_5nsweb_volumes(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_v_vols = NULL;
+  CTextFetch *__pyx_v_textFetch;
+  int __pyx_v_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  CTextFetch *__pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_t_4;
+  char *__pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("volumes", 0);
+
+  /* "nsweb.pyx":69
+ * 
+ * def volumes():
+ *     vols = list()             # <<<<<<<<<<<<<<
+ *     cdef CTextFetch *textExploder
+ *     textFetch = new CTextFetch()
+ */
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 69; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v_vols = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "nsweb.pyx":71
+ *     vols = list()
+ *     cdef CTextFetch *textExploder
+ *     textFetch = new CTextFetch()             # <<<<<<<<<<<<<<
+ *     for i in range(MAX_VOLUMES):
+ *         vols.append(textFetch.GetBookName(i))
+ */
+  try {
+    __pyx_t_2 = new CTextFetch();
+  } catch(...) {
+    __Pyx_CppExn2PyErr();
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  }
+  __pyx_v_textFetch = __pyx_t_2;
+
+  /* "nsweb.pyx":72
+ *     cdef CTextFetch *textExploder
+ *     textFetch = new CTextFetch()
+ *     for i in range(MAX_VOLUMES):             # <<<<<<<<<<<<<<
+ *         vols.append(textFetch.GetBookName(i))
+ *     del textFetch
+ */
+  __pyx_t_3 = MAX_VOLUMES;
+  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+    __pyx_v_i = __pyx_t_4;
+
+    /* "nsweb.pyx":73
+ *     textFetch = new CTextFetch()
+ *     for i in range(MAX_VOLUMES):
+ *         vols.append(textFetch.GetBookName(i))             # <<<<<<<<<<<<<<
+ *     del textFetch
+ *     return vols
+ */
+    try {
+      __pyx_t_5 = __pyx_v_textFetch->GetBookName(__pyx_v_i);
+    } catch(...) {
+      __Pyx_CppExn2PyErr();
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_t_5); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_6 = __Pyx_PyList_Append(__pyx_v_vols, __pyx_t_1); if (unlikely(__pyx_t_6 == -1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  }
+
+  /* "nsweb.pyx":74
+ *     for i in range(MAX_VOLUMES):
+ *         vols.append(textFetch.GetBookName(i))
+ *     del textFetch             # <<<<<<<<<<<<<<
+ *     return vols
+ * 
+ */
+  delete __pyx_v_textFetch;
+
+  /* "nsweb.pyx":75
+ *         vols.append(textFetch.GetBookName(i))
+ *     del textFetch
+ *     return vols             # <<<<<<<<<<<<<<
+ * 
+ * cdef class NeoEngine:
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_vols);
+  __pyx_r = __pyx_v_vols;
+  goto __pyx_L0;
+
+  /* "nsweb.pyx":68
+ *         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
+ * 
+ * def volumes():             # <<<<<<<<<<<<<<
+ *     vols = list()
+ *     cdef CTextFetch *textExploder
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("nsweb.volumes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_vols);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "nsweb.pyx":84
  *     cdef CTarget *target
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -736,7 +939,7 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "nsweb.pyx":71
+  /* "nsweb.pyx":85
  * 
  *     def __cinit__(self):
  *         self.giantTable = new CGiant()             # <<<<<<<<<<<<<<
@@ -747,11 +950,11 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
     __pyx_t_1 = new CGiant();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 71; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->giantTable = __pyx_t_1;
 
-  /* "nsweb.pyx":72
+  /* "nsweb.pyx":86
  *     def __cinit__(self):
  *         self.giantTable = new CGiant()
  *         self.textFetch = new CTextFetch()             # <<<<<<<<<<<<<<
@@ -762,11 +965,11 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
     __pyx_t_2 = new CTextFetch();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->textFetch = __pyx_t_2;
 
-  /* "nsweb.pyx":73
+  /* "nsweb.pyx":87
  *         self.giantTable = new CGiant()
  *         self.textFetch = new CTextFetch()
  *         self.textExploder = new CTextExploder()             # <<<<<<<<<<<<<<
@@ -777,11 +980,11 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
     __pyx_t_3 = new CTextExploder();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->textExploder = __pyx_t_3;
 
-  /* "nsweb.pyx":74
+  /* "nsweb.pyx":88
  *         self.textFetch = new CTextFetch()
  *         self.textExploder = new CTextExploder()
  *         self.target = new CTarget()             # <<<<<<<<<<<<<<
@@ -792,11 +995,11 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
     __pyx_t_4 = new CTarget();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->target = __pyx_t_4;
 
-  /* "nsweb.pyx":75
+  /* "nsweb.pyx":89
  *         self.textExploder = new CTextExploder()
  *         self.target = new CTarget()
  *         self.hitList = NULL             # <<<<<<<<<<<<<<
@@ -805,7 +1008,7 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
  */
   __pyx_v_self->hitList = NULL;
 
-  /* "nsweb.pyx":70
+  /* "nsweb.pyx":84
  *     cdef CTarget *target
  * 
  *     def __cinit__(self):             # <<<<<<<<<<<<<<
@@ -824,7 +1027,7 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
   return __pyx_r;
 }
 
-/* "nsweb.pyx":77
+/* "nsweb.pyx":91
  *         self.hitList = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -847,7 +1050,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "nsweb.pyx":78
+  /* "nsweb.pyx":92
  * 
  *     def __dealloc__(self):
  *         del self.textExploder             # <<<<<<<<<<<<<<
@@ -856,7 +1059,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->textExploder;
 
-  /* "nsweb.pyx":79
+  /* "nsweb.pyx":93
  *     def __dealloc__(self):
  *         del self.textExploder
  *         del self.textFetch             # <<<<<<<<<<<<<<
@@ -865,7 +1068,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->textFetch;
 
-  /* "nsweb.pyx":80
+  /* "nsweb.pyx":94
  *         del self.textExploder
  *         del self.textFetch
  *         del self.giantTable             # <<<<<<<<<<<<<<
@@ -874,7 +1077,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->giantTable;
 
-  /* "nsweb.pyx":81
+  /* "nsweb.pyx":95
  *         del self.textFetch
  *         del self.giantTable
  *         del self.hitList             # <<<<<<<<<<<<<<
@@ -883,7 +1086,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->hitList;
 
-  /* "nsweb.pyx":82
+  /* "nsweb.pyx":96
  *         del self.giantTable
  *         del self.hitList
  *         del self.target             # <<<<<<<<<<<<<<
@@ -892,7 +1095,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->target;
 
-  /* "nsweb.pyx":77
+  /* "nsweb.pyx":91
  *         self.hitList = NULL
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
@@ -904,7 +1107,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
   __Pyx_RefNannyFinishContext();
 }
 
-/* "nsweb.pyx":84
+/* "nsweb.pyx":98
  *         del self.target
  * 
  *     def search(self, query):             # <<<<<<<<<<<<<<
@@ -927,6 +1130,7 @@ static PyObject *__pyx_pw_5nsweb_9NeoEngine_5search(PyObject *__pyx_v_self, PyOb
 
 static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self, PyObject *__pyx_v_query) {
   CResultBuilder *__pyx_v_resultBuilder;
+  PyObject *__pyx_v_vol = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -935,34 +1139,38 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   CHitList *__pyx_t_4;
   CResultBuilder *__pyx_t_5;
   unsigned int __pyx_t_6;
-  std::string __pyx_t_7;
+  int __pyx_t_7;
+  int __pyx_t_8;
+  Py_ssize_t __pyx_t_9;
+  PyObject *(*__pyx_t_10)(PyObject *);
+  std::string __pyx_t_11;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("search", 0);
 
-  /* "nsweb.pyx":85
+  /* "nsweb.pyx":99
  * 
  *     def search(self, query):
  *         self.target.SetString(query['params'][0])             # <<<<<<<<<<<<<<
  *         self.giantTable.SetAmbiguityChecking(1)
  *         self.giantTable.SetDisambiguationChecking(0)
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_params); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_params); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_2 = __Pyx_GetItemInt(__pyx_t_1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_AsString(__pyx_t_2); if (unlikely((!__pyx_t_3) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyObject_AsString(__pyx_t_2); if (unlikely((!__pyx_t_3) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   try {
     __pyx_v_self->target->SetString(__pyx_t_3);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 99; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "nsweb.pyx":86
+  /* "nsweb.pyx":100
  *     def search(self, query):
  *         self.target.SetString(query['params'][0])
  *         self.giantTable.SetAmbiguityChecking(1)             # <<<<<<<<<<<<<<
@@ -973,10 +1181,10 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_v_self->giantTable->SetAmbiguityChecking(1);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 100; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "nsweb.pyx":87
+  /* "nsweb.pyx":101
  *         self.target.SetString(query['params'][0])
  *         self.giantTable.SetAmbiguityChecking(1)
  *         self.giantTable.SetDisambiguationChecking(0)             # <<<<<<<<<<<<<<
@@ -987,10 +1195,10 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_v_self->giantTable->SetDisambiguationChecking(0);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 101; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "nsweb.pyx":88
+  /* "nsweb.pyx":102
  *         self.giantTable.SetAmbiguityChecking(1)
  *         self.giantTable.SetDisambiguationChecking(0)
  *         self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)             # <<<<<<<<<<<<<<
@@ -1001,10 +1209,10 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_v_self->giantTable->SetSearchMode(CREATE_NEW, __pyx_v_self->hitList, 25);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 102; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "nsweb.pyx":89
+  /* "nsweb.pyx":103
  *         self.giantTable.SetDisambiguationChecking(0)
  *         self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
  *         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))             # <<<<<<<<<<<<<<
@@ -1015,11 +1223,11 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_t_4 = __pyx_v_self->giantTable->FindHitsWithMatchOf((*__pyx_v_self->target));
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 89; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->hitList = __pyx_t_4;
 
-  /* "nsweb.pyx":90
+  /* "nsweb.pyx":104
  *         self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
  *         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
  *         resultBuilder = new CResultBuilder()             # <<<<<<<<<<<<<<
@@ -1030,56 +1238,145 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_t_5 = new CResultBuilder();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 90; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_resultBuilder = __pyx_t_5;
 
-  /* "nsweb.pyx":91
+  /* "nsweb.pyx":105
  *         self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
  *         resultBuilder = new CResultBuilder()
  *         resultBuilder.firstPassage = query['first']             # <<<<<<<<<<<<<<
  *         resultBuilder.passageCount = query['count']
- *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
+ *         if 'volumes' in query:
  */
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_first); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_first); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 91; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_resultBuilder->firstPassage = __pyx_t_6;
 
-  /* "nsweb.pyx":92
+  /* "nsweb.pyx":106
  *         resultBuilder = new CResultBuilder()
  *         resultBuilder.firstPassage = query['first']
  *         resultBuilder.passageCount = query['count']             # <<<<<<<<<<<<<<
- *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
- * 
+ *         if 'volumes' in query:
+ *             for vol in query['volumes']:
  */
-  __pyx_t_2 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_count); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_2 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_count); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 92; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_resultBuilder->passageCount = __pyx_t_6;
 
-  /* "nsweb.pyx":93
+  /* "nsweb.pyx":107
  *         resultBuilder.firstPassage = query['first']
  *         resultBuilder.passageCount = query['count']
+ *         if 'volumes' in query:             # <<<<<<<<<<<<<<
+ *             for vol in query['volumes']:
+ *                 resultBuilder.volumeFilter.insert(vol)
+ */
+  __pyx_t_7 = (__Pyx_PySequence_Contains(__pyx_n_s_volumes, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_7 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_8 = (__pyx_t_7 != 0);
+  if (__pyx_t_8) {
+
+    /* "nsweb.pyx":108
+ *         resultBuilder.passageCount = query['count']
+ *         if 'volumes' in query:
+ *             for vol in query['volumes']:             # <<<<<<<<<<<<<<
+ *                 resultBuilder.volumeFilter.insert(vol)
+ *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
+ */
+    __pyx_t_2 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_volumes); if (unlikely(__pyx_t_2 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __Pyx_GOTREF(__pyx_t_2);
+    if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
+      __pyx_t_1 = __pyx_t_2; __Pyx_INCREF(__pyx_t_1); __pyx_t_9 = 0;
+      __pyx_t_10 = NULL;
+    } else {
+      __pyx_t_9 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __Pyx_GOTREF(__pyx_t_1);
+      __pyx_t_10 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    }
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    for (;;) {
+      if (likely(!__pyx_t_10)) {
+        if (likely(PyList_CheckExact(__pyx_t_1))) {
+          if (__pyx_t_9 >= PyList_GET_SIZE(__pyx_t_1)) break;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_2 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_9); __Pyx_INCREF(__pyx_t_2); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          #else
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          #endif
+        } else {
+          if (__pyx_t_9 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
+          #if CYTHON_COMPILING_IN_CPYTHON
+          __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_9); __Pyx_INCREF(__pyx_t_2); __pyx_t_9++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          #else
+          __pyx_t_2 = PySequence_ITEM(__pyx_t_1, __pyx_t_9); __pyx_t_9++; if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          #endif
+        }
+      } else {
+        __pyx_t_2 = __pyx_t_10(__pyx_t_1);
+        if (unlikely(!__pyx_t_2)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          }
+          break;
+        }
+        __Pyx_GOTREF(__pyx_t_2);
+      }
+      __Pyx_XDECREF_SET(__pyx_v_vol, __pyx_t_2);
+      __pyx_t_2 = 0;
+
+      /* "nsweb.pyx":109
+ *         if 'volumes' in query:
+ *             for vol in query['volumes']:
+ *                 resultBuilder.volumeFilter.insert(vol)             # <<<<<<<<<<<<<<
+ *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
+ * 
+ */
+      __pyx_t_6 = __Pyx_PyInt_As_unsigned_int(__pyx_v_vol); if (unlikely((__pyx_t_6 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      try {
+        __pyx_v_resultBuilder->volumeFilter.insert(__pyx_t_6);
+      } catch(...) {
+        __Pyx_CppExn2PyErr();
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      }
+
+      /* "nsweb.pyx":108
+ *         resultBuilder.passageCount = query['count']
+ *         if 'volumes' in query:
+ *             for vol in query['volumes']:             # <<<<<<<<<<<<<<
+ *                 resultBuilder.volumeFilter.insert(vol)
+ *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
+ */
+    }
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    goto __pyx_L3;
+  }
+  __pyx_L3:;
+
+  /* "nsweb.pyx":110
+ *             for vol in query['volumes']:
+ *                 resultBuilder.volumeFilter.insert(vol)
  *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')             # <<<<<<<<<<<<<<
  * 
  */
   __Pyx_XDECREF(__pyx_r);
   try {
-    __pyx_t_7 = __pyx_v_resultBuilder->Write(__pyx_v_self->giantTable, __pyx_v_self->textFetch, __pyx_v_self->hitList);
+    __pyx_t_11 = __pyx_v_resultBuilder->Write(__pyx_v_self->giantTable, __pyx_v_self->textFetch, __pyx_v_self->hitList);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_2 = __Pyx_decode_cpp_string(__pyx_t_7, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 93; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_r = __pyx_t_2;
-  __pyx_t_2 = 0;
+  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_t_11, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "nsweb.pyx":84
+  /* "nsweb.pyx":98
  *         del self.target
  * 
  *     def search(self, query):             # <<<<<<<<<<<<<<
@@ -1094,6 +1391,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   __Pyx_AddTraceback("nsweb.NeoEngine.search", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_vol);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -1466,20 +1764,46 @@ static struct PyModuleDef __pyx_moduledef = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_count, __pyx_k_count, sizeof(__pyx_k_count), 0, 0, 1, 1},
   {&__pyx_n_s_first, __pyx_k_first, sizeof(__pyx_k_first), 0, 0, 1, 1},
+  {&__pyx_kp_s_home_ubuntu_staging_ns_jpserve, __pyx_k_home_ubuntu_staging_ns_jpserve, sizeof(__pyx_k_home_ubuntu_staging_ns_jpserve), 0, 0, 1, 0},
+  {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
+  {&__pyx_n_s_nsweb, __pyx_k_nsweb, sizeof(__pyx_k_nsweb), 0, 0, 1, 1},
   {&__pyx_n_s_params, __pyx_k_params, sizeof(__pyx_k_params), 0, 0, 1, 1},
+  {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_n_s_textExploder, __pyx_k_textExploder, sizeof(__pyx_k_textExploder), 0, 0, 1, 1},
+  {&__pyx_n_s_textFetch, __pyx_k_textFetch, sizeof(__pyx_k_textFetch), 0, 0, 1, 1},
+  {&__pyx_n_s_vols, __pyx_k_vols, sizeof(__pyx_k_vols), 0, 0, 1, 1},
+  {&__pyx_n_s_volumes, __pyx_k_volumes, sizeof(__pyx_k_volumes), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 72; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   return 0;
+  __pyx_L1_error:;
+  return -1;
 }
 
 static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
+
+  /* "nsweb.pyx":68
+ *         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
+ * 
+ * def volumes():             # <<<<<<<<<<<<<<
+ *     vols = list()
+ *     cdef CTextFetch *textExploder
+ */
+  __pyx_tuple_ = PyTuple_Pack(4, __pyx_n_s_vols, __pyx_n_s_textExploder, __pyx_n_s_textFetch, __pyx_n_s_i); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
+  __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(0, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_home_ubuntu_staging_ns_jpserve, __pyx_n_s_volumes, 68, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 static int __Pyx_InitGlobals(void) {
@@ -1569,14 +1893,26 @@ PyMODINIT_FUNC PyInit_nsweb(void)
   /*--- Variable export code ---*/
   /*--- Function export code ---*/
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_5nsweb_NeoEngine) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyType_Ready(&__pyx_type_5nsweb_NeoEngine) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_type_5nsweb_NeoEngine.tp_print = 0;
-  if (PyObject_SetAttrString(__pyx_m, "NeoEngine", (PyObject *)&__pyx_type_5nsweb_NeoEngine) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 63; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyObject_SetAttrString(__pyx_m, "NeoEngine", (PyObject *)&__pyx_type_5nsweb_NeoEngine) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 77; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_ptype_5nsweb_NeoEngine = &__pyx_type_5nsweb_NeoEngine;
   /*--- Type import code ---*/
   /*--- Variable import code ---*/
   /*--- Function import code ---*/
   /*--- Execution code ---*/
+
+  /* "nsweb.pyx":68
+ *         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
+ * 
+ * def volumes():             # <<<<<<<<<<<<<<
+ *     vols = list()
+ *     cdef CTextFetch *textExploder
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_5nsweb_1volumes, NULL, __pyx_n_s_nsweb); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_volumes, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 68; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "nsweb.pyx":1
  * #!cython             # <<<<<<<<<<<<<<
@@ -1634,6 +1970,19 @@ end:
     return (__Pyx_RefNannyAPIStruct *)r;
 }
 #endif
+
+static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
+    PyObject* result = __Pyx_PyObject_GetAttrStr(__pyx_b, name);
+    if (unlikely(!result)) {
+        PyErr_Format(PyExc_NameError,
+#if PY_MAJOR_VERSION >= 3
+            "name '%U' is not defined", name);
+#else
+            "name '%.200s' is not defined", PyString_AS_STRING(name));
+#endif
+    }
+    return result;
+}
 
 static void __Pyx_RaiseArgtupleInvalid(
     const char* func_name,
@@ -1962,6 +2311,148 @@ bad:
     Py_XDECREF(py_frame);
 }
 
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
+    const int neg_one = (int) -1, const_zero = 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(int) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+        } else if (sizeof(int) <= sizeof(unsigned long long)) {
+            return PyLong_FromUnsignedLongLong((unsigned long long) value);
+        }
+    } else {
+        if (sizeof(int) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(int) <= sizeof(long long)) {
+            return PyLong_FromLongLong((long long) value);
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(int),
+                                     little, !is_unsigned);
+    }
+}
+
+#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)       \
+    {                                                                     \
+        func_type value = func_value;                                     \
+        if (sizeof(target_type) < sizeof(func_type)) {                    \
+            if (unlikely(value != (func_type) (target_type) value)) {     \
+                func_type zero = 0;                                       \
+                if (is_unsigned && unlikely(value < zero))                \
+                    goto raise_neg_overflow;                              \
+                else                                                      \
+                    goto raise_overflow;                                  \
+            }                                                             \
+        }                                                                 \
+        return (target_type) value;                                       \
+    }
+
+#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
+ #if CYTHON_USE_PYLONG_INTERNALS
+  #include "longintrepr.h"
+ #endif
+#endif
+
+static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
+    const int neg_one = (int) -1, const_zero = 0;
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if (sizeof(int) < sizeof(long)) {
+            __PYX_VERIFY_RETURN_INT(int, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (int) val;
+        }
+    } else
+#endif
+    if (likely(PyLong_Check(x))) {
+        if (is_unsigned) {
+#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
+ #if CYTHON_USE_PYLONG_INTERNALS
+            switch (Py_SIZE(x)) {
+                case  0: return 0;
+                case  1: __PYX_VERIFY_RETURN_INT(int, digit, ((PyLongObject*)x)->ob_digit[0]);
+            }
+ #endif
+#endif
+            if (unlikely(Py_SIZE(x) < 0)) {
+                goto raise_neg_overflow;
+            }
+            if (sizeof(int) <= sizeof(unsigned long)) {
+                __PYX_VERIFY_RETURN_INT(int, unsigned long, PyLong_AsUnsignedLong(x))
+            } else if (sizeof(int) <= sizeof(unsigned long long)) {
+                __PYX_VERIFY_RETURN_INT(int, unsigned long long, PyLong_AsUnsignedLongLong(x))
+            }
+        } else {
+#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
+ #if CYTHON_USE_PYLONG_INTERNALS
+            switch (Py_SIZE(x)) {
+                case  0: return 0;
+                case  1: __PYX_VERIFY_RETURN_INT(int,  digit, +(((PyLongObject*)x)->ob_digit[0]));
+                case -1: __PYX_VERIFY_RETURN_INT(int, sdigit, -(sdigit) ((PyLongObject*)x)->ob_digit[0]);
+            }
+ #endif
+#endif
+            if (sizeof(int) <= sizeof(long)) {
+                __PYX_VERIFY_RETURN_INT(int, long, PyLong_AsLong(x))
+            } else if (sizeof(int) <= sizeof(long long)) {
+                __PYX_VERIFY_RETURN_INT(int, long long, PyLong_AsLongLong(x))
+            }
+        }
+        {
+#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
+            PyErr_SetString(PyExc_RuntimeError,
+                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
+#else
+            int val;
+            PyObject *v = __Pyx_PyNumber_Int(x);
+ #if PY_MAJOR_VERSION < 3
+            if (likely(v) && !PyLong_Check(v)) {
+                PyObject *tmp = v;
+                v = PyNumber_Long(tmp);
+                Py_DECREF(tmp);
+            }
+ #endif
+            if (likely(v)) {
+                int one = 1; int is_little = (int)*(unsigned char *)&one;
+                unsigned char *bytes = (unsigned char *)&val;
+                int ret = _PyLong_AsByteArray((PyLongObject *)v,
+                                              bytes, sizeof(val),
+                                              is_little, !is_unsigned);
+                Py_DECREF(v);
+                if (likely(!ret))
+                    return val;
+            }
+#endif
+            return (int) -1;
+        }
+    } else {
+        int val;
+        PyObject *tmp = __Pyx_PyNumber_Int(x);
+        if (!tmp) return (int) -1;
+        val = __Pyx_PyInt_As_int(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to int");
+    return (int) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to int");
+    return (int) -1;
+}
+
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
     const long neg_one = (long) -1, const_zero = 0;
     const int is_unsigned = neg_one > const_zero;
@@ -1987,27 +2478,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value) {
                                      little, !is_unsigned);
     }
 }
-
-#define __PYX_VERIFY_RETURN_INT(target_type, func_type, func_value)       \
-    {                                                                     \
-        func_type value = func_value;                                     \
-        if (sizeof(target_type) < sizeof(func_type)) {                    \
-            if (unlikely(value != (func_type) (target_type) value)) {     \
-                func_type zero = 0;                                       \
-                if (is_unsigned && unlikely(value < zero))                \
-                    goto raise_neg_overflow;                              \
-                else                                                      \
-                    goto raise_overflow;                                  \
-            }                                                             \
-        }                                                                 \
-        return (target_type) value;                                       \
-    }
-
-#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
- #if CYTHON_USE_PYLONG_INTERNALS
-  #include "longintrepr.h"
- #endif
-#endif
 
 static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *x) {
     const unsigned int neg_one = (unsigned int) -1, const_zero = 0;
@@ -2197,101 +2667,6 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to long");
     return (long) -1;
-}
-
-static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {
-    const int neg_one = (int) -1, const_zero = 0;
-    const int is_unsigned = neg_one > const_zero;
-#if PY_MAJOR_VERSION < 3
-    if (likely(PyInt_Check(x))) {
-        if (sizeof(int) < sizeof(long)) {
-            __PYX_VERIFY_RETURN_INT(int, long, PyInt_AS_LONG(x))
-        } else {
-            long val = PyInt_AS_LONG(x);
-            if (is_unsigned && unlikely(val < 0)) {
-                goto raise_neg_overflow;
-            }
-            return (int) val;
-        }
-    } else
-#endif
-    if (likely(PyLong_Check(x))) {
-        if (is_unsigned) {
-#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
- #if CYTHON_USE_PYLONG_INTERNALS
-            switch (Py_SIZE(x)) {
-                case  0: return 0;
-                case  1: __PYX_VERIFY_RETURN_INT(int, digit, ((PyLongObject*)x)->ob_digit[0]);
-            }
- #endif
-#endif
-            if (unlikely(Py_SIZE(x) < 0)) {
-                goto raise_neg_overflow;
-            }
-            if (sizeof(int) <= sizeof(unsigned long)) {
-                __PYX_VERIFY_RETURN_INT(int, unsigned long, PyLong_AsUnsignedLong(x))
-            } else if (sizeof(int) <= sizeof(unsigned long long)) {
-                __PYX_VERIFY_RETURN_INT(int, unsigned long long, PyLong_AsUnsignedLongLong(x))
-            }
-        } else {
-#if CYTHON_COMPILING_IN_CPYTHON && PY_MAJOR_VERSION >= 3
- #if CYTHON_USE_PYLONG_INTERNALS
-            switch (Py_SIZE(x)) {
-                case  0: return 0;
-                case  1: __PYX_VERIFY_RETURN_INT(int,  digit, +(((PyLongObject*)x)->ob_digit[0]));
-                case -1: __PYX_VERIFY_RETURN_INT(int, sdigit, -(sdigit) ((PyLongObject*)x)->ob_digit[0]);
-            }
- #endif
-#endif
-            if (sizeof(int) <= sizeof(long)) {
-                __PYX_VERIFY_RETURN_INT(int, long, PyLong_AsLong(x))
-            } else if (sizeof(int) <= sizeof(long long)) {
-                __PYX_VERIFY_RETURN_INT(int, long long, PyLong_AsLongLong(x))
-            }
-        }
-        {
-#if CYTHON_COMPILING_IN_PYPY && !defined(_PyLong_AsByteArray)
-            PyErr_SetString(PyExc_RuntimeError,
-                            "_PyLong_AsByteArray() not available in PyPy, cannot convert large numbers");
-#else
-            int val;
-            PyObject *v = __Pyx_PyNumber_Int(x);
- #if PY_MAJOR_VERSION < 3
-            if (likely(v) && !PyLong_Check(v)) {
-                PyObject *tmp = v;
-                v = PyNumber_Long(tmp);
-                Py_DECREF(tmp);
-            }
- #endif
-            if (likely(v)) {
-                int one = 1; int is_little = (int)*(unsigned char *)&one;
-                unsigned char *bytes = (unsigned char *)&val;
-                int ret = _PyLong_AsByteArray((PyLongObject *)v,
-                                              bytes, sizeof(val),
-                                              is_little, !is_unsigned);
-                Py_DECREF(v);
-                if (likely(!ret))
-                    return val;
-            }
-#endif
-            return (int) -1;
-        }
-    } else {
-        int val;
-        PyObject *tmp = __Pyx_PyNumber_Int(x);
-        if (!tmp) return (int) -1;
-        val = __Pyx_PyInt_As_int(tmp);
-        Py_DECREF(tmp);
-        return val;
-    }
-raise_overflow:
-    PyErr_SetString(PyExc_OverflowError,
-        "value too large to convert to int");
-    return (int) -1;
-raise_neg_overflow:
-    PyErr_SetString(PyExc_OverflowError,
-        "can't convert negative value to int");
-    return (int) -1;
 }
 
 static int __Pyx_check_binary_version(void) {

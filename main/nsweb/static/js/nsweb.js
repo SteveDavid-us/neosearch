@@ -8,6 +8,12 @@ function ParseQuery() {
     searchData.count = 10;
     searchData.params = [];
     searchData['params'].push($('input#textInput0').val());
+    searchData['volumes'] = [];
+    $(".volume-filter").each(function() {
+        if (this.checked) {
+            searchData['volumes'].push(parseInt(this.value));
+        }
+    });
     return searchData;
 }
 
@@ -15,20 +21,20 @@ function LoadResults(d) {
     loading = true;
     var bookResults = "";
     $.each(d.volumes, function (i, vol) {
-        if (vol.count > 0) {
+        if (vol.hits > 0) {
             bookResults += '<label class="btn btn-default btn-badged-checkbox">';
-            bookResults += '<!--input type="checkbox"--><span>' + vol.name + '</span>';
-            bookResults += '<span class="badge">' + vol.count + '</span></label>\n';
+            bookResults += '<input class="volume-filter" type="checkbox" value="' + vol.id + '"' + (vol.active ? ' checked' : '') +' ><span>' + vol.name + '</span>';
+            bookResults += '<span class="badge">' + vol.hits + '</span></label>\n';
         }
     });
-    $('div#resultsByBook').html(bookResults); 
-    var hits = "";
-    $.each(d.passages, function(i, hit) {
-        hits += '<h5><a class="">' + hit.volume + ': ' + hit.passage + ' (' + hit.count + ' hit' + ((hit.count == 1) ? '' : 's') + ')</a></h5>\n'
-        hits += '<div class="passage">' + hit.text + '</div>\n'
-        hits += '<hr class="spacer"></hr>\n';
+    $('#resultsByBook').html(bookResults); 
+    var results = "";
+    $.each(d.passages, function(i, result) {
+        results += '<h5><a>' + result.volume + ': ' + result.passage + ' (' + result.count + ' result' + ((result.count == 1) ? '' : 's') + ')</a></h5>\n'
+        results += '<div class="passage">' + result.text + '</div>\n'
+        results += '<hr class="spacer"></hr>\n';
     });
-    $('div#results').html(hits);
+    $('#results').html(results);
     $('#pageSelection').bootpag({
         total: (d.count + lastQuery.count - 1) / lastQuery.count,
         page: lastQuery.first / lastQuery.count + 1,
@@ -67,7 +73,7 @@ function RunQuery(query_data) {
                 */
 
                 var end = new Date().getTime();
-                $('#resultHeader').text("" + d.total_hits + " result" + (d.total_hits == 1 ? '' : 's') + " (" + ((end - start) / 1000).toFixed(1) + " seconds)");
+                $('#resultHeader').text("" + d.total_hits + " hit" + (d.total_hits == 1 ? '' : 's') + " (" + ((end - start) / 1000).toFixed(1) + " seconds)");
                 LoadResults(d);
             }
     }).fail(function() {

@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="static/images/favicon.ico">
-
+<link rel="icon" type="image/png" href="/static/images/neosearch.png">
 <title>Neosearch</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -169,8 +169,8 @@
 
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 pull-right" id="resultsSidebar">
-      <h6 id="resultHeader">0 results (0.0 seconds)</h6>
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 pull-right" id="resultsSidebar">
+      <h6 id="resultHeader">0 hits (0.0 seconds)</h6>
       <div class="form-group">
         <div class="btn-group-vertical" id="resultsByBook">
         </div>
@@ -187,7 +187,9 @@
 {% assets "js_all" %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
-<script type="text/javascript">var clientVersion = {{ version }};</script>
+<script type="text/javascript">
+  var clientVersion = {{ version }};
+</script>
 
 </body>
 </html>

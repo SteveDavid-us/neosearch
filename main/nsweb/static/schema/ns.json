@@ -31,6 +31,13 @@
         "additionalProperties": false,
         "minimum": 1,
         "maximum": 100
+    },
+    "volumes": {
+        "type": "array",
+        "additionalProperties": false,
+        "items" : {
+            "type": "integer"
+        }
     }
   },
 

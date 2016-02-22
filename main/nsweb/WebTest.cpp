@@ -39,9 +39,9 @@ int main (int argc, char **argv)
     bool failure = false;
 
     giantTable->SetSearchMode(mode, theHits, 25);
-    theTarget.SetString("amo");
+    theTarget.SetString("amo*");
 
-    theHits = giantTable->FindHitsWithSubstringOf(theTarget);
+    theHits = giantTable->FindHitsWithMatchOf(theTarget);
 
     if (!theHits) {
         cout << "got not'in" << endl;
@@ -55,6 +55,7 @@ int main (int argc, char **argv)
     CResultBuilder resultBuilder;
     resultBuilder.firstPassage = 0;
     resultBuilder.passageCount = 10;
+    //resultBuilder.volumeFilter.insert(7);
 
     cout << "result:" << endl << resultBuilder.Write(giantTable, textFetcher, theHits);
 
