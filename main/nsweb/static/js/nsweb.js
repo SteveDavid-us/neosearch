@@ -131,6 +131,13 @@ function AddTerm(removable) {
         $(this).parent().toggleClass("active", $(this).is(':checked'));
     });
 
+    $('input.search-word').off('keypress').on('keypress', function(event) {
+        if (event.which == 13) {
+            RunQuery(ParseQuery());
+            return false;
+        }
+    });
+
     $('input[name="term-type"]').off('change').on('change', function(event) {
         $(this).parent().addClass("active").siblings().removeClass("active");
         $(this).closest('.search-term').find('button.dropdown-toggle').first().html($(this).val() + ' <span class="caret">');
