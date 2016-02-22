@@ -6,7 +6,7 @@ This README would normally document whatever steps are necessary to get your app
 
 * Quick summary
 
-This is a repository for a NeoLatin search application. It is a fork from Neosearch, which was a Mac OS application. It's intended to be a web application that allows users to search the Latin texts of Emanuel Swedenborg's works, to find instances where certain words, and their specific forms, are used. 
+This is a repository to support the creation of a NeoLatin search application. It is a fork from Neosearch, which was a Mac OS application. It's intended to be a web application that allows users to search the Latin texts of Emanuel Swedenborg's works, to find instances where certain words, and their specific forms, are used. 
 
 * Version
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
