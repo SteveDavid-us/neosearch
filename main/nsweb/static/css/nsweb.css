@@ -44,3 +44,8 @@
 .badge {
     padding-top: 3px;
 }
+
+.modal-footer-left {
+    float: left;
+    margin-top: 8px;
+}

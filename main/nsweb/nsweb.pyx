@@ -96,16 +96,31 @@ cdef class NeoEngine:
         del self.target
     
     def search(self, query):
-        self.target.SetString(query['params'][0])
+        cdef int searchMode = CREATE_NEW
+        cdef int proximity = 25
+        intersect_mode = 'proximity' in query and query['proximity']['enable']
+        if intersect_mode:
+            proximity = query['proximity']['words']
+            
         self.giantTable.SetAmbiguityChecking(1)
         self.giantTable.SetDisambiguationChecking(0)
-        self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
-        self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
+        for param in query['params']: 
+            text = param.lower().strip()
+            if text:
+                self.target.SetString(text)
+                self.giantTable.SetSearchMode(searchMode, self.hitList, proximity)
+                self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
+                if intersect_mode:
+                    searchMode = INTERSECT
+                else:
+                    searchMode = UNION
+            
         resultBuilder = new CResultBuilder()
         resultBuilder.firstPassage = query['first']
         resultBuilder.passageCount = query['count']
         if 'volumes' in query:
             for vol in query['volumes']:
                 resultBuilder.volumeFilter.insert(vol)
+
         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
 
