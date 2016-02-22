@@ -45,7 +45,7 @@
 #define UNION                           2
 #define INTERSECT                       3
 
-#define PASSAGE_OFFSET_BLANK            0xFFFFFFFF
+#define PASSAGE_OFFSET_BLANK            -1
 
 #endif // _ENGINE_H_
 

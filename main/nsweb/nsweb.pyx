@@ -3,6 +3,7 @@
 from cython.operator cimport dereference as deref
 from libcpp.string cimport string
 from libcpp cimport bool
+from libcpp.set cimport set as cppset
 
 cdef extern from "Types.h":
     pass
@@ -38,6 +39,7 @@ cdef extern from "CHitList.h":
 cdef extern from "CTextFetch.h":
     cdef cppclass CTextFetch:
         CTextFetch() except +
+        char* GetBookName(short vol) except +
 
 cdef extern from "CHitOffsetList.h":
     cdef cppclass CHitOffsetList:
@@ -52,11 +54,25 @@ cdef extern from "Engine.h":
     cdef int CREATE_NEW
     cdef int UNION
     cdef int INTERSECT
+    cdef int MAX_VOLUMES
 
 cdef extern from "CResultBuilder.h":
     cdef cppclass CResultBuilder:
         CResultBuilder() except +
+        unsigned int firstPassage
+        unsigned int passageCount
+        cppset[unsigned int] volumeFilter
+        
         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
+
+def volumes():
+    vols = list()
+    cdef CTextFetch *textExploder
+    textFetch = new CTextFetch()
+    for i in range(MAX_VOLUMES):
+        vols.append(textFetch.GetBookName(i))
+    del textFetch
+    return vols
 
 cdef class NeoEngine:
     cdef CGiant *giantTable
@@ -79,12 +95,32 @@ cdef class NeoEngine:
         del self.hitList
         del self.target
     
-    def match(self, term):
-        self.target.SetString(term)
+    def search(self, query):
+        cdef int searchMode = CREATE_NEW
+        cdef int proximity = 25
+        intersect_mode = 'proximity' in query and query['proximity']['enable']
+        if intersect_mode:
+            proximity = query['proximity']['words']
+            
         self.giantTable.SetAmbiguityChecking(1)
         self.giantTable.SetDisambiguationChecking(0)
-        self.giantTable.SetSearchMode(CREATE_NEW, self.hitList, 25)
-        self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
+        for param in query['params']: 
+            text = param.lower().strip()
+            if text:
+                self.target.SetString(text)
+                self.giantTable.SetSearchMode(searchMode, self.hitList, proximity)
+                self.hitList = self.giantTable.FindHitsWithMatchOf(deref(self.target))
+                if intersect_mode:
+                    searchMode = INTERSECT
+                else:
+                    searchMode = UNION
+            
         resultBuilder = new CResultBuilder()
+        resultBuilder.firstPassage = query['first']
+        resultBuilder.passageCount = query['count']
+        if 'volumes' in query:
+            for vol in query['volumes']:
+                resultBuilder.volumeFilter.insert(vol)
+
         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
 

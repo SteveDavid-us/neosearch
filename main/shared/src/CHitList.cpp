@@ -32,7 +32,7 @@ CHitMemoryStream::CHitMemoryStream() {
     theData = new short[HIT_CHAIN_START_SIZE];
     handleSize = HIT_CHAIN_START_SIZE;
     ResetPosition();
-    totalHits = totalShorts = 0;
+    totalHits = totalShorts = totalPassages = 0;
 }
 
 // ###########################################################################################
@@ -48,7 +48,7 @@ void    CHitMemoryStream::Reset(void) {
 //    }
     handleSize = HIT_CHAIN_START_SIZE;
     ResetPosition();
-    totalHits = totalShorts = 0;
+    totalHits = totalShorts = totalPassages = 0;
 }
 
 // ###########################################################################################
@@ -69,6 +69,7 @@ Boolean CHitMemoryStream::WriteHit(short pas, short wrd) {
     if (lastPas != p) {
         theData[totalShorts++] = p;
         lastPas = p;
+        totalPassages++;
     }
     theData[totalShorts++] = wrd;
     totalHits++;
@@ -206,6 +207,10 @@ void    CHitMemoryStream::PopPosition(void) {
 // ###########################################################################################
 long    CHitMemoryStream::GetTotalHits(void) {
     return totalHits;
+}
+// ###########################################################################################
+long    CHitMemoryStream::GetPassagesHit(void) {
+    return totalPassages;
 }
 
 // ###########################################################################################
@@ -539,7 +544,9 @@ void CHitList::WriteLateralProximityHits(CHitList* destination)
 //  Here is the compareHits function used by sortHits:
 int compareHits(const void *h1, const void *h2)
 {
-    return(memcmp(h1, h2, sizeof(expanded)) );          // works on Mac but not PC
+    expanded *e1 = (expanded *)h1;
+    expanded *e2 = (expanded *)h2;
+    return e1->cmp(e2);  
 }
 
 // ###########################################################################################
@@ -554,6 +561,16 @@ void    CHitList::SortHits(void)
             volumeH[v].SortHits();
 
 //  cout << "Done Sorting...\n";
+}
+
+// ###########################################################################################
+void    CHitList::SortHits(short vol)
+{
+    int     v;
+
+    if (volumeH[vol].GetTotalHits()) {
+        volumeH[vol].SortHits();
+    }
 }
 
 // ###########################################################################################
@@ -573,6 +590,17 @@ long    CHitList::ReportTotalHits(void) {
     
     for (j = 0; j < MAX_VOLUMES; j++)
         total += volumeH[j].GetTotalHits();
+        
+    return total;
+}
+
+// ###########################################################################################
+long    CHitList::ReportTotalPassagesHit(void) {
+    int     j;
+    long    total = 0;
+    
+    for (j = 0; j < MAX_VOLUMES; j++)
+        total += volumeH[j].GetPassagesHit();
         
     return total;
 }
@@ -598,6 +626,14 @@ long*   CHitList::ReportHitsPerVol(void) {
         hitsPerVol[j] = volumeH[j].GetTotalHits();
 
     return hitsPerVol;
+}
+
+// ###########################################################################################
+void   CHitList::ReportPassagesHitPerVol(long (&passagesPerVol)[MAX_VOLUMES]) {
+    short   j;
+    
+    for (j = 0; j < MAX_VOLUMES; j++)
+        passagesPerVol[j] = volumeH[j].GetPassagesHit();
 }
 
 // ###########################################################################################

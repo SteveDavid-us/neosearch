@@ -28,3 +28,24 @@
 .input-search {
     /*width: 125px !important;*/
 }
+
+.btn-remove-term {
+    padding: 0px 5px 0px 6px;
+}
+
+#resultsSidebar {
+    text-align: center;
+}
+
+#pageSelection {
+    text-align: center;
+}
+
+.badge {
+    padding-top: 3px;
+}
+
+.modal-footer-left {
+    float: left;
+    margin-top: 8px;
+}

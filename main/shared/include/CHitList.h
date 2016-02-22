@@ -17,14 +17,24 @@
 #include <vector>
 //#include <stdlib.h>
 
-
 // ###########################################################################################
 // The expanded class is used for sorting the hits for each volume
 class expanded {
+    static inline int cmp(const short a, const short b) {
+        return (a < b) ? -1 : (a > b);
+    };
+
 public:
     short   passage;
     short   word;
-    
+ 
+    int cmp(const expanded *e) const {
+        int result = cmp(passage, e->passage);
+        if (result) {
+            return result;
+        }
+        return cmp(word, e->word);
+    };
     bool operator== (expanded e)    {return (e.word == word) && (e.passage == passage); };
 };
 
@@ -81,7 +91,8 @@ class   CHitMemoryStream {
     short       lastPas, storedLastPas;
     long        iPos, iStoredPos;           // iterator variables
     long        totalHits,                  // number of hits held by this class
-                totalShorts;                // actual memory spaces occupied by these hits
+                totalShorts,                // actual memory spaces occupied by these hits
+                totalPassages;              // passages hit
     
     bool        iMovingNextWards;           // true means iterator last NEXTed, false = PREVIOUSed
 
@@ -103,6 +114,7 @@ public:
     void        PopPosition(void);                      // Recall the last stored position
     
     long        GetTotalHits(void);
+    long        GetPassagesHit(void);
 
     void        SortHits(void);
     void        ShrinkToMinimum(void);                  // Shrinks the memory to lowest needed
@@ -137,10 +149,13 @@ public:
     CHitList*   CloseIntersectMode(void);           // returns the intersected list
     void        AddHits(long diskOffset, std::vector<hit> *exceptions); // Add hits to memory from disk
     void        SortHits(void);                     // Sorts each book's hitlist (to be done at end)
+    void        SortHits(short volume);             // Sorts specified book's hitlist (to be done at end)
 
     long        ReportTotalHits(void);              // Information methods
+    long        ReportTotalPassagesHit(void);
     short       ReportNumberOfVolumes(void);
     long*       ReportHitsPerVol(void);
+    void        ReportPassagesHitPerVol(long (&passagesPerVol)[MAX_VOLUMES]);
     
     void        ResetVolume(short volume);          // Iterator methods
     bool        ReportNextHit(hit&);

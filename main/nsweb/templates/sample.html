@@ -7,7 +7,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="icon" href="static/images/favicon.ico">
-
+<link rel="icon" type="image/png" href="/static/images/neosearch.png">
 <title>Neosearch</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,48 +36,18 @@
       </div>
 
       <div class="collapse navbar-collapse" id="navbar-collapse">
-        <div id="search_form" class="navbar-form navbar-left" role="search">
-          <div class="input-group">
-            <input type="text" id="textInput0" class="input-search form-control" aria-label="..." size="15">
-            <div class="input-group-btn">
-              <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Text <span class="caret"></span></button>
-              <ul class="dropdown-menu dropdown-menu-right dropdown-form">
-                <li class="dropdown">
-                <div class="row">
-                  <div class="col-md-12">
-                    <form id="type0_form">
-                      <label for="type0">Search Type:</label>
-                      <div class="form-group" id="type0">
-                        <div class="btn-group btn-group-justified">
-                          <label class="btn btn-default">
-                            <input type="radio" name="type0" value='text' checked> Text 
-                          </label>
-                          <label class="btn btn-default">
-                            <input type="radio" name="type0" value='noun'> Noun
-                          </label>
-                          <label class="btn btn-default">
-                            <input type="radio" name="type0" value='verb' checked> Verb
-                          </label>
-                        </div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-                </li>
-              </ul>
-            </div><!-- /btn-group -->
-          </div><!-- /input-group -->
+        <div id="searchTerms" class="navbar-form navbar-left" role="search">
         </div>
 
         <form class="navbar-form navbar-left">
           <div class="form-group">
-            <button type="submit" id="searchSubmit" class="btn btn-primary btn-block" style="min-width:100px">Search</button>
+            <button type="button" id="searchSubmit" class="btn btn-primary btn-block" style="min-width:100px">Search</button>
           </div>
         </form>
 
         <ul class="nav navbar-nav">
           <li>
-            <a href="#" class="dropdown-toggle" id="add_term">
+            <a href="#" class="dropdown-toggle" id="addTerm">
               <span class="glyphicon glyphicon-plus"></span>
             </a>
           </li>
@@ -85,6 +55,35 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <span class="glyphicon glyphicon-cog"></span>
             </a>
+            <ul class="dropdown-menu dropdown-form">
+              <li>
+              <div class="row">
+                <div class="col-md-12">
+                  <form id="settings_form">
+                    <label>Find search terms:</label>
+                    <div class="form-group">
+                      <div class="btn-group btn-group-justified">
+                        <label class="btn btn-default">
+                          <input type="radio" name="proximity-mode" id="prox-all" value='all' checked> All
+                        </label>
+                        <label class="btn btn-default">
+                          <input type="radio" name="proximity-mode" id="prox-any" value='any'> Any
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="collapse list-group-submenu" id="proximityMenu">
+                      <label for="proximityDiv">Search radius (words):</label>
+                      <div class="form-group" id="proximityDiv">
+                        <input class="form-control" name="search-proximity" placeholder="Search radius" min="1" inputmode="numeric" pattern="[0-9]+" type="number" value="25">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              </li>
+            </ul>
+            </li>
           </li>
           <li>
             <a href="#" class="dropdown-toggle" data-toggle="modal" data-target="#helpModal">
@@ -98,9 +97,27 @@
   </nav>
 </div>
 
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="Help Dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Help</h4>
+      </div>
+      <div class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <div class="modal-footer-left"></div>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-5 col-lg-4 pull-right" id="resultsSidebar">
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 pull-right" id="resultsSidebar">
+      <h6 id="resultHeader">0 hits (0.0 seconds)</h6>
       <div class="form-group">
         <div class="btn-group-vertical" id="resultsByBook">
         </div>
@@ -108,11 +125,6 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8" id="resultsMain">
       <div id="results">
-        <h6 id="resultHeader">0 results (0.0 seconds)</h6>
-        <div class="passage"></div>
-        <hr class="spacer"></hr>
-        <div class="passage"></div>
-        <hr class="spacer"></hr>
       </div>
       <div id="pageSelection"></div>
     </div>
@@ -122,7 +134,9 @@
 {% assets "js_all" %}
 <script type="text/javascript" src="{{ ASSET_URL }}"></script>
 {% endassets %}
-<script type="text/javascript">var clientVersion = {{ version }};</script>
+<script type="text/javascript">
+  var clientVersion = {{ version }};
+</script>
 
 </body>
 </html>

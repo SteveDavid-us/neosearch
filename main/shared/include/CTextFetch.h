@@ -31,6 +31,7 @@ class CTextFetch {
 
 public:
 
+    static const unsigned char BookOrder[MAX_VOLUMES];
     CTextFetch();
     ~CTextFetch();
     int*        ReadPassage(short vol, short pas, long& length);

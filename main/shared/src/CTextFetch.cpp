@@ -12,6 +12,8 @@
 
 using namespace std;
 
+const unsigned char CTextFetch::BookOrder[MAX_VOLUMES] = {20, 21, 0, 1, 2, 3, 4, 5, 6, 7, 24, 17, 22, 8, 19, 18, 13, 11, 16, 14, 12, 15, 9, 23, 10, 25};
+
 // ###########################################################################################
 CTextFetch::CTextFetch() {
 
