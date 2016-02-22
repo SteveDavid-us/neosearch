@@ -1,0 +1,64 @@
+This is a spec for the way that Latin word forms are subclassified. The top level choice is between Substantive and Verb forms. 
+
+GRAMMAR SELECTION:
+    Substantive (Words used as nouns, pronouns, and adjectives,)
+            Substantive words follow patterns called declensions, which define the way the word endings change based on the stratifications listed below. These stratifications do not exclude each other; selections from this list can be made independently. Multiple selections would be useful.
+        Case:
+            ANY
+            Nominative
+            Genitive
+            Dative
+            Accusative
+            Ablative
+            Vocative
+            Locative
+        Gender:
+            ANY
+            Masculine
+            Feminine
+            Neuter
+        Participle:
+            ANY
+            Present Active Participle
+            Comparative of Present Active Participle
+            Superlative of Present Active Participle
+            Future Active Participle
+            Perfect Passive Participle
+            Comparative of Perfect Passive Participle
+            Superlative of Perfect Passive Participle
+            Gerundive
+            Comparative of Adverb or Adjective
+            Superlative of Adverb or Adjective
+        Number:
+            ANY
+            Singular
+            Plural
+    Verb
+            Similar to the ways substantives follow patters called declensions, verbs follow patterns called conjugations, which define the patterns their endings follow.
+        Mood:
+            ANY
+            Indicative
+            Subjunctive
+            Infinitive
+            Imperative
+        Tense:
+            ANY
+            Present
+            Imperfect
+            Future
+            Perfect
+            Pluperfect
+            Future Perfect
+        Voice:
+            ANY
+            Active
+            Passive
+        Person:
+            ANY
+            1st
+            2nd
+            3rd
+        Number:
+            ANY
+            Singular
+            Plural
