@@ -16,7 +16,86 @@
         "type": "array",
         "additionalProperties": false,
         "items" : {
-            "type": "string"
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "text" : {
+                    "type": "string",
+                    "additionalProperties": false,
+                    "minLength": 0,                    
+                    "maxLength": 128
+                },
+                "type" : {
+                    "enum": ["text", "verb", "substantive"]
+                },
+                "verb" : {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "mood": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 4
+                        },
+                        "voice": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 2
+                        },
+                        "number": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 2
+                        },
+                        "tense": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 6
+                        },
+                        "person": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 3
+                        }
+                    }
+                },
+                "substantive" : {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "case": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 5
+                        },
+                        "participle": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 13 
+                        },
+                        "number": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 2
+                        },
+                        "gender": {
+                            "type": "integer",
+                            "additionalProperties": false,
+                            "minimum": 0,
+                            "maximum": 3
+                        }
+                    }
+                }
+            },
+            "required": ["type"]
         },
         "minLength": 1,
         "maxLength": 16 
