@@ -22,7 +22,7 @@ DEBUG_FLAGS=-g
 RELEASE_FLAGS=-O2
 PROFILE_FLAGS=-pg -O2
 
-FLAGS=-I../shared/include -Iinclude -Wno-write-strings -Wconversion
+FLAGS=-I../shared/include -Iinclude -Wno-write-strings
 LIBS=-ljsoncpp
 
 #	platform-specific makefile includes
@@ -70,7 +70,7 @@ $(OUTDIR)/CDictionary.o: ../shared/src/CDictionary.cpp $(OUTDIR)/CDataFile.o
 $(OUTDIR)/CAmbiguity.o: ../shared/src/CAmbiguity.cpp $(OUTDIR)/CDataFile.o
 	$(CXX) $(FLAGS) -c -o $@ $<
 
-$(OUTDIR)/CResultBuilder.o: CResultBuilder.cpp $(OUTDIR)/CResultBuilder.o
+$(OUTDIR)/CResultBuilder.o: CResultBuilder.cpp
 	$(CXX) $(FLAGS) -c -o $@ $<
 
 $(OUTDIR)/%.o : ../shared/src/%.cpp
