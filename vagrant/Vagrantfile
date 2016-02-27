@@ -15,18 +15,18 @@ Vagrant.configure(2) do |config|
   config.vm.synced_folder "../", "/trunk"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "1536"
+    vb.memory = "768"
     vb.cpus = 2
     vb.name   = "neosearch"
   end
-
+  # if you're using vmware:
   config.vm.provider :libvirt do |libvirt|
-    libvirt.memory = 1536
+    libvirt.memory = 768
     libvirt.cpus = 2
   end
 
   config.vm.provision :shell, binary: "true",  inline: <<-SHELL
-# set this to your VM (or real) user
+# set this to your VM (or real) user; vagrant for your virtual machine, ubuntu if provisioning to AWS
 export VMUSER=vagrant
 export INCEPT_DATE=`date +%Y%m%d.%H%M`
 LOGDIR=/vagrant/logs
