@@ -53,3 +53,7 @@
 .grammar-select {
     width: 100% !important;
 }
+
+.navbar-collapse.in {
+    overflow-y: visible;
+}

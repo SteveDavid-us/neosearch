@@ -1,5 +1,5 @@
-var lastQuery = null;
 var loading = false;
+var version = 2;
 
 function UpdateFilter(searchData)
 {
@@ -10,9 +10,192 @@ function UpdateFilter(searchData)
     });
 }
 
-function ParseQuery() {
+function EncodeParam(p)
+{
+    var str = $.trim(p.text);
+    if (p.type == 'substantive') {
+        str = 'n=' + str;
+        if ('case' in p.substantive) {
+            str += "+c" + p.substantive.case;
+        }
+        if ('participle' in p.substantive) {
+            str += "+p" + p.substantive.participle;
+        }
+        if ('number' in p.substantive) {
+            str += "+n" + p.substantive.number;
+        }
+        if ('gender' in p.substantive) {
+            str += "+g" + p.substantive.gender;
+        }
+    } else if (p.type == 'verb') {
+        str = 'v=' + str;
+        if ('mood' in p.verb) {
+            str += "+m" + p.verb.mood;
+        }
+        if ('voice' in p.verb) {
+            str += "+v" + p.verb.voice;
+        }
+        if ('number' in p.verb) {
+            str += "+n" + p.verb.number;
+        }
+        if ('tense' in p.verb) {
+            str += "+t" + p.verb.tense;
+        }
+        if ('person' in p.verb) {
+            str += "+p" + p.verb.person;
+        }
+    } else if (str) {
+        str = 't=' + str;
+    } else {
+        return null;
+    }
+    return str;
+}
+
+function DecodeParam(p)
+{
+    var param = {};
+    var r = /t=([a-z]+)/i.exec(p);
+    if (r) {
+        param.type = 'text';
+        param.text = r[1].toLowerCase();
+        return param;
+    }
+    r = /n=([a-z]+.*)/i.exec(p);
+    if (r) {
+        param.type = 'substantive';
+        param.substantive = {};
+        param.text = r[1].toLowerCase();
+        r = /\+c([0-9]+)/.exec(p);
+        if (r) {
+            param.substantive.case = r[0];
+        }
+        r = /\+p([0-9]+)/.exec(p);
+        if (r) {
+            param.substantive.participle = r[0];
+        }
+        r = /\+n([0-9]+)/.exec(p);
+        if (r) {
+            param.substantive.number = r[0];
+        }
+        r = /\+g([0-9]+)/.exec(p);
+        if (r) {
+            param.substantive.gender = r[0];
+        }
+        return param;
+    }
+    r = /v=([a-z]+).*/i.exec(p);
+    if (r) {
+        param.type = 'verb';
+        param.verb = {};
+        param.text = r[1].toLowerCase();
+        r = /\+m([0-9]+)/.exec(p);
+        if (r) {
+            param.verb.mood = r[0];
+        }
+        r = /\+v([0-9]+)/.exec(p);
+        if (r) {
+            param.verb.voice = r[0];
+        }
+        r = /\+n([0-9]+)/.exec(p);
+        if (r) {
+            param.verb.number = r[0];
+        }
+        r = /\+t([0-9]+)/.exec(p);
+        if (r) {
+            param.verb.tense = r[0];
+        }
+        r = /\+p([0-9]+)/.exec(p);
+        if (r) {
+            param.verb.person = r[0];
+        }
+        return param;
+    }
+    return null;
+}
+
+function BuildURI(q)
+{
+    var params = [];
+    $.each(q.params, function(i, param) {
+        var p = EncodeParam(param);
+        if (p != null) {
+            params.push(p);
+        }
+    });
+    if (!q.proximity.enable) {
+        params.push('p=a');
+    } else if (q.proximity.words != 25) {
+        params.push('p=' + q.proximity.words);
+    }
+    if (q.volumes && q.volumes.length) {
+        params.push('f=' + q.volumes.join());
+    }
+    if (q.count != 10) {
+        params.push('c=' + q.count);
+    }
+    if (q.first != 0) {
+        params.push('s=' + q.first);
+    }
+    return "?" + params.join(';');
+}
+
+function ParseURI(uri)
+{
+    var q = {};
+    q.version = version;
+    q.proximity = {};
+    q.proximity.enable = true;
+    q.proximity.words = 25;
+    q.count = 10;
+    q.first = 0;
+    q.volumes = [];
+    q.params = [];
+    var r = null;
+    $.each(uri.split(';'), function (i, param) {
+        r = /(v|n|t)=.*/.exec(param);
+        if (r) {
+            var p = DecodeParam(r[0]);
+            if (p) {
+                q.params.push(p); 
+            }
+            return;
+        }
+        r = /p=a/.exec(param);
+        if (r) {
+            q.proximity.enable = false;
+            return;
+        }
+        r = /p=([0-9]+)/.exec(param);
+        if (r) {
+            q.proximity.enable = true;
+            q.proximity.words = parseInt(r[1]);
+            return;
+        }
+        r = /f=([0-9,]+)/.exec(param);
+        if (r) {
+            for (var vol in r[1].split(',')) {
+                q.volumes.push(parseInt(vol));
+            }
+            return;
+        }
+        r = /c=([0-9]+)/.exec(param);
+        if (r) {
+            q.count = parseInt(r[1]);
+            return;
+        }
+        r = /s=([0-9]+)/.exec(param);
+        if (r) {
+            q.first = parseInt(r[1]);
+            return;
+        }
+    });
+    return q;
+}
+
+function ParseUI() {
     var searchData = {};
-    searchData.version = 2;
+    searchData.version = version;
     searchData.first = 0;
     searchData.count = 10;
     searchData.params = [];
@@ -75,7 +258,7 @@ function ParseQuery() {
         searchData.params.push(term);
     });
     searchData.proximity = {};
-    searchData.proximity.enable = ($('input[name="proximity-mode"]').val() == 'all');
+    searchData.proximity.enable = $('input#prox-all').is(':checked');
     searchData.proximity.words = parseInt($('input[name="search-proximity"]').val());
     searchData['volumes'] = [];
     UpdateFilter(searchData);
@@ -83,7 +266,25 @@ function ParseQuery() {
     return searchData;
 }
 
-function LoadResults(d) {
+function ApplyUI(q) {
+    $('.search-term').remove();
+    $(".btn-remove-term").remove();
+    if (q.params.length == 0) {
+        AddTerm('text');
+        return;
+    }
+    $.each(q.params, function (i, p) {
+        if (AddTerm(p.type)) {
+            var t = $('.search-term').last();
+            t.find('.search-word').first().val(p.text);
+            if (p.type == 'substantive') {
+            } else if (p.type == 'verb') {
+            }
+        }
+    });
+}
+
+function LoadResults(q, d) {
     loading = true;
     var bookResults = "";
     $.each(d.volumes, function (i, vol) {
@@ -100,45 +301,56 @@ function LoadResults(d) {
     });
 
     $(".volume-filter").on('click', function(event) {
-        RunQuery(ParseQuery());
+        RunQuery(ParseUI());
     });
     $('#resetFilter').on('click', function(event) {
         $(".volume-filter").each(function() {
             this.checked = false;
         });
-        RunQuery(ParseQuery());
+        RunQuery(ParseUI());
     });
     var results = "";
     $.each(d.passages, function(i, result) {
-        results += '<h5><a>' + result.volume + ': ' + result.passage + ' (' + result.count + ' result' + ((result.count == 1) ? '' : 's') + ')</a></h5>\n'
+        results += '<h5><a>' + result.volume + ': ' + result.passage + ' (' + result.count + ' hit' + ((result.count == 1) ? '' : 's') + ')</a></h5>\n'
         results += '<div class="passage">' + result.text + '</div>\n'
         results += '<hr class="spacer"></hr>\n';
     });
     $('#results').html(results);
-    $('#pageSelection').bootpag({
-        total: (d.count + lastQuery.count - 1) / lastQuery.count,
-        page: lastQuery.first / lastQuery.count + 1,
-        maxVisible: 10
-    }).off("page").on("page", function(event, page) {
-        if (!loading) {
-            var newQuery = $.extend({}, lastQuery);
-            newQuery.first = (page - 1) * newQuery.count;
-            RunQuery(newQuery);
-        }
-    });
+    var pageCount = Math.floor(d.count / q.count);
+    if (pageCount > 0) {
+        $('#pageSelection').bootpag({
+            total: pageCount,
+            page: q.first / q.count + 1,
+            maxVisible: 10
+        }).off("page").on("page", function(event, page) {
+            if (!loading) {
+                var newQuery = $.extend({}, q);
+                newQuery.first = (page - 1) * newQuery.count;
+                RunQuery(newQuery);
+            }
+        });
+    } else {
+        $('#pageSelection').html('');
+    }
     loading = false;
 }
 
-function AddTerm(removable) {
+function AddTerm(termType) {
     if ($('.search-term').length >= 16) {
-        return;
+        return false;
+    }
+    var typeName = 'Text';
+    if (termType == 'substantive') {
+        typeName = 'Nonverb';
+    } else if (termType == 'verb') {
+        typeName = 'Verb';
     }
 
     var newTerm =
       '<div class="input-group search-term">\n' +
         '<input type="text" class="search-word form-control" aria-label="..." size="15">\n' +
         '<div class="input-group-btn">\n' +
-          '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Text <span class="caret"></span></button>\n' +
+          '<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">' + typeName + ' <span class="caret"></span></button>\n' +
           '<ul class="dropdown-menu dropdown-menu-right dropdown-form">\n' +
             '<li class="dropdown">\n' +
             '<div class="row">\n' +
@@ -148,13 +360,13 @@ function AddTerm(removable) {
                   '<div class="form-group" id="grammarEnable">\n' +
                     '<div class="btn-group btn-group-justified">\n' +
                       '<label class="btn btn-default">\n' +
-                        '<input type="radio" name="term-type" id="term-type-text" value="Text" checked> Text\n' +
+                        '<input type="radio" name="term-type" id="term-type-text" value="Text"' + (termType == 'text' ? ' checked' : '') + '> Text\n' +
                       '</label>\n' +
                       '<label class="btn btn-default">\n' +
-                        '<input type="radio" name="term-type" id="term-type-verb" value="Verb"> Verb\n' +
+                        '<input type="radio" name="term-type" id="term-type-verb" value="Verb"' + (termType == 'verb' ? ' checked' : '') + '> Verb\n' +
                       '</label>\n' +
                       '<label class="btn btn-default">\n' +
-                        '<input type="radio" name="term-type" id="term-type-nonverb" value="Nonverb"> Nonverb\n' +
+                        '<input type="radio" name="term-type" id="term-type-nonverb" value="Nonverb"' + (termType == 'substantive' ? ' checked' : '') + '> Nonverb\n' +
                       '</label>\n' +
                     '</div>\n' +
                   '</div>\n' +
@@ -308,7 +520,7 @@ function AddTerm(removable) {
 
     $('input.search-word').off('keypress').on('keypress', function(event) {
         if (event.which == 13) {
-            RunQuery(ParseQuery());
+            RunQuery(ParseUI());
             return false;
         }
     });
@@ -329,11 +541,35 @@ function AddTerm(removable) {
         } else {
             $(this).remove();
         }
+        return false;
     });
+
+    return true;
+}
+
+function UpdateHistory(q, d) {
+    var terms = [];
+    $.each(q.params, function (i, p) {
+        var stripped = $.trim(p.text);
+        if (stripped) {
+            terms.push(stripped); 
+        }
+    });
+    var uri = BuildURI(q);
+    var desc = terms.join(' ');
+    if (desc) {
+        desc += " - "; 
+    }
+    desc += "NeoSearch";
+    $('title').html(desc);
+    $('a[name="a"]')[0].scrollIntoView();
+    history.pushState({'query':q, 'results':d}, desc, uri);
 }
 
 function RunQuery(query_data) {
-    lastQuery = query_data;
+    if (query_data.params.length == 0) {
+        return;
+    }
     var str_query = JSON.stringify(query_data);
     if (Modernizr.localstorage) {
         localStorage.setItem("last_query", str_query);
@@ -357,7 +593,8 @@ function RunQuery(query_data) {
 
                 var end = new Date().getTime();
                 $('#resultHeader').text("" + d.total_hits + " hit" + (d.total_hits == 1 ? '' : 's') + " (" + ((end - start) / 1000).toFixed(1) + " seconds)");
-                LoadResults(d);
+                LoadResults(query_data, d);
+                UpdateHistory(query_data, d);
             }
     }).fail(function() {
         /*
@@ -370,11 +607,20 @@ function RunQuery(query_data) {
     });
 }
 
+function LoadURI() {
+    var urlParts = window.location.href.split('?');
+    if (urlParts.length == 2) {
+        var q = ParseURI(urlParts[1]);
+        ApplyUI(q);
+        RunQuery(q);
+    }
+}
+
 function UIInit() {
-    AddTerm();
+    AddTerm('text');
     $('#pageSelection').bootpag({total: 0, maxVisible: 10});
     $('#searchSubmit').on('click', function(event) {
-        RunQuery(ParseQuery());
+        RunQuery(ParseUI());
     });
     $('input[type=radio]').on('change', function (event) {
         $(this).parent().addClass("active").siblings().removeClass("active");
@@ -385,13 +631,22 @@ function UIInit() {
     });
 
     $('#addTerm').on('click', function(event) {
-        AddTerm();
+        AddTerm('text');
+        return false;
     });
     $('.dropdown-menu').on('click', 'li', function(event) {
         event.stopPropagation(); 
     });
+    window.onpopstate = function(event) {
+        if (event.state) {
+            LoadResults(event.state.query, event.state.results);
+        } else {
+            LoadURI(); 
+        }
+    }
 }
 
 $(document).ready(function(){
     UIInit();
+    LoadURI(); 
 });
