@@ -1,0 +1,123 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "ubuntu/trusty64"
+
+  # access VM's apache
+  # web - port # >= 1024...    52846 spells LATIN & is sign of cross (kinda)
+  #config.vm.network "forwarded_port", guest: 80, host: 52846
+
+  # We'll just use sample.py for now
+  config.vm.network "forwarded_port", guest: 5000, host: 5000
+
+  # or 
+  config.vm.synced_folder "../", "/trunk"
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "768"
+    vb.cpus = 2
+    vb.name   = "neosearch"
+  end
+  # if you're using vmware:
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.memory = 768
+    libvirt.cpus = 2
+  end
+
+  config.vm.provision :shell, binary: "true",  inline: <<-SHELL
+# set this to your VM (or real) user; vagrant for your virtual machine, ubuntu if provisioning to AWS
+export VMUSER=vagrant
+export INCEPT_DATE=`date +%Y%m%d.%H%M`
+LOGDIR=/vagrant/logs
+export VAGRANT_LOG="$LOGDIR/vagrant-$INCEPT_DATE.log"
+
+if ! [ -d $LOGDIR ]; then
+   if ! mkdir $LOGDIR ; then
+     echo failed to mkdir, status = $? .. "Fix please (maybe try /tmp)"	
+     exit 1
+  fi   
+fi
+
+# Let's get the latest lists of packages
+sudo apt-get update
+
+############################################
+#
+# from josh --
+
+sudo apt-get install -y python-dev python-pip libjsoncpp-dev
+sudo pip install cython
+
+# ... | tee -a $VAGRANT_LOG
+#    cd path/to/neosearch/main/nsweb
+#     python setup.py build_ext --inplace
+
+# tested on OSX
+cd /trunk/main/nsweb
+python setup.py build_ext --inplace
+
+# Then you'll need to install and configure mod_wsgi to work with Flask:
+#  http://flask.pocoo.org/docs/0.10/deploying/mod_wsgi/
+
+# this will get apache as well -- 
+sudo apt-get install -y libapache2-mod-wsgi
+
+# flask & dependencies
+sudo pip install flask  flask-assets jsonschema
+
+#
+# TODO:
+#  apache wsgi config..
+
+# for now, serve straight up ?
+# .. but if we start now, this script will hang and vagrant won't complete
+
+
+############################################
+
+# commands to append to .bashrc 
+function bashrc_additions() {
+  local NEWHIST=$1
+  echo '##'; echo '## vagrant bashrc additions'; echo '##';
+  echo "export HISTTIMEFORMAT='%F %T '"; 
+  echo '#' `date` ' - vagrant instance provision date.'
+  # Put the shell history file outside of the box, with a new one for each created instance.
+  # In case you logged in and added packages etc, you (may) have a record.
+  (echo "# learn from history, even after the box is gone"; \
+   echo "PROMPT_COMMAND='history -a'"; \
+   echo export HISTFILE=$LOGDIR/$NEWHIST)
+}
+###########################################
+# bashrc update for user
+bashrc_additions V.bash_history_$INCEPT_DATE >> /home/$VMUSER/.bashrc
+# .. for root
+bashrc_additions V.bash_history_$INCEPT_DATE.R | sudo tee -a /root/.bashrc >/dev/null
+
+############# 
+
+(echo '# tell user how to start it after they log in'
+ echo 'cd /trunk/main/nsweb'
+ echo "echo '================================================================='"
+ echo "echo ' Starting neosearch now; IN YOUR BROWSER:  http://localhost:5000'"
+ echo "echo ' To exit, type Ctrl-c'"
+ echo "echo 'To restart, log out and log back in, or run the following command:  '"
+ echo "echo 'python sample.py'"
+ echo '# now to really start it'
+ echo 'python sample.py'
+ ) >> /home/$VMUSER/.bashrc
+ 
+echo ===================================== >&2
+echo Now log into the virtual machine with >&2
+echo vagrant ssh
+echo ===================================== >&2
+echo 
+
+# debug:  check vagrant env, may be useful for diagnosing problems
+set > $LOGDIR/up-$INCEPT_DATE.env
+
+
+SHELL
+
+# end 'do':
+end
