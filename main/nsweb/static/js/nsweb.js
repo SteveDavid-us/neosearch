@@ -61,26 +61,26 @@ function DecodeParam(p)
         param.text = r[1].toLowerCase();
         return param;
     }
-    r = /n=([a-z]+.*)/i.exec(p);
+    r = /n=([a-z]+).*/i.exec(p);
     if (r) {
         param.type = 'substantive';
         param.substantive = {};
         param.text = r[1].toLowerCase();
         r = /\+c([0-9]+)/.exec(p);
         if (r) {
-            param.substantive.case = r[0];
+            param.substantive.case = parseInt(r[1]);
         }
         r = /\+p([0-9]+)/.exec(p);
         if (r) {
-            param.substantive.participle = r[0];
+            param.substantive.participle = parseInt(r[1]);
         }
         r = /\+n([0-9]+)/.exec(p);
         if (r) {
-            param.substantive.number = r[0];
+            param.substantive.number = parseInt(r[1]);
         }
         r = /\+g([0-9]+)/.exec(p);
         if (r) {
-            param.substantive.gender = r[0];
+            param.substantive.gender = parseInt(r[1]);
         }
         return param;
     }
@@ -91,23 +91,23 @@ function DecodeParam(p)
         param.text = r[1].toLowerCase();
         r = /\+m([0-9]+)/.exec(p);
         if (r) {
-            param.verb.mood = r[0];
+            param.verb.mood = parseInt(r[1]);
         }
         r = /\+v([0-9]+)/.exec(p);
         if (r) {
-            param.verb.voice = r[0];
+            param.verb.voice = parseInt(r[1]);
         }
         r = /\+n([0-9]+)/.exec(p);
         if (r) {
-            param.verb.number = r[0];
+            param.verb.number = parseInt(r[1]);
         }
         r = /\+t([0-9]+)/.exec(p);
         if (r) {
-            param.verb.tense = r[0];
+            param.verb.tense = parseInt(r[1]);
         }
         r = /\+p([0-9]+)/.exec(p);
         if (r) {
-            param.verb.person = r[0];
+            param.verb.person = parseInt(r[1]);
         }
         return param;
     }
@@ -273,15 +273,58 @@ function ApplyUI(q) {
         AddTerm('text');
         return;
     }
+
     $.each(q.params, function (i, p) {
         if (AddTerm(p.type)) {
             var t = $('.search-term').last();
             t.find('.search-word').first().val(p.text);
             if (p.type == 'substantive') {
+                if ('case' in p.substantive) {
+                    t.find('#nonverbCase').first().val(p.substantive.case);
+                }
+                if ('participle' in p.substantive) {
+                    t.find('#nonverbParticiple').first().val(p.substantive.participle);
+                }
+                if ('number' in p.substantive) {
+                    t.find('#nonverbNumber').first().val(p.substantive.number);
+                }
+                if ('gender' in p.substantive) {
+                    t.find('#nonverbGender').first().val(p.substantive.gender);
+                }
             } else if (p.type == 'verb') {
+                if ('mood' in p.verb) {
+                    t.find('#verbMood').first().val(p.verb.mood);
+                }
+                if ('voice' in p.verb) {
+                    t.find('#verbVoice').first().val(p.verb.voice);
+                }
+                if ('number' in p.verb) {
+                    t.find('#verbNumber').first().val(p.verb.number);
+                }
+                if ('tense' in p.verb) {
+                    t.find('#verbTense').first().val(p.verb.tense);
+                }
+                if ('person' in p.verb) {
+                    t.find('#verbPerson').first().val(p.verb.person);
+                }
             }
         }
     });
+
+    if (q.proximity.enable) {
+        $('input#prox-all').prop("checked", true);
+        $('input#prox-all').toggleClass("active", true);
+        $('input#prox-any').prop("checked", false);
+        $('input#prox-any').toggleClass("active", false);
+        $('#proximityMenu').collapse('show');
+    } else {
+        $('input#prox-all').prop("checked", false);
+        $('input#prox-all').toggleClass("active", false);
+        $('input#prox-any').prop("checked", true);
+        $('input#prox-any').toggleClass("active", true);
+        $('#proximityMenu').collapse('hide');
+    }
+    $('input[name="search-proximity"]').val(q.proximity.words);
 }
 
 function LoadResults(q, d) {
@@ -301,13 +344,13 @@ function LoadResults(q, d) {
     });
 
     $(".volume-filter").on('click', function(event) {
-        RunQuery(ParseUI());
+        RunQuery(ParseUI(), false);
     });
     $('#resetFilter').on('click', function(event) {
         $(".volume-filter").each(function() {
             this.checked = false;
         });
-        RunQuery(ParseUI());
+        RunQuery(ParseUI(), false);
     });
     var results = "";
     $.each(d.passages, function(i, result) {
@@ -326,7 +369,7 @@ function LoadResults(q, d) {
             if (!loading) {
                 var newQuery = $.extend({}, q);
                 newQuery.first = (page - 1) * newQuery.count;
-                RunQuery(newQuery);
+                RunQuery(newQuery, true);
             }
         });
     } else {
@@ -370,7 +413,7 @@ function AddTerm(termType) {
                       '</label>\n' +
                     '</div>\n' +
                   '</div>\n' +
-                  '<div class="collapse list-group-submenu" id="verbMenu">\n' +
+                  '<div class="collapse list-group-submenu' + (termType == 'verb' ? ' in" aria-expanded="true"' : '"') + ' id="verbMenu">\n' +
 
                     '<div class="form-group grammar-select">\n' +
                       '<label for="verbMood">Mood:</label>\n' +
@@ -430,7 +473,7 @@ function AddTerm(termType) {
                     '</div>\n' +
 
                   '</div>\n' +
-                  '<div class="collapse list-group-submenu" id="nonverbMenu">\n' +
+                  '<div class="collapse list-group-submenu' + (termType == 'substantive' ? ' in" aria-expanded="true"' : '"') + ' id="nonverbMenu">\n' +
 
                     '<div class="form-group grammar-select">\n' +
                       '<label class="control-label" for="nonverbCase">Case:</label>\n' +
@@ -520,7 +563,7 @@ function AddTerm(termType) {
 
     $('input.search-word').off('keypress').on('keypress', function(event) {
         if (event.which == 13) {
-            RunQuery(ParseUI());
+            RunQuery(ParseUI(), false);
             return false;
         }
     });
@@ -541,6 +584,7 @@ function AddTerm(termType) {
         } else {
             $(this).remove();
         }
+        RunQuery(ParseUI(), false);
         return false;
     });
 
@@ -562,11 +606,10 @@ function UpdateHistory(q, d) {
     }
     desc += "NeoSearch";
     $('title').html(desc);
-    $('a[name="a"]')[0].scrollIntoView();
     history.pushState({'query':q, 'results':d}, desc, uri);
 }
 
-function RunQuery(query_data) {
+function RunQuery(query_data, scrollToView) {
     if (query_data.params.length == 0) {
         return;
     }
@@ -595,6 +638,9 @@ function RunQuery(query_data) {
                 $('#resultHeader').text("" + d.total_hits + " hit" + (d.total_hits == 1 ? '' : 's') + " (" + ((end - start) / 1000).toFixed(1) + " seconds)");
                 LoadResults(query_data, d);
                 UpdateHistory(query_data, d);
+                if (scrollToView) {
+                    $('a[name="a"]')[0].scrollIntoView();
+                }
             }
     }).fail(function() {
         /*
@@ -607,12 +653,14 @@ function RunQuery(query_data) {
     });
 }
 
-function LoadURI() {
+function LoadURI(run) {
     var urlParts = window.location.href.split('?');
     if (urlParts.length == 2) {
         var q = ParseURI(urlParts[1]);
         ApplyUI(q);
-        RunQuery(q);
+        if (run) {
+            RunQuery(q, false);
+        }
     }
 }
 
@@ -620,7 +668,7 @@ function UIInit() {
     AddTerm('text');
     $('#pageSelection').bootpag({total: 0, maxVisible: 10});
     $('#searchSubmit').on('click', function(event) {
-        RunQuery(ParseUI());
+        RunQuery(ParseUI(), false);
     });
     $('input[type=radio]').on('change', function (event) {
         $(this).parent().addClass("active").siblings().removeClass("active");
@@ -637,16 +685,23 @@ function UIInit() {
     $('.dropdown-menu').on('click', 'li', function(event) {
         event.stopPropagation(); 
     });
+    $('#reset_page').on('click', function(event) {
+        for (i = 0; i < document.forms.length; i++) {
+            document.forms[i].reset();
+        }
+        window.location.href = window.location.href.split('?')[0];
+    });
     window.onpopstate = function(event) {
         if (event.state) {
+            LoadURI(false); 
             LoadResults(event.state.query, event.state.results);
         } else {
-            LoadURI(); 
+            LoadURI(true); 
         }
     }
 }
 
 $(document).ready(function(){
     UIInit();
-    LoadURI(); 
+    LoadURI(true); 
 });
