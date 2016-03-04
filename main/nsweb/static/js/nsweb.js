@@ -271,59 +271,50 @@ function ApplyUI(q) {
     $(".btn-remove-term").remove();
     if (q.params.length == 0) {
         AddTerm('text');
-        return;
-    }
-
-    $.each(q.params, function (i, p) {
-        if (AddTerm(p.type)) {
-            var t = $('.search-term').last();
-            t.find('.search-word').first().val(p.text);
-            if (p.type == 'substantive') {
-                if ('case' in p.substantive) {
-                    t.find('#nonverbCase').first().val(p.substantive.case);
-                }
-                if ('participle' in p.substantive) {
-                    t.find('#nonverbParticiple').first().val(p.substantive.participle);
-                }
-                if ('number' in p.substantive) {
-                    t.find('#nonverbNumber').first().val(p.substantive.number);
-                }
-                if ('gender' in p.substantive) {
-                    t.find('#nonverbGender').first().val(p.substantive.gender);
-                }
-            } else if (p.type == 'verb') {
-                if ('mood' in p.verb) {
-                    t.find('#verbMood').first().val(p.verb.mood);
-                }
-                if ('voice' in p.verb) {
-                    t.find('#verbVoice').first().val(p.verb.voice);
-                }
-                if ('number' in p.verb) {
-                    t.find('#verbNumber').first().val(p.verb.number);
-                }
-                if ('tense' in p.verb) {
-                    t.find('#verbTense').first().val(p.verb.tense);
-                }
-                if ('person' in p.verb) {
-                    t.find('#verbPerson').first().val(p.verb.person);
+    } else {
+        $.each(q.params, function (i, p) {
+            if (AddTerm(p.type)) {
+                var t = $('.search-term').last();
+                t.find('.search-word').first().val(p.text);
+                if (p.type == 'substantive') {
+                    if ('case' in p.substantive) {
+                        t.find('#nonverbCase').first().val(p.substantive.case);
+                    }
+                    if ('participle' in p.substantive) {
+                        t.find('#nonverbParticiple').first().val(p.substantive.participle);
+                    }
+                    if ('number' in p.substantive) {
+                        t.find('#nonverbNumber').first().val(p.substantive.number);
+                    }
+                    if ('gender' in p.substantive) {
+                        t.find('#nonverbGender').first().val(p.substantive.gender);
+                    }
+                } else if (p.type == 'verb') {
+                    if ('mood' in p.verb) {
+                        t.find('#verbMood').first().val(p.verb.mood);
+                    }
+                    if ('voice' in p.verb) {
+                        t.find('#verbVoice').first().val(p.verb.voice);
+                    }
+                    if ('number' in p.verb) {
+                        t.find('#verbNumber').first().val(p.verb.number);
+                    }
+                    if ('tense' in p.verb) {
+                        t.find('#verbTense').first().val(p.verb.tense);
+                    }
+                    if ('person' in p.verb) {
+                        t.find('#verbPerson').first().val(p.verb.person);
+                    }
                 }
             }
-        }
-    });
-
-    if (q.proximity.enable) {
-        $('input#prox-all').prop("checked", true);
-        $('input#prox-all').toggleClass("active", true);
-        $('input#prox-any').prop("checked", false);
-        $('input#prox-any').toggleClass("active", false);
-        $('#proximityMenu').collapse('show');
-    } else {
-        $('input#prox-all').prop("checked", false);
-        $('input#prox-all').toggleClass("active", false);
-        $('input#prox-any').prop("checked", true);
-        $('input#prox-any').toggleClass("active", true);
-        $('#proximityMenu').collapse('hide');
+        });
     }
+
+    $('input#prox-all').prop("checked", q.proximity.enable);
+    $('input#prox-all').parent().toggleClass("active", q.proximity.enable);
+    $('input#prox-any').prop("checked", !q.proximity.enable);
+    $('input#prox-any').parent().toggleClass("active", !q.proximity.enable);
+    $('#proximityMenu').collapse(q.proximity.enable ? 'show' : 'hide');
     $('input[name="search-proximity"]').val(q.proximity.words);
 }
 
@@ -655,12 +646,10 @@ function RunQuery(query_data, scrollToView) {
 
 function LoadURI(run) {
     var urlParts = window.location.href.split('?');
-    if (urlParts.length == 2) {
-        var q = ParseURI(urlParts[1]);
-        ApplyUI(q);
-        if (run) {
-            RunQuery(q, false);
-        }
+    var q = ParseURI(urlParts.length == 2 ? urlParts[1] : "");
+    ApplyUI(q);
+    if (run) {
+        RunQuery(q, false);
     }
 }
 
@@ -673,7 +662,7 @@ function UIInit() {
     $('input[type=radio]').on('change', function (event) {
         $(this).parent().addClass("active").siblings().removeClass("active");
     });
-    $('#proximityMenu').collapse($('input[name="proximity-mode"]').val() == 'all' ? 'show' : 'hide');
+    //$('#proximityMenu').collapse($('input[name="proximity-mode"]').val() == 'all' ? 'show' : 'hide');
     $('input[name="proximity-mode"]').change( function() {
         $('#proximityMenu').collapse($(this).val() == 'all' ? 'show' : 'hide');
     });
