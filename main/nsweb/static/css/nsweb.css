@@ -54,6 +54,10 @@
     width: 100% !important;
 }
 
+mark {
+    background-color: #c7ebc9;
+}
+
 .navbar-collapse.in {
     overflow-y: visible;
 }

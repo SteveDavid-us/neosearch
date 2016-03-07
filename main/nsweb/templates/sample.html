@@ -77,6 +77,14 @@
                         <input class="form-control" name="search-proximity" placeholder="Search radius" min="1" inputmode="numeric" pattern="[0-9]+" type="number" value="25">
                       </div>
                     </div>
+                    <label>Results per page:</label>
+                    <div class="form-group">
+                      <input class="form-control" id="resultsWanted" placeholder="Results per page" min="1" max="100" inputmode="numeric" pattern="[0-9]+" type="number" value="10">
+                    </div>
+                    <label>Result context (number of characters):</label>
+                    <div class="form-group">
+                      <input class="form-control" id="resultContext" placeholder="Result contet" min="0" max="100000" inputmode="numeric" pattern="[0-9]+" type="number" value="40">
+                    </div>
                     <div class="form-group">
                       <button type="button" class="btn btn-default btn-block" id="reset_page">Reset all settings to default</button>
                     </div>

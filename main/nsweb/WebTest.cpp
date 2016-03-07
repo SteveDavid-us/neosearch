@@ -55,6 +55,8 @@ int main (int argc, char **argv)
     CResultBuilder resultBuilder;
     resultBuilder.firstPassage = 0;
     resultBuilder.passageCount = 10;
+    resultBuilder.volume = 20;
+    resultBuilder.passage = 0;
     //resultBuilder.volumeFilter.insert(7);
 
     cout << "result:" << endl << resultBuilder.Write(giantTable, textFetcher, theHits);
