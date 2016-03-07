@@ -644,6 +644,18 @@ void    CHitList::ResetVolume(short volume) {
 }
 
 // ###########################################################################################
+bool    CHitList::SeekPassage(short volume, short passage, hit &h) {
+
+    ResetVolume(volume);
+    while ( volumeH[ihit.volume].ReadNextPassageHit(ihit.passage, ihit.word) ) {
+        if (ihit.passage == passage) {
+            h = ihit;
+            return TRUE;
+        }
+    }
+    return FALSE;
+}
+// ###########################################################################################
 Boolean CHitList::ReportNextHit(hit& h) {
 
     if ( volumeH[ihit.volume].ReadNextHit(ihit.passage, ihit.word) ) {

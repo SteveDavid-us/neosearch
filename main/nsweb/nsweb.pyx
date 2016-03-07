@@ -128,7 +128,12 @@ cdef extern from "CResultBuilder.h":
         CResultBuilder() except +
         unsigned int firstPassage
         unsigned int passageCount
+        unsigned int preContext
+        unsigned int postContext
         cppset[unsigned int] volumeFilter
+        bool passageMode
+        unsigned int volume
+        unsigned int passage
         
         string Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList) except +
 
@@ -219,9 +224,17 @@ cdef class NeoEngine:
         resultBuilder = new CResultBuilder()
         resultBuilder.firstPassage = query['first']
         resultBuilder.passageCount = query['count']
+        if 'context' in query:
+            resultBuilder.preContext = query['context']
+            resultBuilder.postContext = query['context']
+
         if 'volumes' in query:
             for vol in query['volumes']:
                 resultBuilder.volumeFilter.insert(vol)
+
+        if 'passage' in query:
+            resultBuilder.volume = query['passage']['volume']
+            resultBuilder.passage = query['passage']['passage']
 
         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
 

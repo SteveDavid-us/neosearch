@@ -134,8 +134,14 @@ function BuildURI(q)
     if (q.count != 10) {
         params.push('c=' + q.count);
     }
+    if (q.context != 40) {
+        params.push('x=' + q.context);
+    }
     if (q.first != 0) {
         params.push('s=' + q.first);
+    }
+    if ('passage' in q) {
+        params.push('d=' + q.passage.volume + ',' + q.passage.passage);
     }
     return "?" + params.join(';');
 }
@@ -147,6 +153,7 @@ function ParseURI(uri)
     q.proximity = {};
     q.proximity.enable = true;
     q.proximity.words = 25;
+    q.context = 40;
     q.count = 10;
     q.first = 0;
     q.volumes = [];
@@ -184,9 +191,21 @@ function ParseURI(uri)
             q.count = parseInt(r[1]);
             return;
         }
+        r = /x=([0-9]+)/.exec(param);
+        if (r) {
+            q.context = parseInt(r[1]);
+            return;
+        }
         r = /s=([0-9]+)/.exec(param);
         if (r) {
             q.first = parseInt(r[1]);
+            return;
+        }
+        r = /d=([0-9]+),([0-9]+)/.exec(param);
+        if (r) {
+            q.passage = {};
+            q.passage.volume = parseInt(r[1]);
+            q.passage.passage = parseInt(r[2]);
             return;
         }
     });
@@ -198,6 +217,7 @@ function ParseUI() {
     searchData.version = version;
     searchData.first = 0;
     searchData.count = 10;
+    searchData.context = 40;
     searchData.params = [];
     $('.search-term').each(function() {
         var term = {};
@@ -261,6 +281,16 @@ function ParseUI() {
     searchData.proximity.enable = $('input#prox-all').is(':checked');
     searchData.proximity.words = parseInt($('input[name="search-proximity"]').val());
     searchData['volumes'] = [];
+
+    var count = parseInt($('input#resultsWanted').first().val());
+    if (!isNaN(count)) {
+        searchData.count = count;
+    }
+    var context = parseInt($('input#resultContext').first().val());
+    if (!isNaN(context)) {
+        searchData.context = context;
+    }
+
     UpdateFilter(searchData);
 
     return searchData;
@@ -321,14 +351,22 @@ function ApplyUI(q) {
 function LoadResults(q, d) {
     loading = true;
     var bookResults = "";
-    $.each(d.volumes, function (i, vol) {
-        if (vol.hits > 0) {
-            bookResults += '<label class="btn btn-default btn-badged-checkbox">';
-            bookResults += '<input class="volume-filter" type="checkbox" value="' + vol.id + '"' + (vol.active ? ' checked' : '') +' ><span>' + vol.name + '</span>';
-            bookResults += '<span class="badge">' + vol.hits + '</span></label>\n';
-        }
-    });
-    bookResults += '<label id="resetFilter" class="btn btn-default">Reset Filter</label>';
+    if (d.type == "results") {
+        $.each(d.volumes, function (i, vol) {
+            if (vol.hits > 0) {
+                bookResults += '<label class="btn btn-default btn-badged-checkbox">';
+                bookResults += '<input class="volume-filter" type="checkbox" value="' + vol.id + '"' + (vol.active ? ' checked' : '') +' ><span>' + vol.name + '</span>';
+                bookResults += '<span class="badge">' + vol.hits + '</span></label>\n';
+            }
+        });
+        bookResults += '<label id="resetFilter" class="btn btn-default">Reset Filter</label>';
+    } else {
+        bookResults += '<label id="backToResults" class="btn btn-default">Back to results</label>\n';
+        bookResults += '<label id="prevPassage" class="btn btn-default">Previous passage</label>\n';
+        bookResults += '<label id="nextPassage" class="btn btn-default">Next passage</label>\n';
+        //bookResults += '<label id="prevResult" class="btn btn-default">Previous result</label>\n';
+        //bookResults += '<label id="nextResult" class="btn btn-default">Next result</label>\n';
+    }
     $('#resultsByBook').html(bookResults); 
     $('.volume-filter').each( function () {
         $(this).parent().toggleClass("active", $(this).is(':checked'));
@@ -343,15 +381,37 @@ function LoadResults(q, d) {
         });
         RunQuery(ParseUI(), false);
     });
+    $('#prevPassage').on('click', function(event) {
+        if (q.passage.passage > 0) {
+            q.passage.passage -= 1;
+        }
+        RunQuery(q, false);
+    });
+    $('#nextPassage').on('click', function(event) {
+        q.passage.passage += 1;
+        RunQuery(q, false);
+    });
+    $('#backToResults').on('click', function(event) {
+        delete q.passage;
+        RunQuery(q, false);
+    });
     var results = "";
     $.each(d.passages, function(i, result) {
-        results += '<h5><a>' + result.volume + ': ' + result.passage + ' (' + result.count + ' hit' + ((result.count == 1) ? '' : 's') + ')</a></h5>\n'
+        results += '<h5><a class="resultTitle" name="' + result.volume + '_' + result.passage +'">' + result.book + ': ' + result.passage + ' (' + result.count + ' hit' + ((result.count == 1) ? '' : 's') + ')</a></h5>\n'
         results += '<div class="passage">' + result.text + '</div>\n'
         results += '<hr class="spacer"></hr>\n';
     });
     $('#results').html(results);
+    $('a.resultTitle').on("click", function(event) {
+        var pas = this.name.split('_');
+        var newQuery = $.extend({}, q);
+        newQuery.passage = {};
+        newQuery.passage.volume = parseInt(pas[0]);
+        newQuery.passage.passage = parseInt(pas[1]);
+        RunQuery(newQuery, true);
+    });
     var pageCount = Math.floor(d.count / q.count);
-    if (pageCount > 0) {
+    if (d.type == "results" && pageCount > 1) {
         $('#pageSelection').bootpag({
             total: pageCount,
             page: q.first / q.count + 1,
@@ -630,7 +690,11 @@ function RunQuery(query_data, scrollToView) {
                 LoadResults(query_data, d);
                 UpdateHistory(query_data, d);
                 if (scrollToView) {
-                    $('a[name="a"]')[0].scrollIntoView();
+                    if (d.type == 'passage') {
+                        $('mark').first()[0].scrollIntoView();
+                    } else {
+                        $('a[name="a"]')[0].scrollIntoView();
+                    }
                 }
             }
     }).fail(function() {

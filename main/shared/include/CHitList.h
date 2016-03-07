@@ -158,6 +158,7 @@ public:
     void        ReportPassagesHitPerVol(long (&passagesPerVol)[MAX_VOLUMES]);
     
     void        ResetVolume(short volume);          // Iterator methods
+    bool        SeekPassage(short volume, short passage, hit&);   // Iterator methods
     bool        ReportNextHit(hit&);
     bool        ReportNextPassageHit(hit&);
     bool        ReportPreviousHit(hit&);

@@ -10,7 +10,7 @@
         "type": "integer",
         "additionalProperties": false,
         "minimum": 2,
-        "maximum": 2
+        "maximum": 3
     },
     "params": {
         "type": "array",
@@ -111,12 +111,37 @@
         "minimum": 1,
         "maximum": 100
     },
+    "context": {
+        "type": "integer",
+        "additionalProperties": false,
+        "minimum": 1,
+        "maximum": 2147483648
+    },
     "volumes": {
         "type": "array",
         "additionalProperties": false,
         "items" : {
             "type": "integer"
         }
+    },
+    "passage" : {
+        "type": "object",
+        "additionalProperties": false,
+        "properties" : {
+            "volume" : {
+                "type": "integer",
+                "additionalProperties": false,
+                "minimum": 0,
+                "maximum": 25
+            },
+            "passage" : {
+                "type": "integer",
+                "additionalProperties": false,
+                "minimum": 0,
+                "maximum": 16384
+            }
+        },
+        "required": ["volume", "passage"]
     },
     "proximity" : {
         "type": "object",
@@ -130,7 +155,7 @@
                 "type": "integer",
                 "additionalProperties": false,
                 "minimum": 1,
-                "maximum": 2147483648 
+                "maximum": 1073741824
             }
         },
         "required": ["enable", "words"]
