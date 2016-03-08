@@ -719,7 +719,7 @@ function LoadURI(run) {
 
 function UIInit() {
     AddTerm('text');
-    $('#pageSelection').bootpag({total: 0, maxVisible: 10});
+    $('#pageSelection').bootpag({total: 0, maxVisible: 7});
     $('#searchSubmit').on('click', function(event) {
         RunQuery(ParseUI(), false);
     });
