@@ -385,11 +385,11 @@ function LoadResults(q, d) {
         if (q.passage.passage > 0) {
             q.passage.passage -= 1;
         }
-        RunQuery(q, false);
+        RunQuery(q, true);
     });
     $('#nextPassage').on('click', function(event) {
         q.passage.passage += 1;
-        RunQuery(q, false);
+        RunQuery(q, true);
     });
     $('#backToResults').on('click', function(event) {
         delete q.passage;
@@ -415,7 +415,7 @@ function LoadResults(q, d) {
         $('#pageSelection').bootpag({
             total: pageCount,
             page: q.first / q.count + 1,
-            maxVisible: 10
+            maxVisible: 7
         }).off("page").on("page", function(event, page) {
             if (!loading) {
                 var newQuery = $.extend({}, q);
