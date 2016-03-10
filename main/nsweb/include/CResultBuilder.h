@@ -30,15 +30,17 @@ public:
     set<unsigned int> volumeFilter;
     int volume;
     int passage;
+    int version;
 
-    CResultBuilder() :
+    CResultBuilder(int version) :
         firstPassage(0),
         passageCount(10),
         preContext(40),
         postContext(40),
         volumeFilter(),
         volume(-1),
-        passage(-1)
+        passage(-1),
+        version(version)
     {
     }
 

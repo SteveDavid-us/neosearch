@@ -11,7 +11,7 @@ import nsweb
 app = Flask(__name__)
 
 assets = Environment(app)
-version = 1
+version = 3
 app.debug = True
 app.config['ASSETS_DEBUG'] = app.debug
 app.config['PROPAGATE_EXCEPTIONS'] = True
@@ -56,7 +56,7 @@ def network():
     try:
         query = request.get_json()
         validate(query, neoschema)
-        engine = nsweb.NeoEngine()
+        engine = nsweb.NeoEngine(version)
         result = engine.search(query)
     except InputError as e:
         return jsonify(errors=[unicode(e)])
