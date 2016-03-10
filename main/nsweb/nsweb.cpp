@@ -495,6 +495,7 @@ struct __pyx_obj_5nsweb_NeoEngine {
   CTextFetch *textFetch;
   CTextExploder *textExploder;
   CHitList *hitList;
+  int version;
 };
 
 
@@ -594,10 +595,14 @@ static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
 #define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
 #endif
 
+static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
+
+static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject **argnames[], \
+    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args, \
+    const char* function_name);
+
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
-
-static CYTHON_INLINE int __Pyx_CheckKeywordStrings(PyObject *kwdict, const char* function_name, int kw_allowed);
 
 static CYTHON_INLINE int __Pyx_PySequence_Contains(PyObject* item, PyObject* seq, int eq) {
     int result = PySequence_Contains(seq, item);
@@ -745,7 +750,7 @@ int __pyx_module_is_main_nsweb = 0;
 /* Implementation of 'nsweb' */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_pf_5nsweb_volumes(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self); /* proto */
+static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self, PyObject *__pyx_v_version); /* proto */
 static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self, PyObject *__pyx_v_query); /* proto */
 static PyObject *__pyx_tp_new_5nsweb_NeoEngine(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -775,6 +780,7 @@ static char __pyx_k_person[] = "person";
 static char __pyx_k_volume[] = "volume";
 static char __pyx_k_context[] = "context";
 static char __pyx_k_passage[] = "passage";
+static char __pyx_k_version[] = "version";
 static char __pyx_k_volumes[] = "volumes";
 static char __pyx_k_proximity[] = "proximity";
 static char __pyx_k_textFetch[] = "textFetch";
@@ -810,6 +816,7 @@ static PyObject *__pyx_n_s_textExploder;
 static PyObject *__pyx_n_s_textFetch;
 static PyObject *__pyx_n_s_type;
 static PyObject *__pyx_n_s_verb;
+static PyObject *__pyx_n_s_version;
 static PyObject *__pyx_n_s_voice;
 static PyObject *__pyx_n_s_vols;
 static PyObject *__pyx_n_s_volume;
@@ -955,10 +962,10 @@ static PyObject *__pyx_pf_5nsweb_volumes(CYTHON_UNUSED PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "nsweb.pyx":155
- *     cdef CHitList *hitList
+/* "nsweb.pyx":156
+ *     cdef int version
  * 
- *     def __cinit__(self):             # <<<<<<<<<<<<<<
+ *     def __cinit__(self, version):             # <<<<<<<<<<<<<<
  *         self.giantTable = new CGiant()
  *         self.textFetch = new CTextFetch()
  */
@@ -966,33 +973,70 @@ static PyObject *__pyx_pf_5nsweb_volumes(CYTHON_UNUSED PyObject *__pyx_self) {
 /* Python wrapper */
 static int __pyx_pw_5nsweb_9NeoEngine_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
 static int __pyx_pw_5nsweb_9NeoEngine_1__cinit__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_version = 0;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__cinit__ (wrapper)", 0);
-  if (unlikely(PyTuple_GET_SIZE(__pyx_args) > 0)) {
-    __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 0, 0, PyTuple_GET_SIZE(__pyx_args)); return -1;}
-  if (unlikely(__pyx_kwds) && unlikely(PyDict_Size(__pyx_kwds) > 0) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__cinit__", 0))) return -1;
-  __pyx_r = __pyx_pf_5nsweb_9NeoEngine___cinit__(((struct __pyx_obj_5nsweb_NeoEngine *)__pyx_v_self));
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_version,0};
+    PyObject* values[1] = {0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_version)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__cinit__") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 1) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+    }
+    __pyx_v_version = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("__cinit__", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("nsweb.NeoEngine.__cinit__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return -1;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_5nsweb_9NeoEngine___cinit__(((struct __pyx_obj_5nsweb_NeoEngine *)__pyx_v_self), __pyx_v_version);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self) {
+static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngine *__pyx_v_self, PyObject *__pyx_v_version) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   CGiant *__pyx_t_1;
   CTextFetch *__pyx_t_2;
   CTextExploder *__pyx_t_3;
+  int __pyx_t_4;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__cinit__", 0);
 
-  /* "nsweb.pyx":156
+  /* "nsweb.pyx":157
  * 
- *     def __cinit__(self):
+ *     def __cinit__(self, version):
  *         self.giantTable = new CGiant()             # <<<<<<<<<<<<<<
  *         self.textFetch = new CTextFetch()
  *         self.textExploder = new CTextExploder()
@@ -1001,12 +1045,12 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
     __pyx_t_1 = new CGiant();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 156; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->giantTable = __pyx_t_1;
 
-  /* "nsweb.pyx":157
- *     def __cinit__(self):
+  /* "nsweb.pyx":158
+ *     def __cinit__(self, version):
  *         self.giantTable = new CGiant()
  *         self.textFetch = new CTextFetch()             # <<<<<<<<<<<<<<
  *         self.textExploder = new CTextExploder()
@@ -1016,38 +1060,48 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
     __pyx_t_2 = new CTextFetch();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 157; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->textFetch = __pyx_t_2;
 
-  /* "nsweb.pyx":158
+  /* "nsweb.pyx":159
  *         self.giantTable = new CGiant()
  *         self.textFetch = new CTextFetch()
  *         self.textExploder = new CTextExploder()             # <<<<<<<<<<<<<<
  *         self.hitList = NULL
- * 
+ *         self.version = version
  */
   try {
     __pyx_t_3 = new CTextExploder();
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 158; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 159; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_self->textExploder = __pyx_t_3;
 
-  /* "nsweb.pyx":159
+  /* "nsweb.pyx":160
  *         self.textFetch = new CTextFetch()
  *         self.textExploder = new CTextExploder()
  *         self.hitList = NULL             # <<<<<<<<<<<<<<
+ *         self.version = version
  * 
- *     def __dealloc__(self):
  */
   __pyx_v_self->hitList = NULL;
 
-  /* "nsweb.pyx":155
- *     cdef CHitList *hitList
+  /* "nsweb.pyx":161
+ *         self.textExploder = new CTextExploder()
+ *         self.hitList = NULL
+ *         self.version = version             # <<<<<<<<<<<<<<
  * 
- *     def __cinit__(self):             # <<<<<<<<<<<<<<
+ *     def __dealloc__(self):
+ */
+  __pyx_t_4 = __Pyx_PyInt_As_int(__pyx_v_version); if (unlikely((__pyx_t_4 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 161; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_v_self->version = __pyx_t_4;
+
+  /* "nsweb.pyx":156
+ *     cdef int version
+ * 
+ *     def __cinit__(self, version):             # <<<<<<<<<<<<<<
  *         self.giantTable = new CGiant()
  *         self.textFetch = new CTextFetch()
  */
@@ -1063,8 +1117,8 @@ static int __pyx_pf_5nsweb_9NeoEngine___cinit__(struct __pyx_obj_5nsweb_NeoEngin
   return __pyx_r;
 }
 
-/* "nsweb.pyx":161
- *         self.hitList = NULL
+/* "nsweb.pyx":163
+ *         self.version = version
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         del self.textExploder
@@ -1086,7 +1140,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__dealloc__", 0);
 
-  /* "nsweb.pyx":162
+  /* "nsweb.pyx":164
  * 
  *     def __dealloc__(self):
  *         del self.textExploder             # <<<<<<<<<<<<<<
@@ -1095,7 +1149,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->textExploder;
 
-  /* "nsweb.pyx":163
+  /* "nsweb.pyx":165
  *     def __dealloc__(self):
  *         del self.textExploder
  *         del self.textFetch             # <<<<<<<<<<<<<<
@@ -1104,7 +1158,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->textFetch;
 
-  /* "nsweb.pyx":164
+  /* "nsweb.pyx":166
  *         del self.textExploder
  *         del self.textFetch
  *         del self.giantTable             # <<<<<<<<<<<<<<
@@ -1113,7 +1167,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->giantTable;
 
-  /* "nsweb.pyx":165
+  /* "nsweb.pyx":167
  *         del self.textFetch
  *         del self.giantTable
  *         del self.hitList             # <<<<<<<<<<<<<<
@@ -1122,8 +1176,8 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
  */
   delete __pyx_v_self->hitList;
 
-  /* "nsweb.pyx":161
- *         self.hitList = NULL
+  /* "nsweb.pyx":163
+ *         self.version = version
  * 
  *     def __dealloc__(self):             # <<<<<<<<<<<<<<
  *         del self.textExploder
@@ -1134,7 +1188,7 @@ static void __pyx_pf_5nsweb_9NeoEngine_2__dealloc__(struct __pyx_obj_5nsweb_NeoE
   __Pyx_RefNannyFinishContext();
 }
 
-/* "nsweb.pyx":167
+/* "nsweb.pyx":169
  *         del self.hitList
  * 
  *     def search(self, query):             # <<<<<<<<<<<<<<
@@ -1190,7 +1244,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("search", 0);
 
-  /* "nsweb.pyx":168
+  /* "nsweb.pyx":170
  * 
  *     def search(self, query):
  *         cdef int searchMode = CREATE_NEW             # <<<<<<<<<<<<<<
@@ -1199,7 +1253,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  */
   __pyx_v_searchMode = CREATE_NEW;
 
-  /* "nsweb.pyx":169
+  /* "nsweb.pyx":171
  *     def search(self, query):
  *         cdef int searchMode = CREATE_NEW
  *         cdef int proximity = 25             # <<<<<<<<<<<<<<
@@ -1208,25 +1262,25 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  */
   __pyx_v_proximity = 25;
 
-  /* "nsweb.pyx":171
+  /* "nsweb.pyx":173
  *         cdef int proximity = 25
  *         cdef CTarget *target
  *         intersect_mode = 'proximity' in query and query['proximity']['enable']             # <<<<<<<<<<<<<<
  *         if intersect_mode:
  *             proximity = query['proximity']['words']
  */
-  __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_proximity, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_proximity, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_2) {
   } else {
-    __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyBool_FromLong(__pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_1 = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L3_bool_binop_done;
   }
-  __pyx_t_3 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_proximity); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_3 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_proximity); if (unlikely(__pyx_t_3 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_enable); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 171; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_4 = PyObject_GetItem(__pyx_t_3, __pyx_n_s_enable); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_INCREF(__pyx_t_4);
@@ -1236,36 +1290,36 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   __pyx_v_intersect_mode = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "nsweb.pyx":172
+  /* "nsweb.pyx":174
  *         cdef CTarget *target
  *         intersect_mode = 'proximity' in query and query['proximity']['enable']
  *         if intersect_mode:             # <<<<<<<<<<<<<<
  *             proximity = query['proximity']['words']
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_intersect_mode); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 172; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_intersect_mode); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 174; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   if (__pyx_t_2) {
 
-    /* "nsweb.pyx":173
+    /* "nsweb.pyx":175
  *         intersect_mode = 'proximity' in query and query['proximity']['enable']
  *         if intersect_mode:
  *             proximity = query['proximity']['words']             # <<<<<<<<<<<<<<
  * 
  *         self.giantTable.SetAmbiguityChecking(1)
  */
-    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_proximity); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_proximity); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_words); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_words); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 173; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_proximity = __pyx_t_5;
     goto __pyx_L5;
   }
   __pyx_L5:;
 
-  /* "nsweb.pyx":175
+  /* "nsweb.pyx":177
  *             proximity = query['proximity']['words']
  * 
  *         self.giantTable.SetAmbiguityChecking(1)             # <<<<<<<<<<<<<<
@@ -1276,10 +1330,10 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_v_self->giantTable->SetAmbiguityChecking(1);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 175; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "nsweb.pyx":176
+  /* "nsweb.pyx":178
  * 
  *         self.giantTable.SetAmbiguityChecking(1)
  *         self.giantTable.SetDisambiguationChecking(0)             # <<<<<<<<<<<<<<
@@ -1290,25 +1344,25 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_v_self->giantTable->SetDisambiguationChecking(0);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 176; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 178; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
 
-  /* "nsweb.pyx":177
+  /* "nsweb.pyx":179
  *         self.giantTable.SetAmbiguityChecking(1)
  *         self.giantTable.SetDisambiguationChecking(0)
  *         for param in query['params']:             # <<<<<<<<<<<<<<
  *             target = new CTarget()
  *             text = param['text'].lower().strip()
  */
-  __pyx_t_4 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_params); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_4 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_params); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_4);
   if (likely(PyList_CheckExact(__pyx_t_4)) || PyTuple_CheckExact(__pyx_t_4)) {
     __pyx_t_1 = __pyx_t_4; __Pyx_INCREF(__pyx_t_1); __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   for (;;) {
@@ -1316,16 +1370,16 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #endif
       } else {
         if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_COMPILING_IN_CPYTHON
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         #endif
       }
     } else {
@@ -1334,7 +1388,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 177; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         break;
       }
@@ -1343,7 +1397,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __Pyx_XDECREF_SET(__pyx_v_param, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "nsweb.pyx":178
+    /* "nsweb.pyx":180
  *         self.giantTable.SetDisambiguationChecking(0)
  *         for param in query['params']:
  *             target = new CTarget()             # <<<<<<<<<<<<<<
@@ -1354,20 +1408,20 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       __pyx_t_8 = new CTarget();
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 178; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 180; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_v_target = __pyx_t_8;
 
-    /* "nsweb.pyx":179
+    /* "nsweb.pyx":181
  *         for param in query['params']:
  *             target = new CTarget()
  *             text = param['text'].lower().strip()             # <<<<<<<<<<<<<<
  *             if param['type'] == 'text':
  *                 if not text:
  */
-    __pyx_t_9 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_text); if (unlikely(__pyx_t_9 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_9 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_text); if (unlikely(__pyx_t_9 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_9);
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_lower); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_lower); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     __pyx_t_9 = NULL;
@@ -1381,14 +1435,14 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       }
     }
     if (__pyx_t_9) {
-      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_9); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_9); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     } else {
-      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_10); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_10); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_strip); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_strip); if (unlikely(!__pyx_t_10)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_10);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -1402,41 +1456,41 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       }
     }
     if (__pyx_t_3) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_3); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
-      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_10); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 179; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_4 = __Pyx_PyObject_CallNoArg(__pyx_t_10); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
     __Pyx_XDECREF_SET(__pyx_v_text, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "nsweb.pyx":180
+    /* "nsweb.pyx":182
  *             target = new CTarget()
  *             text = param['text'].lower().strip()
  *             if param['type'] == 'text':             # <<<<<<<<<<<<<<
  *                 if not text:
  *                     del target
  */
-    __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_type); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 180; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_type); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_text, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 180; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_text, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 182; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_2) {
 
-      /* "nsweb.pyx":181
+      /* "nsweb.pyx":183
  *             text = param['text'].lower().strip()
  *             if param['type'] == 'text':
  *                 if not text:             # <<<<<<<<<<<<<<
  *                     del target
  *                     continue
  */
-      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_text); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 181; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_text); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 183; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_11 = ((!__pyx_t_2) != 0);
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":182
+        /* "nsweb.pyx":184
  *             if param['type'] == 'text':
  *                 if not text:
  *                     del target             # <<<<<<<<<<<<<<
@@ -1445,7 +1499,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  */
         delete __pyx_v_target;
 
-        /* "nsweb.pyx":183
+        /* "nsweb.pyx":185
  *                 if not text:
  *                     del target
  *                     continue             # <<<<<<<<<<<<<<
@@ -1455,49 +1509,49 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
         goto __pyx_L6_continue;
       }
 
-      /* "nsweb.pyx":184
+      /* "nsweb.pyx":186
  *                     del target
  *                     continue
  *                 target.SetString(text)             # <<<<<<<<<<<<<<
  *             elif param['type'] == 'substantive':
  *                 substantive = param['substantive']
  */
-      __pyx_t_12 = __Pyx_PyObject_AsString(__pyx_v_text); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 184; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_12 = __Pyx_PyObject_AsString(__pyx_v_text); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       try {
         __pyx_v_target->SetString(__pyx_t_12);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 184; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
       goto __pyx_L8;
     }
 
-    /* "nsweb.pyx":185
+    /* "nsweb.pyx":187
  *                     continue
  *                 target.SetString(text)
  *             elif param['type'] == 'substantive':             # <<<<<<<<<<<<<<
  *                 substantive = param['substantive']
  *                 target.SetGrammarDoCare()
  */
-    __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_type); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_type); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_11 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_substantive, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 185; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_substantive, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     if (__pyx_t_11) {
 
-      /* "nsweb.pyx":186
+      /* "nsweb.pyx":188
  *                 target.SetString(text)
  *             elif param['type'] == 'substantive':
  *                 substantive = param['substantive']             # <<<<<<<<<<<<<<
  *                 target.SetGrammarDoCare()
  *                 if text:
  */
-      __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_substantive); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 186; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_substantive); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_v_substantive, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "nsweb.pyx":187
+      /* "nsweb.pyx":189
  *             elif param['type'] == 'substantive':
  *                 substantive = param['substantive']
  *                 target.SetGrammarDoCare()             # <<<<<<<<<<<<<<
@@ -1508,160 +1562,160 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
         __pyx_v_target->SetGrammarDoCare();
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 187; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "nsweb.pyx":188
+      /* "nsweb.pyx":190
  *                 substantive = param['substantive']
  *                 target.SetGrammarDoCare()
  *                 if text:             # <<<<<<<<<<<<<<
  *                     target.SetString(text)
  *                 if 'case' in substantive:
  */
-      __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_v_text); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 188; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_v_text); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":189
+        /* "nsweb.pyx":191
  *                 target.SetGrammarDoCare()
  *                 if text:
  *                     target.SetString(text)             # <<<<<<<<<<<<<<
  *                 if 'case' in substantive:
  *                     target.SetCase(substantive['case'])
  */
-        __pyx_t_12 = __Pyx_PyObject_AsString(__pyx_v_text); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = __Pyx_PyObject_AsString(__pyx_v_text); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         try {
           __pyx_v_target->SetString(__pyx_t_12);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 189; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L10;
       }
       __pyx_L10:;
 
-      /* "nsweb.pyx":190
+      /* "nsweb.pyx":192
  *                 if text:
  *                     target.SetString(text)
  *                 if 'case' in substantive:             # <<<<<<<<<<<<<<
  *                     target.SetCase(substantive['case'])
  *                 if 'participle' in substantive:
  */
-      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_case, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 190; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_case, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = (__pyx_t_11 != 0);
       if (__pyx_t_2) {
 
-        /* "nsweb.pyx":191
+        /* "nsweb.pyx":193
  *                     target.SetString(text)
  *                 if 'case' in substantive:
  *                     target.SetCase(substantive['case'])             # <<<<<<<<<<<<<<
  *                 if 'participle' in substantive:
  *                     target.SetParticiple(substantive['participle'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_case); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_case); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetCase(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 191; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L11;
       }
       __pyx_L11:;
 
-      /* "nsweb.pyx":192
+      /* "nsweb.pyx":194
  *                 if 'case' in substantive:
  *                     target.SetCase(substantive['case'])
  *                 if 'participle' in substantive:             # <<<<<<<<<<<<<<
  *                     target.SetParticiple(substantive['participle'])
  *                 if 'number' in substantive:
  */
-      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_participle, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 192; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_participle, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_11 = (__pyx_t_2 != 0);
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":193
+        /* "nsweb.pyx":195
  *                     target.SetCase(substantive['case'])
  *                 if 'participle' in substantive:
  *                     target.SetParticiple(substantive['participle'])             # <<<<<<<<<<<<<<
  *                 if 'number' in substantive:
  *                     target.SetNumber(substantive['number'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_participle); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_participle); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetParticiple(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 193; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L12;
       }
       __pyx_L12:;
 
-      /* "nsweb.pyx":194
+      /* "nsweb.pyx":196
  *                 if 'participle' in substantive:
  *                     target.SetParticiple(substantive['participle'])
  *                 if 'number' in substantive:             # <<<<<<<<<<<<<<
  *                     target.SetNumber(substantive['number'])
  *                 if 'gender' in substantive:
  */
-      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_number, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 194; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_number, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = (__pyx_t_11 != 0);
       if (__pyx_t_2) {
 
-        /* "nsweb.pyx":195
+        /* "nsweb.pyx":197
  *                     target.SetParticiple(substantive['participle'])
  *                 if 'number' in substantive:
  *                     target.SetNumber(substantive['number'])             # <<<<<<<<<<<<<<
  *                 if 'gender' in substantive:
  *                     target.SetGender(substantive['gender'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_number); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_number); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetNumber(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 195; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L13;
       }
       __pyx_L13:;
 
-      /* "nsweb.pyx":196
+      /* "nsweb.pyx":198
  *                 if 'number' in substantive:
  *                     target.SetNumber(substantive['number'])
  *                 if 'gender' in substantive:             # <<<<<<<<<<<<<<
  *                     target.SetGender(substantive['gender'])
  *             else:
  */
-      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_gender, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 196; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_gender, __pyx_v_substantive, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 198; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_11 = (__pyx_t_2 != 0);
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":197
+        /* "nsweb.pyx":199
  *                     target.SetNumber(substantive['number'])
  *                 if 'gender' in substantive:
  *                     target.SetGender(substantive['gender'])             # <<<<<<<<<<<<<<
  *             else:
  *                 assert param['type'] == 'verb'
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_gender); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_substantive, __pyx_n_s_gender); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetGender(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 197; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L14;
       }
@@ -1670,7 +1724,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     }
     /*else*/ {
 
-      /* "nsweb.pyx":199
+      /* "nsweb.pyx":201
  *                     target.SetGender(substantive['gender'])
  *             else:
  *                 assert param['type'] == 'verb'             # <<<<<<<<<<<<<<
@@ -1679,30 +1733,30 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  */
       #ifndef CYTHON_WITHOUT_ASSERTIONS
       if (unlikely(!Py_OptimizeFlag)) {
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_type); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_type); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_11 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_11 = (__Pyx_PyString_Equals(__pyx_t_4, __pyx_n_s_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         if (unlikely(!__pyx_t_11)) {
           PyErr_SetNone(PyExc_AssertionError);
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 199; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
       }
       #endif
 
-      /* "nsweb.pyx":200
+      /* "nsweb.pyx":202
  *             else:
  *                 assert param['type'] == 'verb'
  *                 verb = param['verb']             # <<<<<<<<<<<<<<
  *                 target.SetGrammarDoCare()
  *                 if text:
  */
-      __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_verb); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 200; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+      __pyx_t_4 = PyObject_GetItem(__pyx_v_param, __pyx_n_s_verb); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_v_verb, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "nsweb.pyx":201
+      /* "nsweb.pyx":203
  *                 assert param['type'] == 'verb'
  *                 verb = param['verb']
  *                 target.SetGrammarDoCare()             # <<<<<<<<<<<<<<
@@ -1713,192 +1767,192 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
         __pyx_v_target->SetGrammarDoCare();
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 201; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "nsweb.pyx":202
+      /* "nsweb.pyx":204
  *                 verb = param['verb']
  *                 target.SetGrammarDoCare()
  *                 if text:             # <<<<<<<<<<<<<<
  *                     target.SetString(text)
  *                 if 'mood' in verb:
  */
-      __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_v_text); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 202; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_v_text); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":203
+        /* "nsweb.pyx":205
  *                 target.SetGrammarDoCare()
  *                 if text:
  *                     target.SetString(text)             # <<<<<<<<<<<<<<
  *                 if 'mood' in verb:
  *                     target.SetMood(verb['mood'])
  */
-        __pyx_t_12 = __Pyx_PyObject_AsString(__pyx_v_text); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_12 = __Pyx_PyObject_AsString(__pyx_v_text); if (unlikely((!__pyx_t_12) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         try {
           __pyx_v_target->SetString(__pyx_t_12);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 203; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L15;
       }
       __pyx_L15:;
 
-      /* "nsweb.pyx":204
+      /* "nsweb.pyx":206
  *                 if text:
  *                     target.SetString(text)
  *                 if 'mood' in verb:             # <<<<<<<<<<<<<<
  *                     target.SetMood(verb['mood'])
  *                 if 'voice' in verb:
  */
-      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_mood, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 204; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_mood, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 206; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = (__pyx_t_11 != 0);
       if (__pyx_t_2) {
 
-        /* "nsweb.pyx":205
+        /* "nsweb.pyx":207
  *                     target.SetString(text)
  *                 if 'mood' in verb:
  *                     target.SetMood(verb['mood'])             # <<<<<<<<<<<<<<
  *                 if 'voice' in verb:
  *                     target.SetVoice(verb['voice'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_mood); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_mood); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetMood(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 205; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L16;
       }
       __pyx_L16:;
 
-      /* "nsweb.pyx":206
+      /* "nsweb.pyx":208
  *                 if 'mood' in verb:
  *                     target.SetMood(verb['mood'])
  *                 if 'voice' in verb:             # <<<<<<<<<<<<<<
  *                     target.SetVoice(verb['voice'])
  *                 if 'number' in verb:
  */
-      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_voice, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 206; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_voice, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_11 = (__pyx_t_2 != 0);
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":207
+        /* "nsweb.pyx":209
  *                     target.SetMood(verb['mood'])
  *                 if 'voice' in verb:
  *                     target.SetVoice(verb['voice'])             # <<<<<<<<<<<<<<
  *                 if 'number' in verb:
  *                     target.SetNumber(verb['number'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_voice); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_voice); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetVoice(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 207; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L17;
       }
       __pyx_L17:;
 
-      /* "nsweb.pyx":208
+      /* "nsweb.pyx":210
  *                 if 'voice' in verb:
  *                     target.SetVoice(verb['voice'])
  *                 if 'number' in verb:             # <<<<<<<<<<<<<<
  *                     target.SetNumber(verb['number'])
  *                 if 'tense' in verb:
  */
-      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_number, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 208; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_number, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = (__pyx_t_11 != 0);
       if (__pyx_t_2) {
 
-        /* "nsweb.pyx":209
+        /* "nsweb.pyx":211
  *                     target.SetVoice(verb['voice'])
  *                 if 'number' in verb:
  *                     target.SetNumber(verb['number'])             # <<<<<<<<<<<<<<
  *                 if 'tense' in verb:
  *                     target.SetTense(verb['tense'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_number); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_number); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetNumber(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 209; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L18;
       }
       __pyx_L18:;
 
-      /* "nsweb.pyx":210
+      /* "nsweb.pyx":212
  *                 if 'number' in verb:
  *                     target.SetNumber(verb['number'])
  *                 if 'tense' in verb:             # <<<<<<<<<<<<<<
  *                     target.SetTense(verb['tense'])
  *                 if 'person' in verb:
  */
-      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_tense, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 210; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_tense, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_11 = (__pyx_t_2 != 0);
       if (__pyx_t_11) {
 
-        /* "nsweb.pyx":211
+        /* "nsweb.pyx":213
  *                     target.SetNumber(verb['number'])
  *                 if 'tense' in verb:
  *                     target.SetTense(verb['tense'])             # <<<<<<<<<<<<<<
  *                 if 'person' in verb:
  *                     target.SetPerson(verb['person'])
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_tense); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_tense); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetTense(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 211; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L19;
       }
       __pyx_L19:;
 
-      /* "nsweb.pyx":212
+      /* "nsweb.pyx":214
  *                 if 'tense' in verb:
  *                     target.SetTense(verb['tense'])
  *                 if 'person' in verb:             # <<<<<<<<<<<<<<
  *                     target.SetPerson(verb['person'])
  * 
  */
-      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_person, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 212; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_person, __pyx_v_verb, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 214; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __pyx_t_2 = (__pyx_t_11 != 0);
       if (__pyx_t_2) {
 
-        /* "nsweb.pyx":213
+        /* "nsweb.pyx":215
  *                     target.SetTense(verb['tense'])
  *                 if 'person' in verb:
  *                     target.SetPerson(verb['person'])             # <<<<<<<<<<<<<<
  * 
  *             self.giantTable.SetSearchMode(searchMode, self.hitList, proximity)
  */
-        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_person); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+        __pyx_t_4 = PyObject_GetItem(__pyx_v_verb, __pyx_n_s_person); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        __pyx_t_13 = __Pyx_PyInt_As_short(__pyx_t_4); if (unlikely((__pyx_t_13 == (short)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         try {
           __pyx_v_target->SetPerson(__pyx_t_13);
         } catch(...) {
           __Pyx_CppExn2PyErr();
-          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 213; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
         }
         goto __pyx_L20;
       }
@@ -1906,7 +1960,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     }
     __pyx_L8:;
 
-    /* "nsweb.pyx":215
+    /* "nsweb.pyx":217
  *                     target.SetPerson(verb['person'])
  * 
  *             self.giantTable.SetSearchMode(searchMode, self.hitList, proximity)             # <<<<<<<<<<<<<<
@@ -1917,10 +1971,10 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       __pyx_v_self->giantTable->SetSearchMode(__pyx_v_searchMode, __pyx_v_self->hitList, __pyx_v_proximity);
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 215; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 217; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "nsweb.pyx":216
+    /* "nsweb.pyx":218
  * 
  *             self.giantTable.SetSearchMode(searchMode, self.hitList, proximity)
  *             self.hitList = self.giantTable.FindHits(deref(target))             # <<<<<<<<<<<<<<
@@ -1931,11 +1985,11 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       __pyx_t_14 = __pyx_v_self->giantTable->FindHits((*__pyx_v_target));
     } catch(...) {
       __Pyx_CppExn2PyErr();
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 216; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 218; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_v_self->hitList = __pyx_t_14;
 
-    /* "nsweb.pyx":218
+    /* "nsweb.pyx":220
  *             self.hitList = self.giantTable.FindHits(deref(target))
  * 
  *             del target             # <<<<<<<<<<<<<<
@@ -1944,17 +1998,17 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
  */
     delete __pyx_v_target;
 
-    /* "nsweb.pyx":219
+    /* "nsweb.pyx":221
  * 
  *             del target
  *             if intersect_mode:             # <<<<<<<<<<<<<<
  *                 searchMode = INTERSECT
  *             else:
  */
-    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_intersect_mode); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 219; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_intersect_mode); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 221; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     if (__pyx_t_2) {
 
-      /* "nsweb.pyx":220
+      /* "nsweb.pyx":222
  *             del target
  *             if intersect_mode:
  *                 searchMode = INTERSECT             # <<<<<<<<<<<<<<
@@ -1966,18 +2020,18 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     }
     /*else*/ {
 
-      /* "nsweb.pyx":222
+      /* "nsweb.pyx":224
  *                 searchMode = INTERSECT
  *             else:
  *                 searchMode = UNION             # <<<<<<<<<<<<<<
  * 
- *         resultBuilder = new CResultBuilder()
+ *         resultBuilder = new CResultBuilder(self.version)
  */
       __pyx_v_searchMode = UNION;
     }
     __pyx_L21:;
 
-    /* "nsweb.pyx":177
+    /* "nsweb.pyx":179
  *         self.giantTable.SetAmbiguityChecking(1)
  *         self.giantTable.SetDisambiguationChecking(0)
  *         for param in query['params']:             # <<<<<<<<<<<<<<
@@ -1988,114 +2042,114 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "nsweb.pyx":224
+  /* "nsweb.pyx":226
  *                 searchMode = UNION
  * 
- *         resultBuilder = new CResultBuilder()             # <<<<<<<<<<<<<<
+ *         resultBuilder = new CResultBuilder(self.version)             # <<<<<<<<<<<<<<
  *         resultBuilder.firstPassage = query['first']
  *         resultBuilder.passageCount = query['count']
  */
   try {
-    __pyx_t_15 = new CResultBuilder();
+    __pyx_t_15 = new CResultBuilder(__pyx_v_self->version);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 224; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_v_resultBuilder = __pyx_t_15;
 
-  /* "nsweb.pyx":225
+  /* "nsweb.pyx":227
  * 
- *         resultBuilder = new CResultBuilder()
+ *         resultBuilder = new CResultBuilder(self.version)
  *         resultBuilder.firstPassage = query['first']             # <<<<<<<<<<<<<<
  *         resultBuilder.passageCount = query['count']
  *         if 'context' in query:
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_first); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_first); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 225; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_resultBuilder->firstPassage = __pyx_t_16;
 
-  /* "nsweb.pyx":226
- *         resultBuilder = new CResultBuilder()
+  /* "nsweb.pyx":228
+ *         resultBuilder = new CResultBuilder(self.version)
  *         resultBuilder.firstPassage = query['first']
  *         resultBuilder.passageCount = query['count']             # <<<<<<<<<<<<<<
  *         if 'context' in query:
  *             resultBuilder.preContext = query['context']
  */
-  __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_count); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+  __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_count); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 226; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_resultBuilder->passageCount = __pyx_t_16;
 
-  /* "nsweb.pyx":227
+  /* "nsweb.pyx":229
  *         resultBuilder.firstPassage = query['first']
  *         resultBuilder.passageCount = query['count']
  *         if 'context' in query:             # <<<<<<<<<<<<<<
  *             resultBuilder.preContext = query['context']
  *             resultBuilder.postContext = query['context']
  */
-  __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_context, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 227; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_context, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_11 = (__pyx_t_2 != 0);
   if (__pyx_t_11) {
 
-    /* "nsweb.pyx":228
+    /* "nsweb.pyx":230
  *         resultBuilder.passageCount = query['count']
  *         if 'context' in query:
  *             resultBuilder.preContext = query['context']             # <<<<<<<<<<<<<<
  *             resultBuilder.postContext = query['context']
  * 
  */
-    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_context); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_context); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 228; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 230; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_resultBuilder->preContext = __pyx_t_16;
 
-    /* "nsweb.pyx":229
+    /* "nsweb.pyx":231
  *         if 'context' in query:
  *             resultBuilder.preContext = query['context']
  *             resultBuilder.postContext = query['context']             # <<<<<<<<<<<<<<
  * 
  *         if 'volumes' in query:
  */
-    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_context); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_context); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 229; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_resultBuilder->postContext = __pyx_t_16;
     goto __pyx_L22;
   }
   __pyx_L22:;
 
-  /* "nsweb.pyx":231
+  /* "nsweb.pyx":233
  *             resultBuilder.postContext = query['context']
  * 
  *         if 'volumes' in query:             # <<<<<<<<<<<<<<
  *             for vol in query['volumes']:
  *                 resultBuilder.volumeFilter.insert(vol)
  */
-  __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_volumes, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 231; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_11 = (__Pyx_PySequence_Contains(__pyx_n_s_volumes, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_11 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_2 = (__pyx_t_11 != 0);
   if (__pyx_t_2) {
 
-    /* "nsweb.pyx":232
+    /* "nsweb.pyx":234
  * 
  *         if 'volumes' in query:
  *             for vol in query['volumes']:             # <<<<<<<<<<<<<<
  *                 resultBuilder.volumeFilter.insert(vol)
  * 
  */
-    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_volumes); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_volumes); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
     if (likely(PyList_CheckExact(__pyx_t_1)) || PyTuple_CheckExact(__pyx_t_1)) {
       __pyx_t_4 = __pyx_t_1; __Pyx_INCREF(__pyx_t_4); __pyx_t_6 = 0;
       __pyx_t_7 = NULL;
     } else {
-      __pyx_t_6 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_6 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_7 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_7 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     for (;;) {
@@ -2103,16 +2157,16 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
         if (likely(PyList_CheckExact(__pyx_t_4))) {
           if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_4)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_1 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #endif
         } else {
           if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
           #if CYTHON_COMPILING_IN_CPYTHON
-          __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_6); __Pyx_INCREF(__pyx_t_1); __pyx_t_6++; if (unlikely(0 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #else
-          __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+          __pyx_t_1 = PySequence_ITEM(__pyx_t_4, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           #endif
         }
       } else {
@@ -2121,7 +2175,7 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 232; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+            else {__pyx_filename = __pyx_f[0]; __pyx_lineno = 234; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
           }
           break;
         }
@@ -2130,22 +2184,22 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
       __Pyx_XDECREF_SET(__pyx_v_vol, __pyx_t_1);
       __pyx_t_1 = 0;
 
-      /* "nsweb.pyx":233
+      /* "nsweb.pyx":235
  *         if 'volumes' in query:
  *             for vol in query['volumes']:
  *                 resultBuilder.volumeFilter.insert(vol)             # <<<<<<<<<<<<<<
  * 
  *         if 'passage' in query:
  */
-      __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_v_vol); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_v_vol); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 235; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       try {
         __pyx_v_resultBuilder->volumeFilter.insert(__pyx_t_16);
       } catch(...) {
         __Pyx_CppExn2PyErr();
-        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 233; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+        {__pyx_filename = __pyx_f[0]; __pyx_lineno = 235; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
       }
 
-      /* "nsweb.pyx":232
+      /* "nsweb.pyx":234
  * 
  *         if 'volumes' in query:
  *             for vol in query['volumes']:             # <<<<<<<<<<<<<<
@@ -2158,53 +2212,53 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
   }
   __pyx_L23:;
 
-  /* "nsweb.pyx":235
+  /* "nsweb.pyx":237
  *                 resultBuilder.volumeFilter.insert(vol)
  * 
  *         if 'passage' in query:             # <<<<<<<<<<<<<<
  *             resultBuilder.volume = query['passage']['volume']
  *             resultBuilder.passage = query['passage']['passage']
  */
-  __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_passage, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 235; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = (__Pyx_PySequence_Contains(__pyx_n_s_passage, __pyx_v_query, Py_EQ)); if (unlikely(__pyx_t_2 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __pyx_t_11 = (__pyx_t_2 != 0);
   if (__pyx_t_11) {
 
-    /* "nsweb.pyx":236
+    /* "nsweb.pyx":238
  * 
  *         if 'passage' in query:
  *             resultBuilder.volume = query['passage']['volume']             # <<<<<<<<<<<<<<
  *             resultBuilder.passage = query['passage']['passage']
  * 
  */
-    __pyx_t_4 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_passage); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_passage); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 238; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_1 = PyObject_GetItem(__pyx_t_4, __pyx_n_s_volume); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_t_4, __pyx_n_s_volume); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 238; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 236; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_1); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 238; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_v_resultBuilder->volume = __pyx_t_16;
 
-    /* "nsweb.pyx":237
+    /* "nsweb.pyx":239
  *         if 'passage' in query:
  *             resultBuilder.volume = query['passage']['volume']
  *             resultBuilder.passage = query['passage']['passage']             # <<<<<<<<<<<<<<
  * 
  *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')
  */
-    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_passage); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_1 = PyObject_GetItem(__pyx_v_query, __pyx_n_s_passage); if (unlikely(__pyx_t_1 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_passage); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
+    __pyx_t_4 = PyObject_GetItem(__pyx_t_1, __pyx_n_s_passage); if (unlikely(__pyx_t_4 == NULL)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;};
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_4); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 237; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_16 = __Pyx_PyInt_As_unsigned_int(__pyx_t_4); if (unlikely((__pyx_t_16 == (unsigned int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __pyx_v_resultBuilder->passage = __pyx_t_16;
     goto __pyx_L26;
   }
   __pyx_L26:;
 
-  /* "nsweb.pyx":239
+  /* "nsweb.pyx":241
  *             resultBuilder.passage = query['passage']['passage']
  * 
  *         return resultBuilder.Write(self.giantTable, self.textFetch, self.hitList).decode('UTF-8')             # <<<<<<<<<<<<<<
@@ -2215,15 +2269,15 @@ static PyObject *__pyx_pf_5nsweb_9NeoEngine_4search(struct __pyx_obj_5nsweb_NeoE
     __pyx_t_17 = __pyx_v_resultBuilder->Write(__pyx_v_self->giantTable, __pyx_v_self->textFetch, __pyx_v_self->hitList);
   } catch(...) {
     __Pyx_CppExn2PyErr();
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
-  __pyx_t_4 = __Pyx_decode_cpp_string(__pyx_t_17, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 239; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_decode_cpp_string(__pyx_t_17, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 241; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "nsweb.pyx":167
+  /* "nsweb.pyx":169
  *         del self.hitList
  * 
  *     def search(self, query):             # <<<<<<<<<<<<<<
@@ -2501,7 +2555,7 @@ static CYTHON_INLINE PyObject *__pyx_convert_PyByteArray_string_to_py_std__in_st
   return __pyx_r;
 }
 
-static PyObject *__pyx_tp_new_5nsweb_NeoEngine(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+static PyObject *__pyx_tp_new_5nsweb_NeoEngine(PyTypeObject *t, PyObject *a, PyObject *k) {
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -2509,7 +2563,7 @@ static PyObject *__pyx_tp_new_5nsweb_NeoEngine(PyTypeObject *t, CYTHON_UNUSED Py
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
-  if (unlikely(__pyx_pw_5nsweb_9NeoEngine_1__cinit__(o, __pyx_empty_tuple, NULL) < 0)) {
+  if (unlikely(__pyx_pw_5nsweb_9NeoEngine_1__cinit__(o, a, k) < 0)) {
     Py_DECREF(o); o = 0;
   }
   return o;
@@ -2645,6 +2699,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_textFetch, __pyx_k_textFetch, sizeof(__pyx_k_textFetch), 0, 0, 1, 1},
   {&__pyx_n_s_type, __pyx_k_type, sizeof(__pyx_k_type), 0, 0, 1, 1},
   {&__pyx_n_s_verb, __pyx_k_verb, sizeof(__pyx_k_verb), 0, 0, 1, 1},
+  {&__pyx_n_s_version, __pyx_k_version, sizeof(__pyx_k_version), 0, 0, 1, 1},
   {&__pyx_n_s_voice, __pyx_k_voice, sizeof(__pyx_k_voice), 0, 0, 1, 1},
   {&__pyx_n_s_vols, __pyx_k_vols, sizeof(__pyx_k_vols), 0, 0, 1, 1},
   {&__pyx_n_s_volume, __pyx_k_volume, sizeof(__pyx_k_volume), 0, 0, 1, 1},
@@ -2859,6 +2914,120 @@ static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
     return result;
 }
 
+static void __Pyx_RaiseDoubleKeywordsError(
+    const char* func_name,
+    PyObject* kw_name)
+{
+    PyErr_Format(PyExc_TypeError,
+        #if PY_MAJOR_VERSION >= 3
+        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
+        #else
+        "%s() got multiple values for keyword argument '%s'", func_name,
+        PyString_AsString(kw_name));
+        #endif
+}
+
+static int __Pyx_ParseOptionalKeywords(
+    PyObject *kwds,
+    PyObject **argnames[],
+    PyObject *kwds2,
+    PyObject *values[],
+    Py_ssize_t num_pos_args,
+    const char* function_name)
+{
+    PyObject *key = 0, *value = 0;
+    Py_ssize_t pos = 0;
+    PyObject*** name;
+    PyObject*** first_kw_arg = argnames + num_pos_args;
+    while (PyDict_Next(kwds, &pos, &key, &value)) {
+        name = first_kw_arg;
+        while (*name && (**name != key)) name++;
+        if (*name) {
+            values[name-argnames] = value;
+            continue;
+        }
+        name = first_kw_arg;
+        #if PY_MAJOR_VERSION < 3
+        if (likely(PyString_CheckExact(key)) || likely(PyString_Check(key))) {
+            while (*name) {
+                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
+                        && _PyString_Eq(**name, key)) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    if ((**argname == key) || (
+                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
+                             && _PyString_Eq(**argname, key))) {
+                        goto arg_passed_twice;
+                    }
+                    argname++;
+                }
+            }
+        } else
+        #endif
+        if (likely(PyUnicode_Check(key))) {
+            while (*name) {
+                int cmp = (**name == key) ? 0 :
+                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                    (PyUnicode_GET_SIZE(**name) != PyUnicode_GET_SIZE(key)) ? 1 :
+                #endif
+                    PyUnicode_Compare(**name, key);
+                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                if (cmp == 0) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    int cmp = (**argname == key) ? 0 :
+                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                        (PyUnicode_GET_SIZE(**argname) != PyUnicode_GET_SIZE(key)) ? 1 :
+                    #endif
+                        PyUnicode_Compare(**argname, key);
+                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                    if (cmp == 0) goto arg_passed_twice;
+                    argname++;
+                }
+            }
+        } else
+            goto invalid_keyword_type;
+        if (kwds2) {
+            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
+        } else {
+            goto invalid_keyword;
+        }
+    }
+    return 0;
+arg_passed_twice:
+    __Pyx_RaiseDoubleKeywordsError(function_name, key);
+    goto bad;
+invalid_keyword_type:
+    PyErr_Format(PyExc_TypeError,
+        "%.200s() keywords must be strings", function_name);
+    goto bad;
+invalid_keyword:
+    PyErr_Format(PyExc_TypeError,
+    #if PY_MAJOR_VERSION < 3
+        "%.200s() got an unexpected keyword argument '%.200s'",
+        function_name, PyString_AsString(key));
+    #else
+        "%s() got an unexpected keyword argument '%U'",
+        function_name, key);
+    #endif
+bad:
+    return -1;
+}
+
 static void __Pyx_RaiseArgtupleInvalid(
     const char* func_name,
     int exact,
@@ -2882,45 +3051,6 @@ static void __Pyx_RaiseArgtupleInvalid(
                  "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
                  func_name, more_or_less, num_expected,
                  (num_expected == 1) ? "" : "s", num_found);
-}
-
-static CYTHON_INLINE int __Pyx_CheckKeywordStrings(
-    PyObject *kwdict,
-    const char* function_name,
-    int kw_allowed)
-{
-    PyObject* key = 0;
-    Py_ssize_t pos = 0;
-#if CYTHON_COMPILING_IN_PYPY
-    if (!kw_allowed && PyDict_Next(kwdict, &pos, &key, 0))
-        goto invalid_keyword;
-    return 1;
-#else
-    while (PyDict_Next(kwdict, &pos, &key, 0)) {
-        #if PY_MAJOR_VERSION < 3
-        if (unlikely(!PyString_CheckExact(key)) && unlikely(!PyString_Check(key)))
-        #endif
-            if (unlikely(!PyUnicode_Check(key)))
-                goto invalid_keyword_type;
-    }
-    if ((!kw_allowed) && unlikely(key))
-        goto invalid_keyword;
-    return 1;
-invalid_keyword_type:
-    PyErr_Format(PyExc_TypeError,
-        "%.200s() keywords must be strings", function_name);
-    return 0;
-#endif
-invalid_keyword:
-    PyErr_Format(PyExc_TypeError,
-    #if PY_MAJOR_VERSION < 3
-        "%.200s() got an unexpected keyword argument '%.200s'",
-        function_name, PyString_AsString(key));
-    #else
-        "%s() got an unexpected keyword argument '%U'",
-        function_name, key);
-    #endif
-    return 0;
 }
 
 #if CYTHON_COMPILING_IN_CPYTHON

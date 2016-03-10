@@ -9,8 +9,6 @@
 #include <iostream>
 #include <sstream>
 
-const int OUTPUT_VERSION = 3;
-
 void OutputRange(stringstream &output, char* text, int start, int end)
 {
     if (start == end) {
@@ -229,7 +227,7 @@ void CResultBuilder::LoadPassage(CGiant *giantTable, CTextFetch *textFetch, CHit
 std::string CResultBuilder::Write(CGiant *giantTable, CTextFetch *textFetch, CHitList *hitList)
 {
     Json::Value results;
-    results["version"] = OUTPUT_VERSION;
+    results["version"] = version;
 
     long *hitsPerVol = hitList->ReportHitsPerVol();
     long passageHitsPerVol[MAX_VOLUMES] = {0};

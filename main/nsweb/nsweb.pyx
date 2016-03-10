@@ -125,7 +125,7 @@ cdef extern from "CRoseCode.h":
 
 cdef extern from "CResultBuilder.h":
     cdef cppclass CResultBuilder:
-        CResultBuilder() except +
+        CResultBuilder(int version) except +
         unsigned int firstPassage
         unsigned int passageCount
         unsigned int preContext
@@ -151,12 +151,14 @@ cdef class NeoEngine:
     cdef CTextFetch *textFetch
     cdef CTextExploder *textExploder
     cdef CHitList *hitList
+    cdef int version
 
-    def __cinit__(self):
+    def __cinit__(self, version):
         self.giantTable = new CGiant()
         self.textFetch = new CTextFetch()
         self.textExploder = new CTextExploder()
         self.hitList = NULL
+        self.version = version
     
     def __dealloc__(self):
         del self.textExploder
@@ -221,7 +223,7 @@ cdef class NeoEngine:
             else:
                 searchMode = UNION
             
-        resultBuilder = new CResultBuilder()
+        resultBuilder = new CResultBuilder(self.version)
         resultBuilder.firstPassage = query['first']
         resultBuilder.passageCount = query['count']
         if 'context' in query:
