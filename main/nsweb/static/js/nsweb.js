@@ -125,7 +125,7 @@ function BuildURI(q)
     });
     if (!q.proximity.enable) {
         params.push('p=a');
-    } else if (q.proximity.words != 25) {
+    } else if (q.proximity.words != 0) {
         params.push('p=' + q.proximity.words);
     }
     if (q.volumes && q.volumes.length) {
@@ -152,7 +152,7 @@ function ParseURI(uri)
     q.version = version;
     q.proximity = {};
     q.proximity.enable = true;
-    q.proximity.words = 25;
+    q.proximity.words = 0;
     q.context = 40;
     q.count = 10;
     q.first = 0;
@@ -678,7 +678,7 @@ function RunQuery(query_data, scrollToView) {
     }
     var start = new Date().getTime();  
     $.ajax({ url: "/Search/", method: "POST", contentType: "application/json", data: str_query}).done(function(d) {
-            var mismatch = (d.version != clientVersion);
+            var mismatch = ('version' in d) && (d.version != clientVersion);
             if (mismatch) {
                 UpdateHistory(query_data, true);
                 window.location.reload(true);
@@ -723,7 +723,6 @@ function UIInit() {
     $('input[type=radio]').on('change', function (event) {
         $(this).parent().addClass("active").siblings().removeClass("active");
     });
-    //$('#proximityMenu').collapse($('input[name="proximity-mode"]').val() == 'all' ? 'show' : 'hide');
     $('input[name="proximity-mode"]').change( function() {
         $('#proximityMenu').collapse($(this).val() == 'all' ? 'show' : 'hide');
     });
