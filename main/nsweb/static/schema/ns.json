@@ -154,7 +154,7 @@
             "words" : {
                 "type": "integer",
                 "additionalProperties": false,
-                "minimum": 1,
+                "minimum": 0,
                 "maximum": 1073741824
             }
         },

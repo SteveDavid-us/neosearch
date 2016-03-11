@@ -51,6 +51,9 @@ class InputError(Exception):
 def route():
     return render_template('sample.html', debug=app.debug, version=version)
 
+def error_object(msg):
+    return jsonify(errors=[msg], version=version)
+
 @app.route("/Search/", methods=['POST'])
 def network():
     try:
@@ -59,11 +62,11 @@ def network():
         engine = nsweb.NeoEngine(version)
         result = engine.search(query)
     except InputError as e:
-        return jsonify(errors=[unicode(e)])
+        return error_object(unicode(e))
     except RuntimeError as e:
-        return jsonify(errors=[unicode(e)])
+        return error_object(unicode(e))
     except ValidationError as e:
-        return jsonify(errors=[u"Input error in '{:s}': {:s}.".format(e.path[0], e.message)])
+        return error_object(u"Input error in '{:s}': {:s}.".format(e.path[0], e.message))
 
     response = make_response(result)
     response.mimetype = 'application/json'
