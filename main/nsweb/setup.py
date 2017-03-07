@@ -20,13 +20,14 @@ StringTools.cpp
 """.strip().split()
 
 source_files = ['nsweb.pyx', 'CResultBuilder.cpp'] + [os.path.join('..', 'shared', 'src', f) for f in source_names]
+source_files.append(os.path.join('jsoncpp', 'jsoncpp.cpp'))
 
 setup(ext_modules = cythonize(Extension(
     'nsweb', 
     language='c++',
     sources=source_files,
-    include_dirs=[os.path.join('..', 'shared', 'include'), 'include'],
-    libraries=['jsoncpp'],
+    include_dirs=[os.path.join('..', 'shared', 'include'), 'include', 'jsoncpp'],
+    libraries=[],
     extra_compile_args='-Wno-write-strings -Wno-unused-variable'.split(),
 )),
     name='nsweb',
